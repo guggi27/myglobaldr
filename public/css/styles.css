@@ -1,0 +1,293 @@
+/*@font-face {
+      font-family: "Manrope";
+      src: url("/fonts/Manrope-Regular.ttf") format("ttf");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+}
+@font-face {
+      font-family: "Manrope-SemiBold";
+      src: url("/fonts/Manrope-SemiBold.ttf") format("ttf");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+}
+:root {
+      --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+}*/
+html, body {
+      font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* mobile */
+@media (max-width: 767px) {
+    #masters-of-medicine .book-appointment {
+        position: relative !important;
+    }
+    
+    footer .copyright {
+        text-align: center !important;
+    }
+    
+    .col-5th {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+    }
+
+    .hide-mobile {
+      display: none;
+    }
+}
+
+/* desktop */
+@media (max-width: 992px) {
+  .col-5th {
+    flex: 0 0 33.33% !important;
+    max-width: 33.33% !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-5th {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 600px) {
+    .whatsapp-float {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px;
+    }
+
+    .whatsapp-float img {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+#call-controls button {
+      border: none;
+      background-color: #E6E8EE;
+      border-radius: 50%;
+      margin-right: 10px;
+      width: 50px;
+      height: 50px;
+}
+#call-controls button.cancel {
+      background-color: red;
+}
+#call-controls button.cancel svg {
+      color: white !important;
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background-color: #25d366;
+    border-radius: 50%;
+    padding: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s;
+}
+
+.whatsapp-float img {
+    width: 32px;
+    height: 32px;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+.our-mission {
+      border: 1px solid black;
+      border-radius: 10px;
+      padding: 40px 30px;
+}
+.our-mission ul {
+      list-style-type: none;
+}
+.our-mission .fa,
+.our-mission svg {
+      border-radius: 50%;
+      font-size: 12px;
+      background-color: #5C6BC0;
+}
+.our-mission li span {
+      position: relative;
+      bottom: 7px;
+}
+.our-mission li {
+      margin-top: 15px;
+}
+
+.status {
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-weight: bold;
+      text-transform: capitalize;
+}
+.status::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: #04BD6C;
+      border-radius: 50%;
+      margin-right: 6px; /* spacing between circle and text */
+      vertical-align: middle; /* aligns the circle with the text */
+      position: relative;
+      bottom: 2px;
+}
+.status-available {
+      color: #04BD6C;
+      background-color: #befee2;
+}
+.stats {
+      text-align: center;
+}
+.stats .info {
+      color: gray;
+      position: relative;
+      bottom: 5px;
+}
+.stats .number {
+      font-size: 50px;
+      font-weight: bold;
+      margin-bottom: 0px;
+}
+
+.child-center-vertical {
+      display: flex;
+      /* horizontal center */
+      /*justify-content: center;*/
+      align-items: center;
+}
+#book-appointments .form-label {
+      color: gray;
+}
+#book-appointments {
+      padding: 20px 30px;
+      border-radius: 20px;
+}
+.center-horizontal {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+}
+.center-vertical {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+}
+.color-gradient-purple-reverse {
+      background: linear-gradient(to left, #1F2ADF, #8990FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+}
+.color-gradient-purple {
+      background: linear-gradient(to right, #1F2ADF, #8990FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+}
+.text-justify {
+      text-align: justify !important;
+}
+.on-hover-underline:hover {
+      text-decoration: underline !important;
+}
+.no-underline {
+      text-decoration: none !important;
+}
+footer .copyright {
+    text-align: right;
+}
+footer .links li a {
+      color: #333333 !important;
+      text-decoration: none;
+}
+footer .links li {
+      margin-bottom: 10px;
+}
+footer .links ul {
+      list-style-type: none;
+      padding-left: 0px;
+}
+footer .social li {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 30px;
+}
+footer .social {
+      list-style-type: none;
+}
+.bg-secondary-gradient {
+      background: linear-gradient(to right, #FFF4F8, #FFD8E7);
+}
+.bg-color-secondary {
+      background-color: #FFDAE8 !important;
+}
+.color-secondary-dark {
+      color: #FF005F !important;
+}
+.color-secondary {
+      color: #FFDAE8 !important;
+}
+.input {
+      padding: 15px 10px;
+      border-radius: 10px;
+      border: none !important;
+}
+.input::placeholder {
+      color: lightgray;       /* gray */
+      opacity: 1;        /* ensure full visibility */
+}
+.col-5th {
+      flex: 0 0 20%;
+      max-width: 20%;
+}
+.border-primary {
+      border: 1px solid #1F2ADF !important;
+}
+.border-width-2 {
+      border-width: 2px !important;
+}
+.color-primary-light {
+      color: #8990FF !important;
+}
+.color-primary {
+      color: #1F2ADF !important;
+}
+.bold {
+      font-weight: bold;
+}
+.white {
+      color: white !important;
+}
+.no-border {
+      border: none !important;
+}
+.bg-primary-gradient {
+      background: linear-gradient(to right, #9097FF, #1F2ADF);
+}
+.font-600 {
+      font-weight: 600;
+}
+.navbar-nav .nav-link {
+      font-weight: 600;
+}
+.navbar-nav {
+      margin: 0 auto;
+}
