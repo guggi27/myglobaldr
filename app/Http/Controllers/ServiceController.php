@@ -129,7 +129,6 @@ class ServiceController extends Controller
                 "name" => $name,
                 "updated_at" => now()->utc()
             ]);
-
         DB::table("doctors")
             ->whereRaw("JSON_CONTAINS(services, '\"" . ($service->name ?? "") . "\"')")
             ->update([

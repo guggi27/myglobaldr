@@ -26,22 +26,20 @@ class DatabaseSeeder extends Seeder
             ->where("type", "=", "super_admin")
             ->first();
 
-        if ($super_admin == null)
-        {
+        if ($super_admin == null) {
             DB::table("users")
                 ->insertGetId([
-                    "name" => "Admin",
-                    "email" => "admin@gmail.com",
-                    "password" => password_hash("admin", PASSWORD_DEFAULT),
-                    "email_verified_at" => now(),
-                    "type" => "super_admin",
-                    "created_at" => now(),
-                    "updated_at" => now()
-                ]);
+                        "name" => "Admin",
+                        "email" => "admin@gmail.com",
+                        "password" => password_hash("admin", PASSWORD_DEFAULT),
+                        "email_verified_at" => now(),
+                        "type" => "super_admin",
+                        "created_at" => now(),
+                        "updated_at" => now()
+                    ]);
         }
 
-        if (DB::table('specialities')->count() <= 0)
-        {
+        if (DB::table('specialities')->count() <= 0) {
             $specialities = [
                 [
                     'name' => 'General Physician',
@@ -97,8 +95,7 @@ class DatabaseSeeder extends Seeder
             DB::table('specialities')->insert($records);
         }
 
-        if (DB::table('services')->count() <= 0)
-        {
+        if (DB::table('services')->count() <= 0) {
             $services = [
                 'Blood Test',
                 'X-Ray',
@@ -123,8 +120,7 @@ class DatabaseSeeder extends Seeder
             DB::table('services')->insert($records);
         }
 
-        if (DB::table('diseases')->count() <= 0)
-        {
+        if (DB::table('diseases')->count() <= 0) {
             $diseases = [
                 "Diabetes",
                 "Hypertension",
