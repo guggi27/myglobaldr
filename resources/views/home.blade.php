@@ -274,7 +274,7 @@
             <div class="col-md-12">
                 <h2 class="color-gradient-purple-reverse bold text-center">Patient Testimonials:</h2>
                 <p class="text-center bold black" style="font-size: 30px;">Hear from Those We've Cared For</p>
-                <p class="text-center mt-5" style="color: gray;">Discover the difference we make through the voices of those we’ve served:</p>
+                <p class="text-center mt-5" style="color: gray;">Discover the difference we make through the voices of those we&apos;ve served:</p>
             </div>
 
             <div class="col-md-10 mt-5 center-horizontal">
