@@ -13,6 +13,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\Schedules;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -32,6 +33,7 @@ Route::any("/login", [UserController::class, "login"])
     ->name("login");
 Route::get("/doctors/{id}/detail", [DoctorController::class, "detail"])
     ->name("doctors.detail");
+Route::get("/doctors/schedules", [Schedules::class, "index"])->name("doctors.schedules");
 Route::get("/doctors", [DoctorController::class, "index"]);
 Route::get("/services", [PageController::class, "services"]);
 Route::get("/about-us", [PageController::class, "about_us"]);
