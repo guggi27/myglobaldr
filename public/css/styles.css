@@ -827,9 +827,9 @@ body {
 }
 
 .custom-card-container {
-    border: 1px solid #dee2e6;
+    border: 2px solid #465D7C;
     border-radius: 1rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05); */
     background-color: #fff;
     height: 100%;
 }
@@ -837,7 +837,7 @@ body {
 .service-card {
     position: relative;
     background-color: transparent;
-    border: 1px solid #dee2e6;
+    border: 2px solid #dee2e6;
     border-radius: 0.5rem;
     padding: 1.5rem;
     display: flex;
@@ -850,42 +850,79 @@ body {
 }
 
 .service-card:hover {
-    border-color: #6f42c1;
+    border-color: #9C27B0;
 }
 
 .service-card.active {
-    border-color: #6f42c1;
-    background-color: #f3e8ff;
+    border-color: #9C27B0;
+    background-color: #F3E5F5;
     box-shadow: 0 0 10px rgba(111, 66, 193, 0.3);
 }
 
 .service-details {
     display: flex;
     flex-direction: column;
+    align-items: start;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.service-details svg {
+    width: max-content;
+    justify-self: center;
+    align-self: center;
 }
 
 .service-name {
-    font-weight: 500;
+    font-weight: 600;
     color: #343a40;
 }
 
 .service-price {
     font-size: 1rem;
-    color: #6c757d;
+    color: #9C27B0;
     margin-top: 0.5rem;
 }
 
 .checkmark-icon {
     position: absolute;
-    top: 1rem;
+    top: 0;
     right: 1rem;
     color: #6a5acd;
+    height: 100%;
     font-size: 1.5rem;
     display: none;
 }
 
+.appointment-type {
+    height: 100%;
+    justify-content: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+
+.appointment-type-detail {
+    font-size: larger;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+}
+
+.service-card.active .appointment-type-detail svg {
+    fill: #9C27B0;
+    color: #9C27B0;
+}
+
+.appointment-type-detail svg {
+    fill: #465D7C;
+    color: #465D7C;
+}
+
 .service-card.active .checkmark-icon {
-    display: block;
+    display: flex;
+    align-items: center;
+
 }
 
 .schedules-update-steps-container {
@@ -951,14 +988,19 @@ body {
 .form-control,
 .form-select {
     border-radius: 5px;
+    padding: 10px;
+    /* font-size: small; */
+    /* color: darkgray; */
     border: 1px solid #ced4da;
     /* background-color: #f8f9fa; */
 }
 
 .form-control:focus,
-.form-select:focus {
+.form-select:focus,
+.form-select:focus .input-group-text {
     box-shadow: none;
     border-color: #6a5acd;
+    color: black;
 }
 
 .upload-link {
@@ -1032,7 +1074,8 @@ body {
     padding-left: 0.75rem;
 }
 
-.custom-input-group:focus-within .input-group-text {
+.custom-input-group:focus-within .input-group-text,
+.input-group:focus-within .input-group-text {
     border-color: #6a5acd;
 }
 

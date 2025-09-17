@@ -190,9 +190,9 @@
 
         @switch($step)
             @case(1)
-                <div class="card p-4 mt-5 custom-card-container">
+                <div class="card p-5 mt-5 custom-card-container" id="">
                     <h5 class="card-title">Select Speciality</h5>
-                    <div class="mb-4">
+                    <div class="pb-4" style="border-bottom: 1px solid #E6E8EE">
                         <select id="specialitySelect" class="form-select" aria-label="Select Speciality">
                             @foreach ($specialities as $index => $speciality)
                                 <option value="{{ $speciality->id }}" {{ $index === 0 ? 'selected' : '' }}>
@@ -204,7 +204,7 @@
 
                     <h5 class="card-title mt-4">Services</h5>
                     <div id="servicesContainer" class="row g-3">
-                        {{-- Services will load dynamically --}}
+
                     </div>
                 </div>
 
@@ -232,7 +232,9 @@
                                 <span class="service-price">${service.price} PKR</span>
                             </div>
                             <div class="checkmark-icon d-none">
-                                <i class="bi bi-check-circle-fill"></i>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.4915 1.6665H6.50817C3.47484 1.6665 1.6665 3.47484 1.6665 6.50817V13.4832C1.6665 16.5248 3.47484 18.3332 6.50817 18.3332H13.4832C16.5165 18.3332 18.3248 16.5248 18.3248 13.4915V6.50817C18.3332 3.47484 16.5248 1.6665 13.4915 1.6665ZM13.9832 8.08317L9.25817 12.8082C9.1415 12.9248 8.98317 12.9915 8.8165 12.9915C8.64984 12.9915 8.4915 12.9248 8.37484 12.8082L6.0165 10.4498C5.77484 10.2082 5.77484 9.80817 6.0165 9.5665C6.25817 9.32484 6.65817 9.32484 6.89984 9.5665L8.8165 11.4832L13.0998 7.19984C13.3415 6.95817 13.7415 6.95817 13.9832 7.19984C14.2248 7.4415 14.2248 7.83317 13.9832 8.08317Z" fill="#9C27B0"/>
+                                </svg>
                             </div>
                         </div>
                     `;
@@ -266,7 +268,7 @@
             @break
 
             @case(2)
-                <div class="card p-5">
+                <div class="card p-5 mt-5 custom-card-container">
                     <h6 class="mb-3">
                         <strong>
                             Select Appointment Type
@@ -274,37 +276,70 @@
                     </h6>
                     <div class="d-flex gap-3 justify-content-evenly">
 
-                        <div class="service-card" data-type="clinic">
-                            <div class="service-details" style="text-align: center; font-size: larger;">
-                                <i class="bi bi-hospital"></i>
+                        <div class="service-card appointment-type" data-type="clinic">
+                            <div class="service-details appointment-type-detail">
+                                <svg width="20" height="20" viewBox="0 0 19 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" class="">
+                                    <path
+                                        d="M14.7002 0H4.7002C1.7002 0 0.700195 1.79 0.700195 4V20H6.7002V13.94C6.7002 13.42 7.12019 13 7.64019 13H11.7702C12.2802 13 12.7102 13.42 12.7102 13.94V20H18.7102V4C18.7002 1.79 17.7002 0 14.7002 0ZM12.2002 7.25H10.4502V9C10.4502 9.41 10.1102 9.75 9.7002 9.75C9.2902 9.75 8.9502 9.41 8.9502 9V7.25H7.2002C6.7902 7.25 6.4502 6.91 6.4502 6.5C6.4502 6.09 6.7902 5.75 7.2002 5.75H8.9502V4C8.9502 3.59 9.2902 3.25 9.7002 3.25C10.1102 3.25 10.4502 3.59 10.4502 4V5.75H12.2002C12.6102 5.75 12.9502 6.09 12.9502 6.5C12.9502 6.91 12.6102 7.25 12.2002 7.25Z"
+                                        fill="currentColor" />
+                                </svg>
+
                                 <span>Clinic</span>
                             </div>
                         </div>
 
-                        <div class="service-card" data-type="video">
-                            <div class="service-details" style="text-align: center; font-size: larger;">
-                                <i class="bi bi-camera-video"></i>
+                        <div class="service-card appointment-type" data-type="video">
+                            <div class="service-details appointment-type-detail">
+                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M21.2501 6.17C20.8401 5.95 19.9801 5.72 18.8101 6.54L17.3401 7.58C17.2301 4.47 15.8801 3.25 12.6001 3.25H6.6001C3.1801 3.25 1.8501 4.58 1.8501 8V16C1.8501 18.3 3.1001 20.75 6.6001 20.75H12.6001C15.8801 20.75 17.2301 19.53 17.3401 16.42L18.8101 17.46C19.4301 17.9 19.9701 18.04 20.4001 18.04C20.7701 18.04 21.0601 17.93 21.2501 17.83C21.6601 17.62 22.3501 17.05 22.3501 15.62V8.38C22.3501 6.95 21.6601 6.38 21.2501 6.17ZM11.1001 11.38C10.0701 11.38 9.2201 10.54 9.2201 9.5C9.2201 8.46 10.0701 7.62 11.1001 7.62C12.1301 7.62 12.9801 8.46 12.9801 9.5C12.9801 10.54 12.1301 11.38 11.1001 11.38Z"
+                                        fill="currentColor" />
+                                </svg>
+
                                 <span>Video Call</span>
                             </div>
                         </div>
 
-                        <div class="service-card" data-type="audio">
-                            <div class="service-details" style="text-align: center; font-size: larger;">
-                                <i class="bi bi-telephone"></i>
+                        <div class="service-card appointment-type" data-type="audio">
+                            <div class="service-details appointment-type-detail">
+                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M11.55 14.95L9.7 16.8C9.31 17.19 8.69 17.19 8.29 16.81C8.18 16.7 8.07 16.6 7.96 16.49C6.93 15.45 6 14.36 5.17 13.22C4.35 12.08 3.69 10.94 3.21 9.81C2.74 8.67 2.5 7.58 2.5 6.54C2.5 5.86 2.62 5.21 2.86 4.61C3.1 4 3.48 3.44 4.01 2.94C4.65 2.31 5.35 2 6.09 2C6.37 2 6.65 2.06 6.9 2.18C7.16 2.3 7.39 2.48 7.57 2.74L9.89 6.01C10.07 6.26 10.2 6.49 10.29 6.71C10.38 6.92 10.43 7.13 10.43 7.32C10.43 7.56 10.36 7.8 10.22 8.03C10.09 8.26 9.9 8.5 9.66 8.74L8.9 9.53C8.79 9.64 8.74 9.77 8.74 9.93C8.74 10.01 8.75 10.08 8.77 10.16C8.8 10.24 8.83 10.3 8.85 10.36C9.03 10.69 9.34 11.12 9.78 11.64C10.23 12.16 10.71 12.69 11.23 13.22C11.33 13.32 11.44 13.42 11.54 13.52C11.94 13.91 11.95 14.55 11.55 14.95Z"
+                                        fill="currentColor" />
+                                    <path
+                                        d="M22.4701 18.33C22.4701 18.61 22.4201 18.9 22.3201 19.18C22.2901 19.26 22.2601 19.34 22.2201 19.42C22.0501 19.78 21.8301 20.12 21.5401 20.44C21.0501 20.98 20.5101 21.37 19.9001 21.62C19.8901 21.62 19.8801 21.63 19.8701 21.63C19.2801 21.87 18.6401 22 17.9501 22C16.9301 22 15.8401 21.76 14.6901 21.27C13.5401 20.78 12.3901 20.12 11.2501 19.29C10.8601 19 10.4701 18.71 10.1001 18.4L13.3701 15.13C13.6501 15.34 13.9001 15.5 14.1101 15.61C14.1601 15.63 14.2201 15.66 14.2901 15.69C14.3701 15.72 14.4501 15.73 14.5401 15.73C14.7101 15.73 14.8401 15.67 14.9501 15.56L15.7101 14.81C15.9601 14.56 16.2001 14.37 16.4301 14.25C16.6601 14.11 16.8901 14.04 17.1401 14.04C17.3301 14.04 17.5301 14.08 17.7501 14.17C17.9701 14.26 18.2001 14.39 18.4501 14.56L21.7601 16.91C22.0201 17.09 22.2001 17.3 22.3101 17.55C22.4101 17.8 22.4701 18.05 22.4701 18.33Z"
+                                        fill="currentColor" />
+                                </svg>
+
                                 <span>Audio Call</span>
                             </div>
                         </div>
 
-                        <div class="service-card" data-type="chat">
-                            <div class="service-details" style="text-align: center; font-size: larger;">
-                                <i class="bi bi-chat-dots"></i>
+                        <div class="service-card appointment-type" data-type="chat">
+                            <div class="service-details appointment-type-detail">
+                                <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M11.55 14.95L9.7 16.8C9.31 17.19 8.69 17.19 8.29 16.81C8.18 16.7 8.07 16.6 7.96 16.49C6.93 15.45 6 14.36 5.17 13.22C4.35 12.08 3.69 10.94 3.21 9.81C2.74 8.67 2.5 7.58 2.5 6.54C2.5 5.86 2.62 5.21 2.86 4.61C3.1 4 3.48 3.44 4.01 2.94C4.65 2.31 5.35 2 6.09 2C6.37 2 6.65 2.06 6.9 2.18C7.16 2.3 7.39 2.48 7.57 2.74L9.89 6.01C10.07 6.26 10.2 6.49 10.29 6.71C10.38 6.92 10.43 7.13 10.43 7.32C10.43 7.56 10.36 7.8 10.22 8.03C10.09 8.26 9.9 8.5 9.66 8.74L8.9 9.53C8.79 9.64 8.74 9.77 8.74 9.93C8.74 10.01 8.75 10.08 8.77 10.16C8.8 10.24 8.83 10.3 8.85 10.36C9.03 10.69 9.34 11.12 9.78 11.64C10.23 12.16 10.71 12.69 11.23 13.22C11.33 13.32 11.44 13.42 11.54 13.52C11.94 13.91 11.95 14.55 11.55 14.95Z"
+                                        fill="currentColor" />
+                                    <path
+                                        d="M22.4701 18.33C22.4701 18.61 22.4201 18.9 22.3201 19.18C22.2901 19.26 22.2601 19.34 22.2201 19.42C22.0501 19.78 21.8301 20.12 21.5401 20.44C21.0501 20.98 20.5101 21.37 19.9001 21.62C19.8901 21.62 19.8801 21.63 19.8701 21.63C19.2801 21.87 18.6401 22 17.9501 22C16.9301 22 15.8401 21.76 14.6901 21.27C13.5401 20.78 12.3901 20.12 11.2501 19.29C10.8601 19 10.4701 18.71 10.1001 18.4L13.3701 15.13C13.6501 15.34 13.9001 15.5 14.1101 15.61C14.1601 15.63 14.2201 15.66 14.2901 15.69C14.3701 15.72 14.4501 15.73 14.5401 15.73C14.7101 15.73 14.8401 15.67 14.9501 15.56L15.7101 14.81C15.9601 14.56 16.2001 14.37 16.4301 14.25C16.6601 14.11 16.8901 14.04 17.1401 14.04C17.3301 14.04 17.5301 14.08 17.7501 14.17C17.9701 14.26 18.2001 14.39 18.4501 14.56L21.7601 16.91C22.0201 17.09 22.2001 17.3 22.3101 17.55C22.4101 17.8 22.4701 18.05 22.4701 18.33Z"
+                                        fill="currentColor" />
+                                </svg>
                                 <span>Chat</span>
                             </div>
                         </div>
 
-                        <div class="service-card" data-type="home">
-                            <div class="service-details" style="text-align: center; font-size: larger;">
-                                <i class="bi bi-house-door"></i>
+                        <div class="service-card appointment-type" data-type="home">
+                            <div class="service-details appointment-type-detail">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" fill="currentColor"
+                                    class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                                    <path
+                                        d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5" />
+                                </svg>
                                 <span>Home Visit</span>
                             </div>
                         </div>
@@ -329,7 +364,7 @@
             @break
 
             @case (3)
-                <div class="card p-4 custom-form-card">
+                <div class="card p-5 mt-5 custom-card-container">
                     <div class="row g-4">
                         <div class="col-12">
                             <label for="appointmentDate" class="form-label">Select Date</label>
@@ -386,7 +421,7 @@
             @break
 
             @case(4)
-                <div class="card p-4 custom-form-card">
+                <div class="card p-5 mt-5 custom-card-container">
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="firstName" class="form-label">First Name</label>
@@ -436,10 +471,10 @@
 
             @case(5)
                 <div class="container my-5">
-                    <div class="row g-4">
+                    <div class="row g-4 p-5">
                         <div class="col-lg-6">
-                            <div class="card p-4 custom-card-container">
-                                <h5 class="card-title">Payment Gateway</h5>
+                            <div class="custom-card-container p-4">
+                                <h5 class ="card-title">Payment Gateway</h5>
                                 <div class="d-flex gap-3 payment-options my-3">
                                     <button type="button" class="btn btn-outline-primary active">
                                         <i class="bi bi-credit-card-fill me-2"></i> Credit Card
@@ -486,7 +521,7 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <div class="card p-4 custom-card-container booking-info-card">
+                            <div class="card p-4 booking-info-card custom-card-container">
                                 <h5 class="card-title">Booking Info</h5>
                                 <div class="booking-details-item">
                                     <strong>Date & Time</strong>
