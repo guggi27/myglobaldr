@@ -53,7 +53,7 @@
                 <div class="auth-form-inner-container">
 
                     <div class="auth-logo">
-                        <img src="{{ asset('/administrator/img/admin/logo.png') }}" alt="" />
+                        <img src="{{ asset('/administrator/img/admin/logo.png') }}" alt="Admin" />
                     </div>
                     <div class="text">
 
@@ -160,7 +160,7 @@
                     </p>
             </section>
             <section class="auth-img-container">
-                <img src="{{ asset('/administrator/img/admin/doctors-admin-login.png') }}" alt="" />
+                <img src="{{ asset('/administrator/img/admin/doctors-admin-login.png') }}" alt="Doctor" />
             </section>
         </div>
         </div>

@@ -36,7 +36,7 @@
         <div class="schedules-doctor-card border-primary-gradient shadow-sm">
             <div class="schedules-doctor-info">
                 <div class="schedules-doctor-info-img-container">
-                    <img class="schedules-doctor-info-img" src="{{ asset('/img/doctors/2.png') }}" alt="">
+                    <img class="schedules-doctor-info-img" src="{{ asset('/img/doctors/2.png') }}" alt="Doctor">
                     <div class="bg-dark schedules-doctor-info-img" style="width: 100%; height: 100%;"></div>
                     <div class="schedules-icons-container">
                         <div class="schedules-star-icon">
@@ -470,20 +470,20 @@
             @break
 
             @case(5)
-                <div class="container my-5">
+                <div class="my-5">
                     <div class="row g-4 p-5">
                         <div class="col-lg-6">
                             <div class="custom-card-container p-4">
                                 <h5 class ="card-title">Payment Gateway</h5>
-                                <div class="d-flex gap-3 payment-options my-3">
-                                    <button type="button" class="btn btn-outline-primary active">
-                                        <i class="bi bi-credit-card-fill me-2"></i> Credit Card
+                                <div class="payment-options my-3">
+                                    <button type="button" class="payment-button" id="credit-card-btn">
+                                        <img src="{{ asset('/img/payment/card.png') }}" alt="Credit Card"> Credit Card
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary">
-                                        <i class="bi bi-paypal me-2"></i> Paypal
+                                    <button type="button" class="payment-button" id="paypal-btn">
+                                        <img src="{{ asset('/img/payment/paypal.png') }}" alt="Credit Card">Paypal
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary">
-                                        <i class="bi bi-stripe me-2"></i> Stripe
+                                    <button type="button" class="payment-button" id="stripe-btn">
+                                        <img src="{{ asset('/img/payment/stripe.png') }}" alt="Credit Card">Stripe
                                     </button>
                                 </div>
 
@@ -522,82 +522,151 @@
 
                         <div class="col-lg-6">
                             <div class="card p-4 booking-info-card custom-card-container">
-                                <h5 class="card-title">Booking Info</h5>
+                                <h5 class="card-title">
+                                    <strong>
+                                        Booking Info
+                                    </strong>
+                                </h5>
                                 <div class="booking-details-item">
                                     <strong>Date & Time</strong>
                                     <p class="mb-0">10:00 - 11:00 AM, 15, Oct 2025</p>
                                 </div>
-                                <div class="booking-details-item mt-3">
+                                <div class="booking-details-item mt-3 p-4">
                                     <strong>Appointment with</strong>
                                     <p class="mb-0">Dr. Kamran - Regular Check-up - Physiology - Via Video Call</p>
                                 </div>
 
                                 <hr class="my-4">
 
-                                <h5 class="card-title">Payment Info</h5>
-                                <div class="d-flex justify-content-between my-2">
+                                <h5 class="card-title">
+                                    <strong>
+                                        Payment Info
+                                </h5>
+                                </strong>
+                                <div class="d-flex justify-content-between my-2" style="font-weight: 500">
                                     <span>Regular Check-up</span>
-                                    <span>3000 PKR</span>
+                                    <span>
+                                        3000 PKR
+                                    </span>
                                 </div>
                                 <div class="d-flex justify-content-between my-2">
                                     <span>Prescription</span>
-                                    <span>500 PKR</span>
+                                    <span style="color: black">500 PKR</span>
                                 </div>
                                 <div class="d-flex justify-content-between my-2">
                                     <span>Tax</span>
-                                    <span>7%</span>
+                                    <span style="color: black">7%</span>
                                 </div>
                                 <div class="d-flex justify-content-between my-2">
                                     <span>Discount</span>
-                                    <span class="text-danger">-100 PKR</span>
+                                    <strong class="text-danger">-100 PKR</strong>
                                 </div>
 
                                 <div class="mt-4">
-                                    <button type="button" class="btn btn-primary btn-lg w-100">
-                                        Total <span class="ms-2">3645 PKR</span>
+                                    <button type="button" class="btn btn-primary btn-lg w-100 d-flex justify-content-between"
+                                        style="font-weight: bold; background-color: #0E82FD; color: white;">
+                                        Total
+                                        <span class="ms-2">3645 PKR</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script>
+                    const creditCardBtn = document.getElementById('credit-card-btn');
+                    const paypalBtn = document.getElementById('paypal-btn');
+                    const stripeBtn = document.getElementById('stripe-btn');
+                    document.addEventListener('DOMContentLoaded', () => {
+
+                        creditCardBtn.addEventListener('click', (e) => {
+                            creditCardBtn.classList.add('active')
+                            paypalBtn.classList.remove('active')
+                            stripeBtn.classList.remove('active')
+                            e.stopPropagation();
+                        })
+                        paypalBtn.addEventListener('click', (e) => {
+                            paypalBtn.classList.add('active')
+                            creditCardBtn.classList.remove('active')
+                            stripeBtn.classList.remove('active')
+                            e.stopPropagation();
+                        })
+                        stripeBtn.addEventListener('click', (e) => {
+                            stripeBtn.classList.add('active')
+                            paypalBtn.classList.remove('active')
+                            creditCardBtn.classList.remove('active')
+                            e.stopPropagation();
+                        })
+                    })
+                </script>
             @break
 
             @case(6)
-                <div class="container my-5">
+                <div class="my-5">
                     <div class="row g-4 justify-content-center">
                         <div class="col-lg-6">
-                            <div class="card p-4 custom-card-container">
-                                <div class="d-flex align-items-center mb-3">
-                                    <span class="booking-check-icon me-2">
-                                        <i class="bi bi-check-circle-fill"></i>
-                                    </span>
-                                    <h5 class="card-title fw-bold m-0">Booking Confirmed</h5>
+                            <div class="card p-4 custom-card-container" style="display: flex; align-items: center; gap: 20px;">
+                                <div class="" style="border: 1px solid #E6E8EE; border-radius: 10px;">
+                                    <div class="d-flex align-items-center mb-3 p-4" style="border-bottom: 1px solid #E6E8EE;">
+
+                                        <span class="booking-check-icon me-2">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                        </span>
+                                        <h5 class="card-title fw-bold m-0">Booking Confirmed</h5>
+
+                                    </div>
+
+                                    <p class="mb-4 px-4 py-2">
+                                        Your <span class="span-light-blue special-span span-bold">Request</span> for <span
+                                            class="special-span span-bold span-underline">Regular Check-up</span> for <span
+                                            class="span-light-blue special-span span-bold">Physiology</span> with
+                                        <span class="special-span span-bold">
+                                            <img src="{{ asset('/img/doctors/3.png') }}" style="object-fit: cover"
+                                                width="25" height="25" alt="Dr. Kamran" class="rounded-circle me-1">
+                                            Dr Kamran
+                                        </span> on <span class="special-span span-bold span-light-purple">
+                                            <svg width="17" height="17" viewBox="0 0 17 17" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M0 14.2417C0 15.6158 1.05083 16.6667 2.425 16.6667H13.7417C15.1158 16.6667 16.1667 15.6158 16.1667 14.2417V7.775H0V14.2417ZM13.7417 2.11667H12.125V1.30833C12.125 0.823333 11.8017 0.5 11.3167 0.5C10.8317 0.5 10.5083 0.823333 10.5083 1.30833V2.11667H5.65833V1.30833C5.65833 0.823333 5.335 0.5 4.85 0.5C4.365 0.5 4.04167 0.823333 4.04167 1.30833V2.11667H2.425C1.05083 2.11667 0 3.1675 0 4.54167V6.15833H16.1667V4.54167C16.1667 3.1675 15.1158 2.11667 13.7417 2.11667Z"
+                                                    fill="#4A148C" />
+                                            </svg>
+
+                                            Monday, April 1st,
+                                            2024</span> at <span class="special-span span-bold span-green">
+                                            <svg width="19" height="20" viewBox="0 0 19 20" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M9.08333 0.5C7.89049 0.5 6.70933 0.745725 5.60729 1.22314C4.50525 1.70056 3.50391 2.40033 2.66045 3.28249C0.956991 5.06408 0 7.48044 0 10C0 12.5196 0.956991 14.9359 2.66045 16.7175C3.50391 17.5997 4.50525 18.2994 5.60729 18.7769C6.70933 19.2543 7.89049 19.5 9.08333 19.5C11.4924 19.5 13.8028 18.4991 15.5062 16.7175C17.2097 14.9359 18.1667 12.5196 18.1667 10C18.1667 8.75244 17.9317 7.5171 17.4752 6.36451C17.0188 5.21191 16.3497 4.16464 15.5062 3.28249C14.6628 2.40033 13.6614 1.70056 12.5594 1.22314C11.4573 0.745725 10.2762 0.5 9.08333 0.5ZM12.8983 13.99L8.175 10.95V5.25H9.5375V10.19L13.625 12.755L12.8983 13.99Z"
+                                                    fill="#2E7D32" />
+                                            </svg>
+
+                                            10:00 AM</span>
+                                        has
+                                        been sent.
+                                    </p>
                                 </div>
 
-                                <p class="mb-4">
-                                    Your <span class="badge rounded-pill bg-light text-primary">Request</span> for <span
-                                        class="badge rounded-pill bg-light text-primary">Regular Check-up</span> for <span
-                                        class="badge rounded-pill bg-light text-primary">Physiology</span> with
-                                    <span class="">
-                                        <img src="{{ asset('/img/doctors/1.png') }}" width="25" height="25"
-                                            alt="Dr. Kamran" class="rounded-circle me-1">
-                                        Dr Kamran
-                                    </span> on <span class="badge rounded-pill bg-light text-primary">Monday, April 1st,
-                                        2024</span> at <span class="badge rounded-pill bg-light text-primary">10:00 AM</span> has
-                                    been sent.
-                                </p>
 
-                                <hr class="my-4">
-
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex px-4 py-2 justify-content-between align-items-center"
+                                    style="border: 1px solid #E6E8EE; width: 100%;  border-radius:10px">
                                     <div class="d-flex flex-column">
                                         <h6 class="fw-bold mb-1">Need Our Assistance</h6>
                                         <small class="text-secondary">Call us in case you face any issue on Booking /
                                             Cancellation</small>
                                     </div>
-                                    <button class="btn btn-outline-secondary d-flex align-items-center gap-2">
-                                        <i class="bi bi-telephone-fill"></i>
+                                    <button class="btn d-flex align-items-center gap-2"
+                                        style="color: #012047; background-color: #E6E8EE; border-radius: 1000px; display: flex; align-items: center; justify-content: center;">
+                                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M3.02734 1.5835C3.10894 1.5835 3.1864 1.60085 3.25 1.63135L3.25684 1.63525C3.32332 1.66596 3.37547 1.70766 3.41797 1.76904L3.42188 1.77393L4.67773 3.54443L4.67969 3.54736C4.75898 3.65749 4.80883 3.748 4.83984 3.82373L4.84277 3.83154C4.87203 3.89982 4.87891 3.94625 4.87891 3.96533C4.87888 3.99459 4.87063 4.03542 4.83789 4.08936L4.83301 4.09619L4.8291 4.104C4.78659 4.17912 4.71459 4.2732 4.60742 4.38037L4.60059 4.38721L4.18945 4.81592C4.07275 4.93536 4.00379 5.07602 3.97656 5.2251L3.96289 5.37939L3.97168 5.50732C3.97708 5.54782 3.98465 5.58653 3.99414 5.62451L4.00098 5.65283L4.01074 5.6792C4.02315 5.71228 4.03564 5.74134 4.04199 5.75635C4.04482 5.76302 4.04684 5.76754 4.04785 5.77002L4.0625 5.81201L4.08398 5.85107C4.20511 6.07314 4.39735 6.3363 4.64453 6.62842L4.64844 6.63232C4.89726 6.91985 5.16449 7.21506 5.45508 7.51123L5.45801 7.51416C5.49007 7.54622 5.52321 7.57774 5.55078 7.604C5.58004 7.63187 5.60395 7.65522 5.62598 7.67725L5.63086 7.68115C5.65027 7.70008 5.64916 7.72721 5.63184 7.74463L4.62988 8.74658C4.6204 8.75607 4.61055 8.75923 4.60059 8.75928C4.59004 8.7593 4.57668 8.75522 4.56348 8.74268C4.53236 8.7118 4.502 8.68293 4.47559 8.65771C4.44517 8.62868 4.41857 8.60363 4.39355 8.57861C3.85419 8.03382 3.36879 7.46346 2.93555 6.86865C2.61572 6.42401 2.34541 5.98399 2.12793 5.55029L1.92773 5.11865C1.69424 4.55091 1.58301 4.02678 1.58301 3.54248C1.58303 3.23354 1.63744 2.94504 1.74219 2.68311L1.74316 2.68018C1.84458 2.42243 2.00726 2.18002 2.24414 1.95654L2.25195 1.94873C2.52296 1.68206 2.78125 1.58356 3.02734 1.5835Z"
+                                                fill="#012047" stroke="#012047" />
+                                            <path
+                                                d="M11.9006 9.92873C11.9006 10.0804 11.8735 10.2375 11.8194 10.3891C11.8031 10.4325 11.7869 10.4758 11.7652 10.5191C11.6731 10.7141 11.5539 10.8983 11.3969 11.0716C11.1314 11.3641 10.8389 11.5754 10.5085 11.7108C10.5031 11.7108 10.4977 11.7162 10.4923 11.7162C10.1727 11.8462 9.82603 11.9166 9.45228 11.9166C8.89978 11.9166 8.30936 11.7866 7.68644 11.5212C7.06353 11.2558 6.44061 10.8983 5.82311 10.4487C5.61186 10.2916 5.40061 10.1346 5.2002 9.96665L6.97145 8.1954C7.12311 8.30915 7.25853 8.39581 7.37228 8.4554C7.39936 8.46623 7.43186 8.48248 7.46978 8.49873C7.51311 8.51498 7.55645 8.5204 7.6052 8.5204C7.69728 8.5204 7.7677 8.4879 7.82728 8.42831L8.23895 8.02206C8.37436 7.88665 8.50436 7.78373 8.62895 7.71873C8.75353 7.6429 8.87811 7.60498 9.01353 7.60498C9.11644 7.60498 9.22478 7.62665 9.34395 7.6754C9.46311 7.72415 9.5877 7.79456 9.72311 7.88665L11.516 9.15956C11.6569 9.25706 11.7544 9.37081 11.8139 9.50623C11.8681 9.64165 11.9006 9.77706 11.9006 9.92873Z"
+                                                fill="#012047" />
+                                        </svg>
+
                                         Call Us
                                     </button>
                                 </div>

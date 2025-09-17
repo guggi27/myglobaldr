@@ -22,7 +22,7 @@
         <div class="schedules-doctor-card border-primary-gradient shadow-sm">
             <div class="schedules-doctor-info">
                 <div class="schedules-doctor-info-img-container">
-                    <img class="schedules-doctor-info-img" src="{{ asset('/img/doctors/2.png') }}" alt="">
+                    <img class="schedules-doctor-info-img" src="{{ asset('/img/doctors/2.png') }}" alt="Doctor">
                     <div class="bg-dark schedules-doctor-info-img" style="width: 100%; height: 100%;"></div>
                     <div class="schedules-icons-container">
                         <div class="schedules-star-icon">

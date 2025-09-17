@@ -1035,19 +1035,55 @@ body {
     color: #343a40;
 }
 
-.payment-options .btn {
-    border-radius: 0.75rem;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    color: #6c757d;
-    border-color: #dee2e6;
+.payment-options {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 5px;
 }
 
-.payment-options .btn.active {
-    background-color: #fff;
-    border-color: #6a5acd;
-    color: #6a5acd;
-    box-shadow: 0 0 0 0.25rem rgba(106, 90, 205, 0.25);
+.payment-options .active {
+    border-color: #0E82FD !important;
+    /* color: #0E82FD !important; */
+    /* box-shadow: 0 0 20px 0.25rem #0E82FD; */
+}
+
+.payment-button {
+    width: 100%;
+    transition: all 0.3s;
+    padding: 15px 0;
+    border: 2px solid #E6E8EE;
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.special-span {
+    padding: 5px 8px;
+    border-radius: 15px;
+    font-size: small;
+}
+
+.span-underline {
+    text-decoration: underline;
+}
+
+.span-bold {
+    font-weight: bold;
+}
+
+.span-green {
+    background-color: #66BB6A;
+    color: white;
+}
+
+.span-light-purple {
+    background-color: #B39DDB;
+    color: white;
+}
+
+.span-light-blue {
+    background-color: #29B6F6;
+    color: white;
+
 }
 
 .custom-input-group {
