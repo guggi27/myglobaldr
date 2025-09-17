@@ -20,7 +20,17 @@
                 {{-- <img src="{{ asset('/img/sm-logo.png') }}" alt=""> --}}
                 {{-- <span class="fw-bold">MedBook</span> --}}
             </div>
-            <button class="btn bg-primary-gradient no-border white bold">Back</button>
+            <div>
+                @if ($step > 1)
+                    <a href="/doctors/schedules/update?step={{ $step - 1 }}" class="btn no-border white bold"
+                        style="background-color: darkgray">Back</a>
+                @endif
+
+                @if ($step < 6)
+                    <a href="/doctors/schedules/update?step={{ $step + 1 }}"
+                        class="btn bg-primary-gradient no-border white bold" style="background-color: darkgray">Next</a>
+                @endif
+            </div>
         </div>
         <!-- Doctor Profile Card -->
         <div class="schedules-doctor-card border-primary-gradient shadow-sm">
