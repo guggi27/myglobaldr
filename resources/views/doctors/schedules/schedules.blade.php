@@ -18,7 +18,6 @@
             </div>
             <button class="btn bg-primary-gradient no-border white bold">Back</button>
         </div>
-
         <!-- Doctor Profile Card -->
         <div class="schedules-doctor-card border-primary-gradient shadow-sm">
             <div class="schedules-doctor-info">
