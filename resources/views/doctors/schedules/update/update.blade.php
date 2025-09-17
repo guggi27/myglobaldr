@@ -521,7 +521,7 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <div class="card p-4 booking-info-card custom-card-container">
+                            <div class="card p-5 booking-info-card custom-card-container">
                                 <h5 class="card-title">
                                     <strong>
                                         Booking Info
@@ -531,7 +531,7 @@
                                     <strong>Date & Time</strong>
                                     <p class="mb-0">10:00 - 11:00 AM, 15, Oct 2025</p>
                                 </div>
-                                <div class="booking-details-item mt-3 p-4">
+                                <div class="booking-details-item mt-3">
                                     <strong>Appointment with</strong>
                                     <p class="mb-0">Dr. Kamran - Regular Check-up - Physiology - Via Video Call</p>
                                 </div>
