@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UpdateSchedule;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\Admin;
@@ -34,6 +35,7 @@ Route::any("/login", [UserController::class, "login"])
 Route::get("/doctors/{id}/detail", [DoctorController::class, "detail"])
     ->name("doctors.detail");
 Route::get("/doctors/schedules", [Schedules::class, "index"])->name("doctors.schedules");
+Route::get("/doctors/schedules/update", [UpdateSchedule::class, "index"])->name("doctors.schedules.update");
 Route::get("/doctors", [DoctorController::class, "index"]);
 Route::get("/services", [PageController::class, "services"]);
 Route::get("/about-us", [PageController::class, "about_us"]);
