@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorRegisterController;
 use App\Http\Controllers\UpdateSchedule;
 use Illuminate\Support\Facades\Route;
 
@@ -37,6 +38,7 @@ Route::get("/doctors/{id}/detail", [DoctorController::class, "detail"])
 Route::get("/doctors/schedules", [Schedules::class, "index"])->name("doctors.schedules");
 Route::get("/doctors/schedules/update", [UpdateSchedule::class, "index"])->name("doctors.schedules.update");
 Route::get("/doctors", [DoctorController::class, "index"]);
+Route::get("/doctors/register", [DoctorRegisterController::class, "index"]);
 Route::get("/services", [PageController::class, "services"]);
 Route::get("/about-us", [PageController::class, "about_us"]);
 Route::get("/", [PageController::class, "home"]);
@@ -107,3 +109,5 @@ Route::group([
     Route::get("/admin/doctors/{id}/edit", [DoctorController::class, "edit"]);
     Route::get("/admin/doctors", [DoctorController::class, "admin_index"]);
 });
+
+Route::post('/doctor/register', [DoctorRegisterController::class, 'store'])->name('doctors.register');

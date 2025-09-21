@@ -21,7 +21,6 @@
     <link href="{{ asset('/administrator/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/administrator/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link href="{{ asset('/administrator/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/administrator/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('/administrator/vendor/quill/quill.snow.css') }}" rel="stylesheet">
     <link href="{{ asset('/administrator/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('/administrator/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
@@ -187,35 +186,34 @@
 
     <script>
         async function doLogin(event) {
-    event.preventDefault()
-    const form = event.target
+            event.preventDefault()
+            const form = event.target
 
-    try {
-        const formData = new FormData(form)
-        const submitButton = form.querySelector('button[type="submit"]')
-        submitButton.setAttribute("disabled", "disabled")
+            try {
+                const formData = new FormData(form)
+                const submitButton = form.querySelector('button[type="submit"]')
+                submitButton.setAttribute("disabled", "disabled")
 
-        const response = await axios.post(
-            baseUrl + "/admin/login",
-            formData
-        )
+                const response = await axios.post(
+                    baseUrl + "/admin/login",
+                    formData
+                )
 
-        if (response.data.status == "success") {
-            window.location.href = baseUrl + "/admin"
-        } else {
-            swal.fire("Error", response.data.message, "error")
+                if (response.data.status == "success") {
+                    window.location.href = baseUrl + "/admin"
+                } else {
+                    swal.fire("Error", response.data.message, "error")
+                }
+            } catch (exp) {
+                swal.fire("Error", exp.message, "error")
+            } finally {
+                const submitButton = form.querySelector('button[type="submit"]')
+                submitButton.removeAttribute("disabled")
+            }
         }
-    } catch (exp) {
-        swal.fire("Error", exp.message, "error")
-    } finally {
-        const submitButton = form.querySelector('button[type="submit"]')
-        submitButton.removeAttribute("disabled")
-    }
-}
 
-const form = document.getElementById('login-form')
-form.addEventListener('submit', doLogin)  // ✅ no "on"
-
+        const form = document.getElementById('login-form')
+        form.addEventListener('submit', doLogin) // ✅ no "on"
     </script>
 
 </body>

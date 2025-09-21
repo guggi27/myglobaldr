@@ -490,28 +490,28 @@
                                 <form class="row g-3">
                                     <div class="col-12">
                                         <label for="cardHolderName" class="form-label">Card Holder Name</label>
-                                        <div class="custom-input-group custom-input-group">
+                                        <div class="custom-input-group">
                                             <span class="input-group-text"><i class="bi bi-person"></i></span>
                                             <input type="text" class="form-control" id="cardHolderName">
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <label for="cardNumber" class="form-label">Card Number</label>
-                                        <div class="custom-input-group custom-input-group">
+                                        <div class="custom-input-group">
                                             <span class="input-group-text"><i class="bi bi-credit-card"></i></span>
                                             <input type="text" class="form-control" id="cardNumber">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="expiryDate" class="form-label">Expire Date</label>
-                                        <div class="custom-input-group custom-input-group">
+                                        <div class="custom-input-group">
                                             <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                                             <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="cvv" class="form-label">CVV</label>
-                                        <div class="custom-input-group custom-input-group">
+                                        <div class="custom-input-group">
                                             <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                             <input type="text" class="form-control" id="cvv">
                                         </div>
