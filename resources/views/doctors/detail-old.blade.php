@@ -1,0 +1,432 @@
+@extends ("layouts/app")
+@section ("title", $user->name)
+
+@section ("main")
+
+  <style>
+      .body {
+          background-color: #f8f9fa;
+
+      }
+  </style>
+
+  <div class="container my-3">
+
+      <!-- Header -->
+      <div class="schedules-header container d-flex justify-content-between align-items-center">
+          <div class="schedules-logo">
+              {{-- <img src="{{ asset('/img/sm-logo.png') }}" alt=""> --}}
+              {{-- <span class="fw-bold">MedBook</span> --}}
+          </div>
+          <button class="btn bg-primary-gradient no-border white bold">Back</button>
+      </div>
+
+      <!-- Doctor Profile Card -->
+      <div class="schedules-doctor-card border-primary-gradient shadow-sm">
+          <div class="schedules-doctor-info">
+              <div class="schedules-doctor-info-img-container">
+                  <img class="schedules-doctor-info-img"
+                    src="{{ $user->profile_image }}"
+                    onerror="this.src = baseUrl + '/img/doctors/2.png'"
+                    alt="" />
+                  <div class="bg-dark schedules-doctor-info-img" style="width: 100%; height: 100%;"></div>
+                  <div class="schedules-icons-container">
+
+                      @if ($user->ratings > 0)
+                        <div class="schedules-star-icon">
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M3.63057 1.28424C3.92993 0.362934 5.23333 0.362934 5.53269 1.28425L5.92871 2.50309C6.06259 2.91512 6.44654 3.19408 6.87977 3.19408H8.16134C9.13007 3.19408 9.53284 4.43369 8.74913 5.00309L7.71231 5.75638C7.36183 6.01103 7.21517 6.46239 7.34904 6.87442L7.74507 8.09327C8.04442 9.01458 6.98994 9.7807 6.20623 9.2113L5.16942 8.45801C4.81893 8.20336 4.34433 8.20336 3.99385 8.45801L2.95703 9.2113C2.17332 9.7807 1.11884 9.01458 1.41819 8.09326L1.81422 6.87442C1.94809 6.46239 1.80143 6.01103 1.45095 5.75638L0.414131 5.00309C-0.369582 4.43369 0.0331938 3.19408 1.00192 3.19408H2.28349C2.71672 3.19408 3.10067 2.91512 3.23455 2.50309L3.63057 1.28424Z"
+                                    fill="white" />
+                            </svg>
+                            {{ $user->ratings }}
+                        </div>
+                      @endif
+
+                      <div class="schedules-doctor-heart-icon">
+                          <svg width="20" height="20" viewBox="0 0 16 16" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                  d="M10.9602 2.06689C9.7535 2.06689 8.6735 2.65356 8.00016 3.55356C7.32683 2.65356 6.24683 2.06689 5.04016 2.06689C2.9935 2.06689 1.3335 3.73356 1.3335 5.79356C1.3335 6.58689 1.46016 7.32023 1.68016 8.00023C2.7335 11.3336 5.98016 13.3269 7.58683 13.8736C7.8135 13.9536 8.18683 13.9536 8.4135 13.8736C10.0202 13.3269 13.2668 11.3336 14.3202 8.00023C14.5402 7.32023 14.6668 6.58689 14.6668 5.79356C14.6668 3.73356 13.0068 2.06689 10.9602 2.06689Z"
+                                  fill="#CE93D8" />
+                          </svg>
+
+                      </div>
+                  </div>
+              </div>
+              <div class="schedules-doctor-details flex-grow-1">
+                  <h5>{{ $user->name ?? "" }}</h5>
+                  <div class="schedules-doctor-specialty">
+                    @foreach ($user->specialities as $speciality)
+                      {{ $speciality }} |
+                    @endforeach
+                  </div>
+                  <hr>
+                  <div style="display: flex; align-items: start; justify-content: space-between;gap:10px">
+
+                      <div class="schedules-status-badges">
+                          <span class="schedules-location-badge">
+                              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                      d="M7.99992 8.95346C9.14867 8.95346 10.0799 8.02221 10.0799 6.87346C10.0799 5.7247 9.14867 4.79346 7.99992 4.79346C6.85117 4.79346 5.91992 5.7247 5.91992 6.87346C5.91992 8.02221 6.85117 8.95346 7.99992 8.95346Z"
+                                      stroke="#012047" stroke-width="1.5" />
+                                  <path
+                                      d="M2.4133 5.66016C3.72664 -0.113169 12.28 -0.106502 13.5866 5.66683C14.3533 9.0535 12.2466 11.9202 10.4 13.6935C9.05997 14.9868 6.93997 14.9868 5.5933 13.6935C3.7533 11.9202 1.64664 9.04683 2.4133 5.66016Z"
+                                      stroke="#012047" stroke-width="1.5" />
+                              </svg>
+                              <span>{{ $user->location }}</span>
+                          </span>
+                          <span class="schedules-votes-badge">
+                              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                      d="M4.36328 10.7039L6.17161 12.1039C6.40495 12.3373 6.92995 12.4539 7.27995 12.4539H9.49662C10.1966 12.4539 10.9549 11.9289 11.1299 11.2289L12.5299 6.97061C12.8216 6.15394 12.2966 5.45394 11.4216 5.45394H9.08828C8.73828 5.45394 8.44661 5.16228 8.50495 4.75394L8.79661 2.88728C8.91328 2.36228 8.56328 1.77894 8.03828 1.60394C7.57161 1.42894 6.98828 1.66228 6.75495 2.01228L4.36328 5.57061"
+                                      stroke="#012047" stroke-width="1.5" stroke-miterlimit="10" />
+                                  <path
+                                      d="M1.38818 10.7044V4.98773C1.38818 4.17106 1.73818 3.87939 2.55485 3.87939H3.13818C3.95485 3.87939 4.30485 4.17106 4.30485 4.98773V10.7044C4.30485 11.5211 3.95485 11.8127 3.13818 11.8127H2.55485C1.73818 11.8127 1.38818 11.5211 1.38818 10.7044Z"
+                                      stroke="#012047" stroke-width="1.5" stroke-linecap="round"
+                                      stroke-linejoin="round" />
+                              </svg>
+
+                              <span>98% ({{ $user->reviews }} Votes)</span>
+                          </span>
+                          <span class="schedules-experience-badge">
+                              <svg width="15" height="14" viewBox="0 0 15 14" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M5.896 5.2793C6.93433 5.65846 8.066 5.65846 9.10433 5.2793" stroke="#012047"
+                                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                  <path
+                                      d="M10.3115 1.1665H4.68819C3.44569 1.1665 2.43652 2.1815 2.43652 3.41817V11.6373C2.43652 12.6873 3.18902 13.1307 4.11069 12.6232L6.95736 11.0423C7.26069 10.8732 7.75069 10.8732 8.04819 11.0423L10.8949 12.6232C11.8165 13.1365 12.569 12.6932 12.569 11.6373V3.41817C12.5632 2.1815 11.554 1.1665 10.3115 1.1665Z"
+                                      stroke="#012047" stroke-width="1.5" stroke-linecap="round"
+                                      stroke-linejoin="round" />
+                                  <path
+                                      d="M10.3115 1.1665H4.68819C3.44569 1.1665 2.43652 2.1815 2.43652 3.41817V11.6373C2.43652 12.6873 3.18902 13.1307 4.11069 12.6232L6.95736 11.0423C7.26069 10.8732 7.75069 10.8732 8.04819 11.0423L10.8949 12.6232C11.8165 13.1365 12.569 12.6932 12.569 11.6373V3.41817C12.5632 2.1815 11.554 1.1665 10.3115 1.1665Z"
+                                      stroke="#012047" stroke-width="1.5" stroke-linecap="round"
+                                      stroke-linejoin="round" />
+                              </svg>
+
+                              <span>20 Years of Experience</span>
+                          </span>
+                      </div>
+                      <div class="schedules-consultation-fee">Consultation Fee <div>{{ ($user->fee ?? 0) . "/" . strtoupper(config("config.currency")) }}</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="schedules-calendar-container mt-3 mb-5">
+          <div class="schedules-calendar-header">
+              <button class="schedules-nav-arrow" id="prevWeek">
+                  <i class="fas fa-chevron-left"></i>
+              </button>
+              <div class="schedules-calendar-days" id="calendarDays"></div>
+              <button class="schedules-nav-arrow" id="nextWeek">
+                  <i class="fas fa-chevron-right"></i>
+              </button>
+          </div>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="schedules-testimonials" style="margin-top: 5rem;">
+          <div class="schedules-testimonial-card">
+              <img src="{{ asset('/img/doctors/1.png') }}" alt="Patient" class="schedules-testimonial-avatar">
+              <div class="schedules-testimonial-text">
+                  "The clinic has been amazing, the appointment online consultation made my recovery journey much more
+                  manageable."
+                  <span>
+                      - Author.
+                  </span>
+              </div>
+          </div>
+          <div class="schedules-testimonial-card">
+              <img src="{{ asset('/img/doctors/2.png') }}" alt="Patient" class="schedules-testimonial-avatar">
+              <div class="schedules-testimonial-text">
+                  "Amazing service, everything was the platform is so easy to use and the medicine delivery was so smooth
+                  and fast."
+                  <span>
+                      - Author.
+                  </span>
+              </div>
+          </div>
+      </div>
+
+      <!-- Statistics -->
+      <div class="schedules-stats-container">
+          <div class="schedules-stat-item">
+              <div class="schedules-stat-number">10,000+</div>
+              <div class="schedules-stat-label">Successful Consultations</div>
+          </div>
+          <div class="schedules-stat-item">
+              <div class="schedules-stat-number">2,500+</div>
+              <div class="schedules-stat-label">Healthcare Professionals</div>
+          </div>
+          <div class="schedules-stat-item">
+              <div class="schedules-stat-number">98%</div>
+              <div class="schedules-stat-label">Patient Satisfaction Rate</div>
+          </div>
+          <div class="schedules-stat-item">
+              <div class="schedules-stat-number">200+</div>
+              <div class="schedules-stat-label">Top Specialists</div>
+          </div>
+      </div>
+
+      <!-- Additional Testimonials -->
+      <div class="schedules-testimonials">
+          <div class="schedules-testimonial-card">
+              <img src="{{ asset('/img/doctors/3.png') }}" alt="Patient" class="schedules-testimonial-avatar">
+              <div class="schedules-testimonial-text">
+                  "The patient-oriented system is so great, everything is so easy to use and the online consultation and
+                  comfortable session that has changed my life."
+                  <span>
+                      - Author.
+                  </span>
+              </div>
+          </div>
+          <div class="schedules-testimonial-card">
+              <img src="{{ asset('/img/doctors/4.png') }}" alt="Patient" class="schedules-testimonial-avatar">
+              <div class="schedules-testimonial-text">
+                  "Finding a doctor who really understands all of my health concerns was so easy with this platform and
+                  has changed my life dramatically."
+                  <span>
+                      - Author.
+                  </span>
+              </div>
+          </div>
+      </div>
+
+      <input type="hidden" id="doctor-availability" value="{{ json_encode($user->availability) }}" />
+      <input type="hidden" id="doctor-user-id" value="{{ $user->id }}" />
+
+      <script>
+          // Example data
+          /*const slotsData = {
+              "2025-09-08": ["10:45", "11:00"], // Mon
+              "2025-09-09": ["10:45", "11:00", "12:00"], // Tue
+              "2025-09-10": ["10:45"], // Wed
+              "2025-09-11": ["10:45", "11:00"], // Thu
+              "2025-09-12": ["10:45"] // Fri
+          };*/
+
+          const doctorUserId = document.getElementById("doctor-user-id").value;
+
+          const onTimeslotSelected = function (event) {
+            const node = event.currentTarget;
+            const slot = node.getAttribute("data-slot");
+            const day = node.getAttribute("data-slot-day");
+
+            localStorage.setItem("selected_slot", JSON.stringify({
+              day: day,
+              slot: slot
+            }));
+
+            window.location.href = baseUrl + "/doctors/" + doctorUserId + "/appointment";
+          };
+
+          const slotsData = JSON.parse(document.getElementById("doctor-availability").value || "{}") || {};
+
+          const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+          const MAX_ROWS = 1; // fix rows count per day (like in your screenshot)
+          let currentDate = new Date();
+
+          function getMonday(d) {
+              d = new Date(d);
+              let day = d.getDay(),
+                  diff = d.getDate() - day + (day === 0 ? -6 : 1);
+              return new Date(d.setDate(diff));
+          }
+
+          function renderCalendar(date) {
+              const calendarDays = document.getElementById("calendarDays");
+              calendarDays.innerHTML = "";
+              let monday = getMonday(date);
+
+              const slotKeys = Object.keys(slotsData);
+              for (let a = 0; a < slotKeys.length; a++) {
+                // console.log(slotKeys[a], slotsData[slotKeys[a]]);
+
+                let column = document.createElement("div");
+                column.className = "schedules-day-column";
+
+                let html = "";
+
+                html += `<div class="schedules-day-header">${slotKeys[a]}</div>`;
+
+                // html += `<div class="schedules-day-date">${dayDate.toDateString().slice(4, 10)}</div>`;
+
+                column.innerHTML = html;
+
+                for (let r = 0; r < MAX_ROWS; r++) {
+                    if (slotsData[slotKeys[a]] != "") {
+                        let btn = document.createElement("button");
+                        btn.className = "schedules-time-slot";
+                        btn.textContent = slotsData[slotKeys[a]];
+                        btn.setAttribute("data-slot-day", slotKeys[a]);
+                        btn.setAttribute("data-slot", slotsData[slotKeys[a]]);
+                        btn.onclick = onTimeslotSelected;
+                        column.appendChild(btn);
+                    } else {
+                        let empty = document.createElement("div");
+                        empty.className = "schedules-time-slot-empty";
+                        empty.textContent = "-";
+                        column.appendChild(empty);
+                    }
+                }
+
+                calendarDays.appendChild(column);
+              }
+
+              /*for (let i = 0; i < 7; i++) {
+                  let dayDate = new Date(monday);
+                  dayDate.setDate(monday.getDate() + i);
+
+                  let yyyy = dayDate.getFullYear();
+                  let mm = String(dayDate.getMonth() + 1).padStart(2, "0");
+                  let dd = String(dayDate.getDate()).padStart(2, "0");
+                  let key = `${yyyy}-${mm}-${dd}`;
+
+                  let column = document.createElement("div");
+                  column.className = "schedules-day-column";
+
+                  let html = "";
+
+                  html += `<div class="schedules-day-header">${days[i]}</div>`;
+
+                  // html += `<div class="schedules-day-date">${dayDate.toDateString().slice(4, 10)}</div>`;
+
+                  column.innerHTML = html;
+
+                  let slots = slotsData[key] || [];
+                  for (let r = 0; r < MAX_ROWS; r++) {
+                      if (slots[r]) {
+                          let btn = document.createElement("button");
+                          btn.className = "schedules-time-slot";
+                          btn.textContent = slots[r];
+                          column.appendChild(btn);
+                      } else {
+                          let empty = document.createElement("div");
+                          empty.className = "schedules-time-slot-empty";
+                          empty.textContent = "-";
+                          column.appendChild(empty);
+                      }
+                  }
+
+                  calendarDays.appendChild(column);
+              }*/
+          }
+
+          document.getElementById("prevWeek").addEventListener("click", () => {
+              currentDate.setDate(currentDate.getDate() - 7);
+              renderCalendar(currentDate);
+          });
+
+          document.getElementById("nextWeek").addEventListener("click", () => {
+              currentDate.setDate(currentDate.getDate() + 7);
+              renderCalendar(currentDate);
+          });
+
+          renderCalendar(currentDate);
+      </script>
+  </div>
+
+  @if (false)
+    <section class="bg-white py-10">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Doctor Profile Header -->
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+          
+          <!-- Profile Image -->
+          <img src="{{ $user->profile_image }}"
+               alt="{{ $user->name ?? '' }}"
+               class="w-36 h-36 rounded-full object-cover shadow-md"
+               onerror="this.src = baseUrl + '/img/user-placeholder.png'"
+               style="width: 100%;" />
+
+          <!-- Doctor Info -->
+          <div>
+            <h1 class="text-2xl font-bold text-gray-800">{{ $user->name ?? "" }}</h1>
+
+            <!-- Tags / Services -->
+            <div class="mt-4 flex flex-wrap gap-2 text-sm">
+              @foreach ($user->specialities as $speciality)
+                <span class="px-3 py-1 rounded-full"
+                  style="background-color: {{ random_color() }};
+                    color: white;">{{ $speciality }}</span>
+              @endforeach
+            </div>
+
+            <div class="mt-8 grid md:grid-cols-1 gap-4">
+              <p>Fee {{ strtoupper(config("config.currency")) . " " . ($user->fee ?? 0) }}</p>
+
+              <p>
+                <a href="javascript:void(0);" onclick="doVideoCall(event);">
+                  <i class="fa-solid fa-video text-green-600 text-3xl"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Optional: Contact / Appointment Section -->
+        {{--<div class="mt-10 border-t pt-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-4">Book an Appointment</h2>
+
+          <form class="space-y-4 max-w-md">
+            <input type="text" placeholder="Your Name" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <input type="email" placeholder="Your Email" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <input type="date" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Submit</button>
+          </form>
+        </div>--}}
+      </div>
+    </section>
+
+    <input type="hidden" id="user-id" value="{{ $user->id }}" />
+
+    <script>
+
+      const userId = document.getElementById("user-id").value || "";
+
+      async function doVideoCall(event) {
+        const node = event.currentTarget;
+        node.querySelector(".fa-video").remove();
+
+        let i = document.createElement("i");
+        i.setAttribute("class", "fa-solid fa-spinner text-gray-600 text-3xl");
+        node.appendChild(i);
+
+        try {
+            const formData = new FormData()
+            formData.append("id", userId);
+            formData.append("type", "video");
+
+            const response = await axios.post(
+                baseUrl + "/calls/start",
+                formData
+            )
+
+            if (response.data.status == "success") {
+                const callId = response.data.call_id;
+
+                ref = db.ref("calls/" + userId);
+                await ref.set({ callId: callId });
+
+                window.location.href = baseUrl + "/calls/" + callId + "/detail";
+            } else {
+                swal.fire("Error", response.data.message, "error")
+            }
+        } catch (exp) {
+            if (exp?.response?.status == 401) {
+              swal.fire("Un-authenticated", "Please login first.", "error")
+            } else {
+              swal.fire("Error", exp.message, "error")
+            }
+        }
+      }
+    </script>
+  @endif
+
+  @endsection
