@@ -376,16 +376,15 @@
         </p>
     </div>
     <div class="container mt-5 mb-4 mw-md-40" style="">
-
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form action="#">
             @csrf <!-- Add CSRF token -->
             <div class="form-group mb-3">
                 <label class="form-label" for="salutation">Salutation</label>
-                <select class="form-control" id="salutation">
-                    <option>Mr</option>
-                    <option>Mrs</option>
-                    <option>Ms</option>
-                    <option>Dr</option>
+                <select class="form-control" name="salutation" id="salutation">
+                    <option value="mr">Mr</option>
+                    <option value="mrs">Mrs</option>
+                    <option value="ms">Ms</option>
+                    <option value="dr">Dr</option>
                 </select>
             </div>
 
@@ -393,10 +392,12 @@
                 <label class="form-label" for="first-name">Name</label>
                 <div class="form-row mb-3" style="display: flex; gap: 10px;">
                     <div class="col">
-                        <input type="text" id="first-name" class="form-control" placeholder="First name">
+                        <input type="text" id="first-name" name="first-name" class="form-control"
+                            placeholder="First name">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Last name">
+                        <input type="text" class="form-control" name="last-name" id="last-name"
+                            placeholder="Last name">
                     </div>
                 </div>
             </div>
@@ -419,9 +420,9 @@
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gender" id="prefer-not-to-say"
-                                value="prefer-not-to-say">
-                            <label class="form-check-label" for="prefer-not-to-say">
+                            <input class="form-check-input" type="radio" name="gender" id="gender-not-preferred"
+                                value="gender-not-preferred">
+                            <label class="form-check-label" for="gender-not-preferred">
                                 Prefer not to say
                             </label>
                         </div>
@@ -455,9 +456,31 @@
                 <label class="form-label" for="phone">Phone</label>
                 <div class="custom-input-group">
                     <input type="phone" class="form-control" name="phone" id="phone"
-                        placeholder="Enter email">
+                        placeholder="Enter phone number">
                     <span class="input-group-text">
                         <i class="bi text-light bi-telephone-fill"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" for="password">Password</label>
+                <div class="custom-input-group">
+                    <input type="password" class="form-control" name="password" id="password"
+                        placeholder="Enter password">
+                    <span class="input-group-text">
+                        <i class="bi text-light bi-lock-fill"></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" for="confirm-password">Confirm Password</label>
+                <div class="custom-input-group">
+                    <input type="password" class="form-control" name="confirm-password" id="confirm-password"
+                        placeholder="Enter confirm password">
+                    <span class="input-group-text">
+                        <i class="bi text-light bi-lock-fill"></i>
                     </span>
                 </div>
             </div>
@@ -466,7 +489,7 @@
 
             <div class="form-group mb-3">
                 <label class="form-label" for="address">Street Address</label>
-                <input type="text" name="address" class="form-control" id="address"
+                <input type="text" name="street-address" class="form-control" id="address"
                     placeholder="Street #, House no 5">
             </div>
 
@@ -494,8 +517,8 @@
                             placeholder="Postal Code">
                     </div>
                     <div class="col">
-                        <select class="form-control" id="medical-lisence-issuing-country"
-                            name="medical-lisence-issuing-country">
+                        <select class="form-control" id="medical-licence-issuing-country"
+                            name="medical-licence-issuing-country">
                             <option value="" class="text-light">-- Select Country --</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country }}">{{ $country }}</option>
@@ -508,10 +531,10 @@
             <h4 style="border-bottom: 1px solid lightgray;" class="mt-5 mb-4 text-light">Professional Information</h4>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="medical-lisence-number">Medical License Number</label>
+                <label class="form-label" for="medical-licence-number">Medical License Number</label>
                 <div class="custom-input-group">
-                    <input type="text" class="form-control" name="medical-lisence-number"
-                        id="medical-lisence-number">
+                    <input type="text" class="form-control" name="medical-licence-number"
+                        id="medical-licence-number">
                     <span class="input-group-text">
                         <i class="bi text-light bi-paperclip"></i>
                     </span>
@@ -519,10 +542,11 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="medical-lisence-number">Medical License Issuing Authority</label>
+                <label class="form-label" for="medical-licence-issuing-authority">Medical License Issuing
+                    Authority</label>
                 <div class="custom-input-group">
-                    <input type="text" class="form-control" name="medical-lisence-issuing-authority"
-                        id="medical-lisence-issuing-authority">
+                    <input type="text" class="form-control" name="medical-licence-issuing-authority"
+                        id="medical-licence-issuing-authority">
                     <span class="input-group-text">
                         <i class="bi text-light bi-paperclip"></i>
                     </span>
@@ -530,10 +554,10 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="medical-lisence-issuing-country">Medical License Issuing
+                <label class="form-label" for="medical-licence-issuing-country">Medical License Issuing
                     Country</label>
-                <select class="form-control" id="medical-lisence-issuing-country"
-                    name="medical-lisence-issuing-country">
+                <select class="form-control" id="medical-licence-issuing-country"
+                    name="medical-licence-issuing-country">
                     <option value="">-- Select Country --</option>
                     @foreach ($countries as $country)
                         <option value="{{ $country }}">{{ $country }}</option>
@@ -552,7 +576,7 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="specialization">Sub specialization</label>
+                <label class="form-label" for="sub-specialization">Sub specialization</label>
                 <select class="form-control" id="sub-specialization" name="sub-specialization">
                     <option value="">-- Select Sub specialization --</option>
                     @foreach ($subSpecializations as $specialization)
@@ -597,25 +621,24 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="city" class="text-light">City</label>
+                <label class="form-label" for="clinic-city" class="text-light">City</label>
                 <div class="form-row mb-3" style="display: flex; gap: 10px;">
                     <div class="col">
-                        <input name="city" type="text" id="city" class="form-control"
-                            placeholder="City">
+                        <input name="clinic-city" type="text" id="clinic-city" class="form-control"
+                            placeholder="Clinic City">
                     </div>
                     <div class="col">
-                        <input type="text" name="state" class="form-control"
+                        <input type="text" name="clinic-state" class="form-control"
                             placeholder="State/Reigon/Province">
                     </div>
                 </div>
                 <div class="form-row mb-3" style="display: flex; gap: 10px;">
                     <div class="col">
-                        <input name="postal" type="text" id="postal" class="form-control"
+                        <input name="clinic-postal" type="text" id="clinic-postal" class="form-control"
                             placeholder="Postal Code">
                     </div>
                     <div class="col">
-                        <select class="form-control" id="medical-lisence-issuing-country"
-                            name="medical-lisence-issuing-country">
+                        <select class="form-control" id="clinic-country" name="clinic-country">
                             <option value="" class="text-light">-- Select Country --</option>
                             @foreach ($countries as $country)
                                 <option value="{{ $country }}">{{ $country }}</option>
@@ -638,10 +661,10 @@
             <h4 style="border-bottom: 1px solid lightgray;" class="mt-5 mb-4 text-light">Educational Details</h4>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="degree" class="text-light">Medical Degree (e.g. MD, MBBS, BDS
+                <label class="form-label" for="medical-degree" class="text-light">Medical Degree (e.g. MD, MBBS, BDS
                     etc)</label>
                 <div class="custom-input-group">
-                    <input type="text" class="form-control" name="degree" id="degree">
+                    <input type="text" class="form-control" name="medical-degree" id="medical-degree">
                     <span class="input-group-text">
                         <i class="bi text-light bi-paperclip"></i>
                     </span>
@@ -649,10 +672,11 @@
             </div>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="school-or-college" class="text-light">Medical
+                <label class="form-label" for="medical-institute-name" class="text-light">Medical
                     School/College/University Name</label>
                 <div class="custom-input-group">
-                    <input type="text" class="form-control" name="school-or-college" id="school-or-college">
+                    <input type="text" class="form-control" name="medical-institute-name"
+                        id="medical-institute-name">
                     <span class="input-group-text">
                         <i class="bi text-light bi-paperclip"></i>
                     </span>
@@ -706,22 +730,24 @@
                     </legend>
                     <div class="d-flex gap-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="willing-to-international-patients"
-                                id="yes" value="yes" checked>
+                            <input class="form-check-input" type="radio"
+                                name="support-international-patients-treatment" id="yes" value="yes"
+                                checked>
                             <label class="form-check-label" for="yes">
                                 Yes
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="willing-to-international-patients"
-                                id="no" value="no">
+                            <input class="form-check-input" type="radio"
+                                name="support-international-patients-treatment" id="no" value="no">
                             <label class="form-check-label" for="no">
                                 No
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="willing-to-international-patients"
-                                id="prefer-not-to-say" value="prefer-not-to-say">
+                            <input class="form-check-input" type="radio"
+                                name="support-international-patients-treatment" id="prefer-not-to-say"
+                                value="prefer-not-to-say">
                             <label class="form-check-label" for="prefer-not-to-say">
                                 Prefer not to say
                             </label>
@@ -732,11 +758,11 @@
             </fieldset>
 
             <div class="form-group mb-3">
-                <label class="form-label" for="preffered-patient-countries" class="text-light">Countries You Are
+                <label class="form-label" for="preferred-patient-countries" class="text-light">Countries You Are
                     Willing to Treat
                     Patients From (Any Preferences Or Exclusions)
                 </label>
-                <textarea class="form-control" name="preffered-patient-countries" id="preffered-patient-countries"></textarea>
+                <textarea class="form-control" name="preferred-patient-countries" id="preferred-patient-countries"></textarea>
             </div>
 
             <fieldset class="form-group mb-3">
@@ -746,28 +772,28 @@
                     </legend>
                     <div class="d-flex flex-column gap-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="preferred_communication[]"
+                            <input class="form-check-input" type="checkbox" name="preferred_communication_methods[]"
                                 id="email" value="email">
                             <label class="form-check-label" for="email">Email</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="preferred_communication[]"
+                            <input class="form-check-input" type="checkbox" name="preferred_communication_methods[]"
                                 id="phone" value="phone">
                             <label class="form-check-label" for="phone">Phone Call</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="preferred_communication[]"
+                            <input class="form-check-input" type="checkbox" name="preferred_communication_methods[]"
                                 id="video" value="video">
                             <label class="form-check-label" for="video">Video Call</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="preferred_communication[]"
+                            <input class="form-check-input" type="checkbox" name="preferred_communication_methods[]"
                                 id="whatsapp" value="whatsapp">
                             <label class="form-check-label" for="whatsapp">WhatsApp</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="preferred_communication[]"
-                                id="all" value="all">
+                            <input class="form-check-input all-check" type="checkbox"
+                                name="preferred_communication_methods[]" id="all" value="">
                             <label class="form-check-label" for="all">All Of Above</label>
                         </div>
                     </div>
@@ -884,8 +910,8 @@
                             <label class="form-check-label" for="cash">Cash</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="payment_methods[]"
-                                id="all_payments" value="all">
+                            <input class="form-check-input all-check" type="checkbox" name="payment_methods[]"
+                                id="all_payments" value="">
                             <label class="form-check-label" for="all_payments">All Of Above</label>
                         </div>
                     </div>
@@ -912,7 +938,7 @@
                     <i class="bi bi-upload ms-2"></i>
                 </label>
                 <input class="form-control custom-file-input" type="file" id="degree_certificates"
-                    name="degree_certificates[]" multiple accept=".pdf,.docx,.txt">
+                    name="degree_certificates" multiple accept=".pdf,.docx,.txt">
                 <small class="form-text">
                     Please add all degree certificates and upload.
                 </small>
@@ -1004,7 +1030,8 @@
                 <div class="form-check mx-2 mt-2">
                     <input class="form-check-input" type="checkbox" name="terms-and-conditions"
                         id="terms-and-conditions" value="all">
-                    <label class="form-check-label" for="all">I accept the Terms and Conditions.</label>
+                    <label class="form-check-label" for="terms-and-conditions">I accept the Terms and
+                        Conditions.</label>
                 </div>
             </div>
 
@@ -1143,22 +1170,709 @@
             <button class="btn mt-3" style="width: 100%; border: 1px solid white; color:white;">
                 Submit
             </button>
+        </form>
     </div>
-    </form>
 
     </div>
     <script>
+        (function() {
+            // Utility helpers
+            const $ = (sel, ctx = document) => ctx.querySelector(sel);
+            const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+            const byName = (name, ctx = document) => Array.from((ctx || document).querySelectorAll('[name="' + name +
+                '"]'));
+            const showError = (el, msg) => {
+                if (!el) return;
+                // find or create a .field-error next to the field
+                let wrapper = el.closest('.form-group') || el.parentElement;
+                if (!wrapper) wrapper = document.body;
+                let err = wrapper.querySelector('.field-error');
+                if (!err) {
+                    err = document.createElement('div');
+                    err.className = 'field-error text-danger small mt-1';
+                    wrapper.appendChild(err);
+                }
+                err.textContent = msg;
+            };
+            const clearErrors = (form) => {
+                $$('.field-error', form).forEach(n => n.remove());
+            };
+
+            // Basic validators (expand if you need)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9+\-\s()]{6,20}$/; // permissive; change to your local format
+
+            // Configure what to validate and rules
+            const rules = {
+                // Authentication
+                'password': {
+                    required: true,
+                    type: 'text',
+                    min: 8
+                },
+
+                'confirm-password': {
+                    required: true,
+                    type: 'text',
+                    min: 8
+                },
+
+                // Basic Details
+                'salutation': {
+                    required: false
+                },
+                'first-name': {
+                    required: true
+                },
+                'last-name': {
+                    required: true
+                },
+                'gender': {
+                    required: true
+                },
+                'nationality': {
+                    required: true
+                },
+
+                // Contact Info
+                'email': {
+                    required: true,
+                    type: 'email'
+                },
+                'phone': {
+                    required: true,
+                    type: 'phone'
+                },
+
+                // Address
+                'street-address': {
+                    required: true
+                },
+                'address-line-2': {
+                    required: false
+                },
+                'city': {
+                    required: true
+                },
+                'state': {
+                    required: true
+                },
+                'postal': {
+                    required: true
+                },
+                'country': {
+                    required: true
+                },
+
+                // Professional Information
+                'medical-licence-number': {
+                    required: true
+                },
+                'medical-licence-issuing-authority': {
+                    required: true
+                },
+                'medical-licence-issuing-country': {
+                    required: true
+                },
+                'specialization': {
+                    required: true
+                },
+                'sub-specialization': {
+                    required: false
+                },
+                'experience': {
+                    required: true,
+                    type: 'number'
+                },
+                'clinic-name': {
+                    required: true
+                },
+                'clinic-street-address': {
+                    required: true
+                },
+                'clinic-address-line-2': {
+                    required: false
+                },
+                'clinic-city': {
+                    required: true
+                },
+                'clinic-state': {
+                    required: true
+                },
+                'clinic-postal-code': {
+                    required: true
+                },
+                'clinic-country': {
+                    required: true
+                },
+                'position': {
+                    required: true
+                },
+
+                // Educational Details
+                'medical-degree': {
+                    required: true
+                },
+                'institution-name': {
+                    required: true
+                },
+                'graduation-date': {
+                    required: true,
+                    type: 'date'
+                },
+                'additional-certifications': {
+                    required: false
+                },
+                'continuing-medical-education': {
+                    required: false
+                },
+
+                // Professional Affiliations
+                'memberships': {
+                    required: false
+                },
+                'licensing-bodies': {
+                    required: false
+                },
+                'other-affiliations': {
+                    required: false
+                },
+
+                // Preferences
+                'international-patients': {
+                    required: true
+                },
+                'countries-preferred': {
+                    required: false
+                },
+                'preferred_communication_methods': {
+                    required: true
+                },
+                'virtual-consultations': {
+                    required: true
+                },
+                'second-opinions': {
+                    required: true
+                },
+                'treatments-offered': {
+                    required: false
+                },
+                'estimated-costs': {
+                    required: false
+                },
+                'insurance-accepted': {
+                    required: true
+                },
+                'payment-methods[]': {
+                    required: true
+                },
+
+                // Document Uploads
+                'medical_license': {
+                    required: false,
+                    type: 'file'
+                },
+                'degree_certificates[]': {
+                    required: false,
+                    type: 'file'
+                },
+                'certifications': {
+                    required: false,
+                    type: 'file'
+                },
+                'resume': {
+                    required: false,
+                    type: 'file'
+                },
+                'profile_picture': {
+                    required: false,
+                    type: 'file'
+                },
+
+                // Legal
+                'terms-and-conditions': {
+                    required: true
+                },
+                'signature': {
+                    required: true,
+                    type: 'file'
+                },
+
+                // Misc
+                '_token': {
+                    required: false
+                }
+            };
+
+            // Inputs that are file inputs to append as files
+            const fileInputs = [
+                'medical_license',
+                'degree_certificates',
+                'certifications',
+                'resume',
+                'profile_picture'
+            ];
+
+            // main
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('input[type="checkbox"].all-check').forEach(allCheck => {
+                    allCheck.addEventListener('change', e => {
+                        const groupName = e.target.name;
+                        const checkboxes = document.querySelectorAll(
+                            `input[name="${groupName}"]`);
+
+                        checkboxes.forEach(cb => {
+                            // Set all others to match the "all-check" state
+                            cb.checked = e.target.checked;
+                        });
+                    });
+                });
+
+                const form = document.querySelector('form[action="#"]') || document.querySelector('form');
+                if (!form) {
+                    console.warn('Registration form not found.');
+                    return;
+                }
+
+                // create status area
+                let statusArea = document.createElement('div');
+                statusArea.id = 'register-status';
+                statusArea.style.marginTop = '12px';
+                form.appendChild(statusArea);
+
+                // hook submit
+                form.addEventListener('submit', async (ev) => {
+                    ev.preventDefault();
+                    clearErrors(form);
+                    statusArea.textContent = '';
+                    statusArea.className = '';
+
+                    // run validation
+                    const validationErrors = [];
+
+                    // validate defined rules
+                    for (const [name, rule] of Object.entries(rules)) {
+                        // handle inputs which might be selects or checkboxes or text inputs
+                        const inputs = byName(name, form);
+                        if (rule.required) {
+                            if (!inputs || inputs.length === 0) {
+                                // if not found, skip (maybe it's missing in markup)
+                                continue;
+                            }
+
+                            // For checkboxes/radios we check checked
+                            const first = inputs[0];
+                            if (first.type === 'checkbox') {
+                                const anyChecked = inputs.some(i => i.checked);
+                                if (!anyChecked) validationErrors.push({
+                                    el: first,
+                                    msg: 'This field is required.'
+                                });
+                                continue;
+                            }
+
+                            if (first.type === 'radio') {
+                                const anyChecked = inputs.some(i => i.checked);
+                                if (!anyChecked) validationErrors.push({
+                                    el: first,
+                                    msg: 'Please select an option.'
+                                });
+                                continue;
+                            }
+
+                            // fallback: value presence
+                            const val = first.value && first.value.trim();
+                            if (!val) validationErrors.push({
+                                el: first,
+                                msg: 'This field is required.'
+                            });
+                            if (val && rule.type === 'email' && !emailRegex.test(val))
+                                validationErrors.push({
+                                    el: first,
+                                    msg: 'Enter a valid email.'
+                                });
+                            if (val && rule.type === 'phone' && !phoneRegex.test(val))
+                                validationErrors.push({
+                                    el: first,
+                                    msg: 'Enter a valid phone number.'
+                                });
+                            if (val && rule.type === 'number' && isNaN(Number(val)))
+                                validationErrors.push({
+                                    el: first,
+                                    msg: 'Enter a valid number.'
+                                });
+                        } else {
+                            // not required but format validations if present and value exists
+                            const inputs = byName(name, form);
+                            if (inputs && inputs[0]) {
+                                const val = inputs[0].value && inputs[0].value.trim();
+                                if (val) {
+                                    if (rule.type === 'email' && !emailRegex.test(val))
+                                        validationErrors.push({
+                                            el: inputs[0],
+                                            msg: 'Enter a valid email.'
+                                        });
+                                    if (rule.type === 'phone' && !phoneRegex.test(val))
+                                        validationErrors.push({
+                                            el: inputs[0],
+                                            msg: 'Enter a valid phone number.'
+                                        });
+                                    if (rule.type === 'number' && isNaN(Number(val)))
+                                        validationErrors.push({
+                                            el: inputs[0],
+                                            msg: 'Enter a valid number.'
+                                        });
+                                }
+                            }
+                        }
+                    }
+
+                    // Additional validations for specific fields:
+                    const fname = form.querySelector('[name="first-name"]');
+                    const lname = form.querySelector('[name="last-name"]');
+                    if (fname && fname.value.trim().length < 2) validationErrors.push({
+                        el: fname,
+                        msg: 'First name must be at least 2 characters.'
+                    });
+                    if (lname && lname.value.trim().length < 1) validationErrors.push({
+                        el: lname,
+                        msg: 'Last name is required.'
+                    });
+
+                    const emailInput = form.querySelector('[name="email"]');
+                    if (emailInput && emailInput.value && !emailRegex.test(emailInput.value.trim()))
+                        validationErrors.push({
+                            el: emailInput,
+                            msg: 'Enter a valid email.'
+                        });
+
+                    const phoneInput = form.querySelector('[name="phone"]');
+                    if (phoneInput && phoneInput.value && !phoneRegex.test(phoneInput.value.trim()))
+                        validationErrors.push({
+                            el: phoneInput,
+                            msg: 'Enter a valid phone number.'
+                        });
+
+                    // Files: optional checks (example max 5MB)
+                    for (const fileName of fileInputs) {
+                        const fi = form.querySelector('[name="' + fileName + '"]');
+                        if (!fi) continue;
+                        if (fi.files && fi.files.length > 0) {
+                            for (const f of fi.files) {
+                                if (f.size > 5 * 1024 * 1024) {
+                                    validationErrors.push({
+                                        el: fi,
+                                        msg: `File "${f.name}" is larger than 5MB.`
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    // signature basic check: ensure some drawing exists (simple pixel check)
+                    const sigCanvas = form.querySelector('#sigCanvas');
+                    if (sigCanvas) {
+                        // check if canvas is blank by comparing pixel data
+                        const ctx = sigCanvas.getContext('2d');
+                        try {
+                            const px = ctx.getImageData(0, 0, sigCanvas.width, sigCanvas.height)
+                                .data;
+                            let allEmpty = true;
+                            for (let i = 0; i < px.length; i += 4) {
+                                if (px[i + 3] !== 0) { // non-transparent pixel
+                                    allEmpty = false;
+                                    break;
+                                }
+                            }
+                            // only warn, not fail; comment out next line if signature should be optional
+                            if (allEmpty) {
+                                // optional: require signature by uncommenting next line
+                                // validationErrors.push({ el: sigCanvas, msg: 'Please provide a signature.' });
+                            }
+                        } catch (err) {
+                            // ignore cross-origin or other issues
+                        }
+                    }
+
+                    // display validation errors
+                    if (validationErrors.length > 0) {
+                        validationErrors.forEach(e => showError(e.el, e.msg));
+                        statusArea.className = 'text-danger small';
+                        statusArea.textContent =
+                            `There are ${validationErrors.length} validation error(s). Please fix and try again.`;
+                        statusArea.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        return;
+                    }
+
+                    // build FormData
+                    const fd = new FormData();
+
+                    // helper to append input(s) by name
+                    const appendField = (name) => {
+                        // handle checkboxes arrays (name with [] or with given name)
+                        const els = byName(name, form);
+                        if (!els || els.length === 0) return;
+                        const first = els[0];
+                        if (first.type === 'checkbox') {
+                            // if there are multiple checkboxes with same name, append all checked values
+                            const checked = els.filter(i => i.checked).map(i => i.value);
+                            // append as JSON array string OR multiple keys — backend must support
+                            // Append as multiple entries: e.g., preferred_communication_methods[] -> multiple values
+                            if (name.endsWith('[]')) {
+                                checked.forEach(v => fd.append(name, v));
+                            } else {
+                                // safe option: append JSON
+                                if (name === 'terms-and-conditions')
+                                    fd.append(name, checked[0] ? true : false)
+                                else
+                                    fd.append(name, JSON.stringify(checked));
+                            }
+                            return;
+                        }
+
+                        if (first.type === 'radio') {
+                            const checked = els.find(i => i.checked);
+                            if (checked) fd.append(name, checked.value);
+                            return;
+                        }
+
+                        // file inputs
+                        if (first.type === 'file') {
+                            const files = first.files;
+                            if (!files || files.length === 0) return;
+                            // Always append with the same name — Multer groups them automatically
+                            for (const f of files) fd.append(name, f);
+                            return;
+                        }
+
+
+                        // simple text/select/number etc.
+                        if (name === 'salutation') {
+                            fd.append(name, first.value.toLowerCase());
+                        } else {
+                            fd.append(name, first.value);
+                        }
+
+                    };
+                    // Append most common fields by iterating inputs in the form (robust)
+                    const allInputs = $$('input, select, textarea', form);
+                    const appended = new Set();
+                    allInputs.forEach(inp => {
+                        const name = inp.name;
+                        if (!name) return;
+                        if (appended.has(name) && !name.endsWith('[]'))
+                            return; // already appended non-array
+                        // Skip the built-in submit buttons
+                        if (inp.type === 'submit' || inp.type === 'button') return;
+                        // For multiple checkbox with [] naming, we want to append each
+                        if (inp.type === 'checkbox' && name.endsWith('[]')) {
+                            // will be handled below via appendField
+                            return;
+                        }
+                        appendField(name);
+                        appended.add(name);
+                    });
+
+                    // For checkboxes with array style name 'preferred_communication_methods[]' ensure appended
+                    const checkArrayNames = [
+                        'preferred_communication_methods[]',
+                        'payment_methods[]',
+                        'degree_certificates[]'
+                    ];
+
+                    checkArrayNames.forEach(name => {
+                        const els = byName(name, form);
+                        if (!els || els.length === 0) return;
+
+                        // filter out "all" or empty checkboxes
+                        const checked = els
+                            .filter(i => i.checked && i.value.trim() !== '' && i.value
+                                .toLowerCase() !== 'all')
+                            .map(i => i.value);
+
+                        if (checked.length === 0) return; // nothing meaningful selected
+
+                        // append them one by one like before
+                        checked.forEach(v => fd.append(name, v));
+
+                        appended.add(name);
+                    });
+
+                    // signature: convert canvas to blob and append as signature.png
+                    const canvas = form.querySelector('#sigCanvas');
+                    if (canvas) {
+                        // Use toBlob (async) and only send after blob ready
+                        try {
+                            statusArea.className = 'text-muted small';
+                            statusArea.textContent = 'Preparing signature and uploading...';
+                            await new Promise((resolve, reject) => {
+                                canvas.toBlob((blob) => {
+                                    if (blob && blob.size > 0) {
+                                        fd.append('signature', blob,
+                                            'signature.png');
+                                    }
+                                    resolve();
+                                }, 'image/png');
+                            });
+                        } catch (err) {
+                            // ignore, continue without signature
+                        }
+                    }
+
+                    // CSRF token (common Laravel name: _token)
+                    const tokenInput = form.querySelector('input[name="_token"]');
+                    if (tokenInput && tokenInput.value) {
+                        // Add to headers later; also append to FormData so backend receives it in case of file upload
+                        fd.append('_token', tokenInput.value);
+                    } else {
+                        // try meta
+                        const meta = document.querySelector('meta[name="csrf-token"]');
+                        if (meta && meta.content) {
+                            fd.append('_token', meta.content);
+                        }
+                    }
+
+                    // You might want to show a loading state
+                    statusArea.className = 'text-info small';
+                    statusArea.textContent = 'Submitting...';
+
+                    // prepare axios headers
+                    const headers = {
+                        'X-Requested-With': 'XMLHttpRequest'
+                        // axios will set Content-Type to multipart/form-data with boundary automatically when you pass FormData
+                    };
+
+                    // if token present in meta, include as header (common in Laravel setups)
+                    const metaToken = document.querySelector('meta[name="csrf-token"]');
+                    if (metaToken && metaToken.content) headers['X-CSRF-TOKEN'] = metaToken.content;
+
+                    try {
+                        const response = await axios.post('{{ env('API_HOST') }}/doctor/register',
+                            fd, {
+                                headers,
+                                withCredentials: true
+                            });
+                        // success handling
+                        statusArea.className = 'text-success small';
+                        // backend should return a message — show it or a default success
+                        statusArea.textContent = (response.data && response.data.message) ? response
+                            .data.message : 'Registration submitted successfully.';
+                        if (response.data.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Account Created",
+                                text: "Please wait for the activation of your account so you can log in and work here.",
+                                confirmButtonText: "OK",
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                            }).then(() => {
+                                // Redirect after user closes the alert
+                                window.location.href = "/";
+                            });
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Submission failed",
+                            text: err.response?.data?.message ||
+                                "Something went wrong while submitting your form. Please try again.",
+                        });
+                        statusArea.className = 'text-danger small';
+                        if (err.response && err.response.data) {
+                            // Try to show backend validation errors (assumes structure: errors: {field: [msg]})
+                            const data = err.response.data;
+                            if (data.errors && typeof data.errors === 'object') {
+                                // show inline errors for fields returned by backend
+                                Object.keys(data.errors).forEach(k => {
+                                    const el = form.querySelector('[name="' + k + '"]') ||
+                                        form.querySelector('[name="' + k + '[]"]');
+                                    showError(el || statusArea, Array.isArray(data.errors[
+                                        k]) ? data.errors[k].join(', ') : String(
+                                        data.errors[k]));
+                                });
+                                statusArea.textContent = data.message ||
+                                    'Validation failed. Please correct highlighted fields.';
+                            } else if (data.message) {
+                                statusArea.textContent = data.message;
+                            } else {
+                                statusArea.textContent =
+                                    'Submission failed. See console for details.';
+                            }
+                        } else {
+                            statusArea.textContent =
+                                'Network or server error. Please try again later.';
+                        }
+                    }
+                }); // end submit listener
+            });
+        })();
+    </script>
+
+    {{-- <script>
         document.querySelectorAll(".custom-file-input").forEach(input => {
             input.addEventListener("change", function() {
-                const fileName = this.files.length > 0 ? this.files[0].name : "Upload File";
+                const fileName = this.files.length > 0 ? this.files.name : "Upload File";
                 this.nextElementSibling.textContent = "📂 " + fileName;
             });
         });
-    </script>
-    <script>
         document.querySelector('form').addEventListener('submit', async function(e) {
             e.preventDefault();
-
+            const salutation = document.getElementsByName('salutation')
+            const firstName = document.getElementsByName('first-name')
+            const lastName = document.getElementsByName('last-name')
+            const gender = document.getElementsByName('gender')
+            const nationality = document.getElementsByName('nationality')
+            const email = document.getElementsByName('email')
+            const phone = document.getElementsByName('phone')
+            const streetAddress = document.getElementsByName('street-address')
+            const addressLine2 = document.getElementsByName('address-line-2')
+            const city = document.getElementsByName('city')
+            const state = document.getElementsByName('state')
+            const postal = document.getElementsByName('postal')
+            const country = document.getElementsByName('country')
+            const medicalLicenseNumber = document.getElementsByName('medical-license-number')
+            const medicalLicenseIssuingAuthority = document.getElementsByName(
+                'medical-license-issuing-authority')
+            const medicalLicenseIssuingCountry = document.getElementsByName('medical-license-issuing-country')
+            const specialization = document.getElementsByName('specialization')
+            const subSpecialization = document.getElementsByName('sub-specialization')
+            const experience = document.getElementsByName('experience')
+            const clinicName = document.getElementsByName('clinic-name')
+            const clinicAddress = document.getElementsByName('clinic-address')
+            const clinicAddressLine2 = document.getElementsByName('clinic-address-line-2')
+            const clinicCity = document.getElementsByName('clinic-city')
+            const clinicState = document.getElementsByName('clinic-state')
+            const clinicPostal = document.getElementsByName('clinic-postal')
+            const clinicCountry = document.getElementsByName('clinic-country')
+            const position = document.getElementsByName('position')
+            const medicalDegree = document.getElementsByName('medical-degree')
+            const medicalInstituteName = document.getElementsByName('medical-institute-name')
+            const dateOfGraduation = document.getElementsByName('date-of-graduation')
+            const additionalCertifications = document.getElementsByName('additional-certifications')
+            const continuingMedicalEducation = document.getElementsByName('continuing-medical-education')
+            const membershipInMedicalAssociations = document.getElementsByName(
+                'membership-in-medical-associations')
+            const licensingBodies = document.getElementsByName('licensing-bodies')
+            const supportInternationalPatientsTreatment = document.getElementsByName(
+                'support-international-patients-treatment')
+            const preferredPatientCountries = document.getElementsByName('preferred-patient-countries')
+            const preferredCommunicationMethods = document.getElementsByName('preferred_communication_methods')
+            const virtualConsultations = document.getElementsByName('virtual-consultations')
+            const secondOpinions = document.getElementsByName('second-opinions')
+            // const membershipInMedicalAssociations = document.getElementsByName(
+            //     'membership-in-medical-associations')
+            const internationalInsurance = document.getElementsByName('international-insurance')
+            const paymentMethods = document.getElementsByName('payment_methods')
+            const medicalLicense = document.getElementsByName('medical_license')
+            const degreeCertificates = document.getElementsByName('degree_certificates')
+            const certifications = document.getElementsByName('certifications')
+            const resume = document.getElementsByName('resume')
+            const profilePicture = document.getElementsByName('profile_picture')
+            const termsAndConditions = document.getElementsByName('terms-and-conditions')
             // Clear previous errors
             clearErrors();
 
@@ -1167,13 +1881,12 @@
             const signatureData = canvas.toDataURL();
 
             // Create FormData object
-            const formData = new FormData(this);
-            formData.append('signature', signatureData);
-
             try {
-                const response = await axios.post('#', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+                const response = await axios.post('{{ env('API_HOST') }}/doctor/register', {
+                    data: {
+                        salutation: salutation[0].value,
+                        firstName: firstName[0].value,
+                        lastName: lastName[0].value,
                     }
                 });
 
@@ -1220,7 +1933,7 @@
                     // Create error message element
                     const errorDiv = document.createElement('div');
                     errorDiv.className = 'invalid-feedback';
-                    errorDiv.innerHTML = errors[field][0]; // Get first error message
+                    errorDiv.innerHTML = errors[field]; // Get first error message
 
                     // Insert error message after input
                     input.parentNode.insertBefore(errorDiv, input.nextSibling);
@@ -1255,11 +1968,102 @@
             }
         `;
         document.head.appendChild(style);
-    </script>
+    </script> --}}
 
     {{-- @endsection --}}
 
 
+    <script>
+        /**
+         * Collect all field values (inputs, selects, textareas) into a JS object.
+         * Handles radios, single/multiple checkboxes, and multiple selects.
+         */
+        function getAllFormData() {
+            const data = {};
+            const elements = document.querySelectorAll("input, select, textarea");
+
+            elements.forEach((el) => {
+                const name = el.name || el.id;
+                if (!name) return; // Skip unnamed fields
+
+                if (el.type === "radio") {
+                    // Store only checked radio
+                    if (el.checked) data[name] = el.value;
+                } else if (el.type === "checkbox") {
+                    // Handle multiple checkboxes with same name as array
+                    const checkboxes = document.querySelectorAll(`input[name="${name}"][type="checkbox"]`);
+                    if (checkboxes.length > 1) {
+                        data[name] = data[name] || [];
+                        if (el.checked) data[name].push(el.value);
+                    } else {
+                        data[name] = el.checked;
+                    }
+                } else if (el.tagName === "SELECT" && el.multiple) {
+                    data[name] = Array.from(el.selectedOptions).map((opt) => opt.value);
+                } else {
+                    data[name] = el.value;
+                }
+            });
+
+            return data;
+        }
+
+        /**
+         * Fill all inputs, selects, and textareas from a JS object.
+         * Handles radios, checkboxes, and multiple selects correctly.
+         */
+        function setAllFormData(data) {
+            const elements = document.querySelectorAll("input, select, textarea");
+
+            elements.forEach((el) => {
+                const name = el.name || el.id;
+                if (el.type === 'file') return;
+                if (!name || !(name in data)) return;
+
+                const value = data[name];
+
+                if (el.type === "radio") {
+                    el.checked = el.value === value;
+                } else if (el.type === "checkbox") {
+                    if (Array.isArray(value)) {
+                        el.checked = value.includes(el.value);
+                    } else {
+                        el.checked = Boolean(value);
+                    }
+                } else if (el.tagName === "SELECT" && el.multiple && Array.isArray(value)) {
+                    Array.from(el.options).forEach((opt) => {
+                        opt.selected = value.includes(opt.value);
+                    });
+                } else {
+                    el.value = value ?? "";
+                }
+            });
+        }
+
+        /** 
+         * Optional: Automatically save and restore all form data using localStorage.
+         * You can remove this block if you want manual control.
+         */
+        window.addEventListener("DOMContentLoaded", () => {
+            const saved = localStorage.getItem("formState");
+            if (saved) {
+                try {
+                    setAllFormData(JSON.parse(saved));
+                } catch (err) {
+                    console.error("Failed to restore saved form data:", err);
+                }
+            }
+        });
+
+        // Auto-save on any change (every input event)
+        window.addEventListener("input", () => {
+            try {
+                localStorage.setItem("formState", JSON.stringify(getAllFormData()));
+            } catch (err) {
+                console.error("Failed to save form data:", err);
+            }
+        });
+    </script>
 
 
     <script src="{{ asset('/js/jquery.js') }}"></script>

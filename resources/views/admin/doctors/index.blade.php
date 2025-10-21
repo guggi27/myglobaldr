@@ -1,141 +1,240 @@
-@extends ("admin/layouts/app")
-@section ("title", "Doctors")
+@extends('admin/layouts/app')
+@section('title', 'Doctors')
 
-@section ("main")
+@section('main')
 
-  <div class="pagetitle">
-    <div style="display: flex;">
-      <h1>Doctors</h1>
-      
-      <a href="{{ url('/admin/doctors/add') }}" class="btn btn-outline-primary btn-sm"
-        style="margin-left: 15px;">Add Doctor</a>
+    <div class="pagetitle">
+        <div style="display: flex; align-items: center;">
+            <h1>Doctors</h1>
+            <a href="{{ url('/admin/doctors/add') }}" class="btn btn-outline-primary btn-sm ms-3">
+                Add Doctor
+            </a>
+        </div>
+
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">Doctors</li>
+            </ol>
+        </nav>
     </div>
 
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Doctors</li>
-      </ol>
-    </nav>
-  </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
 
-  <section class="section">
-    <div class="row">
-      <div class="col-12">
+                <div class="input-group mb-3">
+                    <input id="searchInput" type="text" class="form-control" placeholder="Search doctors">
+                    <button id="searchBtn" class="btn btn-primary" type="button">Search</button>
+                </div>
 
-        <form method="GET" action="{{ url('/admin/doctors') }}">
-          <div class="input-group mb-3">
-            <input type="text" name="search" class="form-control"
-              placeholder="Search users"
-              value="{{ $search }}" />
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Profile</th>
+                            <th>Specialization</th>
+                            <th>Experience (yrs)</th>
+                            <th>Status</th>
+                            <th>Registered At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorsTableBody">
+                        <tr>
+                            <td colspan="8" class="text-center">Loading doctors...</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Search</button>
+                <nav>
+                    <ul id="pagination" class="pagination justify-content-center"></ul>
+                </nav>
             </div>
-          </div>
-        </form>
+        </div>
+    </section>
 
-        <table class="table table-bordered table-responsive">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Image</th>
-              <th>Services</th>
-              <th>Specialities</th>
-              <th>Registered at</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+    <script>
+        const doctorsTableBody = document.getElementById("doctorsTableBody");
+        const paginationEl = document.getElementById("pagination");
+        const searchInput = document.getElementById("searchInput");
+        const searchBtn = document.getElementById("searchBtn");
 
-          <tbody>
+        // Add a refresh button dynamically
+        const refreshBtn = document.createElement("button");
+        refreshBtn.textContent = "Refresh";
+        refreshBtn.className = "btn btn-outline-secondary btn-sm ms-2";
+        refreshBtn.onclick = () => fetchDoctors(currentPage, searchQuery, orderBy);
+        document.querySelector(".pagetitle div").appendChild(refreshBtn);
 
-            @if (count($users) <= 0)
-              <tr>
-                <td colspan="7">No doctor found.</td>
-              </tr>
-            @endif
+        let currentPage = 1;
+        let lastPage = 1;
+        let searchQuery = "";
+        let orderBy = "createdAt"; // default order field
+        let orderDirection = "desc"; // default direction
 
-            @foreach ($users as $user)
-              <tr>
-                <td>{{ $user->name ?? "" }}</td>
-                <td>{{ $user->email ?? "" }}</td>
-                <td>
-                  <img src="{{ $user->profile_image }}"
-                    style="width: 100px;
-                      height: 100px;
-                      object-fit: cover;
-                      border-radius: 50%;"
-                    onerror="event.target.remove();" />
-                </td>
-                <td>
-                  @foreach ($user->services ?? [] as $service)
-                    {{ $service }} |
-                  @endforeach
-                </td>
-                <td>
-                  @foreach ($user->specialities ?? [] as $speciality)
-                    {{ $speciality }} |
-                  @endforeach
-                </td>
-                <td>{{ date("d M, Y", strtotime($user->created_at . " UTC")) }}</td>
-                <td>
-                  @if (is_null($user->deleted_at))
-                    <a href="{{ url('/admin/doctors/' . $user->id . '/edit') }}"
-                      class="btn btn-outline-warning mb-2">Edit</a>&nbsp;
-                    
-                    <button type="button" class="btn btn-outline-danger" onclick="deleteUser(event, '{{ $user->id }}', '{{ $user->email }}');">Delete</button>
-                  @else
-                    <span class="text-danger">Doctor has been deleted.</span>
-                  @endif
-                </td>
-              </tr>
-            @endforeach
-          </tbody>
-        </table>
+        async function fetchDoctors(page = 1, search = "", order = "createdAt", direction = "desc") {
+            try {
+                doctorsTableBody.innerHTML = `<tr><td colspan="8" class="text-center">Loading...</td></tr>`;
 
-        {!! $pagination !!}
-      </div>
-    </div>
-  </section>
+                const response = await axios.get(`{{ env('API_HOST') }}/admin/doctors`, {
+                    params: {
+                        page,
+                        search,
+                        orderBy: order,
+                        orderDirection: direction
+                    },
+                    withCredentials: true
+                }, );
 
-  <script>
-    function deleteUser(event, id, email) {
-      const node = event.currentTarget;
-
-      swal.fire({
-        title: email,
-        text: "Are you sure you want to delete this doctor ?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(async function (result) {
-        if (result.isConfirmed) {
-          node.setAttribute("disabled", "disabled");
-
-          try {
-            const formData = new FormData()
-            formData.append("id", id)
-
-            const response = await axios.post(
-              baseUrl + "/admin/doctors/delete",
-              formData
-            )
-
-            if (response.data.status == "success") {
-              node.parentElement.parentElement.remove();
-            } else {
-              swal.fire("Error", response.data.message, "error")
+                const payload = response.data || {};
+                renderDoctors(payload.data || []);
+                renderPagination(payload.meta || {});
+            } catch (err) {
+                console.error(err);
+                doctorsTableBody.innerHTML = `
+                <tr><td colspan="8" class="text-center text-danger">Failed to load doctors</td></tr>
+            `;
             }
-          } catch (exp) {
-            swal.fire("Error", exp.message, "error")
-          } finally {
-            node.removeAttribute("disabled");
-          }
         }
-      })
-    }
-  </script>
+
+        function renderDoctors(doctors) {
+            if (!doctors.length) {
+                doctorsTableBody.innerHTML = `
+                <tr><td colspan="8" class="text-center">No doctor found.</td></tr>
+            `;
+                return;
+            }
+
+            doctorsTableBody.innerHTML = doctors.map(doc => `
+            <tr>
+                <td>${doc.salutation ? doc.salutation.toUpperCase() + " " : ""}${doc.firstName} ${doc.lastName}</td>
+                <td>${doc.email}</td>
+                <td>
+                    ${doc.documents?.profilePicture?.url
+                        ? `<img src="{{ env('API_HOST') }}${doc.documents.profilePicture.url}" alt="Profile" width="40" height="40" style="object-fit:cover;border-radius:50%;">`
+                        : `<span>No Image</span>`}
+                </td>
+                <td>${doc.professionalInfo?.specialization || "-"}</td>
+                <td>${doc.professionalInfo?.yearsOfExperience ?? "-"}</td>
+                <td>
+                    <button class="btn btn-sm ${doc.status ? "btn-success" : "btn-warning"}"
+                        onclick="toggleStatus('${doc._id}', ${doc.status})">
+                        ${doc.status ? "Approved" : "Not Approved"}
+                    </button>
+                </td>
+                <td>${new Date(doc.createdAt).toLocaleDateString()}</td>
+                <td>
+                    <button class="btn btn-sm btn-danger" onclick="deleteDoctor('${doc._id}', '${doc.email}')">Delete</button>
+                    <a class="btn btn-sm btn-secondary" href="/admin/doctors/${doc._id}">Details</a>
+                </td>
+            </tr>
+        `).join("");
+        }
+
+        function renderPagination(meta) {
+            const {
+                currentPage: page,
+                totalPages
+            } = meta;
+            currentPage = page || 1;
+            lastPage = totalPages || 1;
+
+            if (lastPage <= 1) {
+                paginationEl.innerHTML = "";
+                return;
+            }
+
+            let pages = "";
+            for (let i = 1; i <= lastPage; i++) {
+                pages += `
+                <li class="page-item ${i === currentPage ? "active" : ""}">
+                    <button class="page-link" onclick="fetchDoctors(${i}, '${searchQuery}', '${orderBy}', '${orderDirection}')">${i}</button>
+                </li>
+            `;
+            }
+            paginationEl.innerHTML = pages;
+        }
+
+        async function deleteDoctor(id, email) {
+            const result = await Swal.fire({
+                title: email,
+                text: "Are you sure you want to delete this doctor?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            });
+
+            if (!result.isConfirmed) return;
+
+            try {
+                const response = await axios.post(`{{ env('API_HOST') }}/admin/doctors/delete`, {
+                    id
+                }, {
+                    withCredentials: true
+                });
+
+                if (response.data.status === "success") {
+                    await Swal.fire("Deleted!", "Doctor removed successfully", "success");
+                    fetchDoctors(currentPage, searchQuery, orderBy, orderDirection);
+                } else {
+                    Swal.fire("Error", response.data.message, "error");
+                }
+            } catch (error) {
+                Swal.fire("Error", error.message, "error");
+            }
+        }
+
+        async function toggleStatus(id, currentStatus) {
+            try {
+                const newStatus = !currentStatus;
+                const response = await axios.post(`{{ env('API_HOST') }}/admin/doctors/status`, {
+                    id,
+                    status: newStatus
+                }, {
+                    withCredentials: true
+                });
+                console.log(response.data.success)
+                if (response.data.success) {
+                    Swal.fire("Updated!", `Doctor status set to ${newStatus ? "Active" : "Inactive"}.`, "success");
+                    fetchDoctors(currentPage, searchQuery, orderBy, orderDirection);
+                } else {
+                    Swal.fire("Error", response.data.message, "error");
+                }
+            } catch (error) {
+                Swal.fire("Error", error.message, "error");
+            }
+        }
+
+        // Search handler
+        searchBtn.addEventListener("click", () => {
+            searchQuery = searchInput.value.trim();
+            fetchDoctors(1, searchQuery, orderBy, orderDirection);
+        });
+
+        // Sorting dropdown (optional UI)
+        const orderSelect = document.createElement("select");
+        orderSelect.className = "form-select form-select-sm w-auto ms-2";
+        orderSelect.innerHTML = `
+        <option value="createdAt-desc">Newest</option>
+        <option value="createdAt-asc">Oldest</option>
+        <option value="firstName-asc">Name A-Z</option>
+        <option value="firstName-desc">Name Z-A</option>
+    `;
+        orderSelect.addEventListener("change", () => {
+            const [field, dir] = orderSelect.value.split("-");
+            orderBy = field;
+            orderDirection = dir;
+            fetchDoctors(1, searchQuery, orderBy, orderDirection);
+        });
+        document.querySelector(".pagetitle div").appendChild(orderSelect);
+
+        // Initial load
+        fetchDoctors();
+    </script>
+
+
 
 @endsection

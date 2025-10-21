@@ -2,17 +2,6 @@
 @section('title', 'Dashboard')
 
 @section('main')
-
-    {{-- <div class="pagetitle">
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ url('/admin') }}">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-      <h1>Dashboard</h1>
-    </div><!-- End Page Title --> --}}
-
     <section class="section dashboard">
 
         <div class="row g-4">
@@ -24,7 +13,7 @@
                     </div>
                     <div>
                         <h5>Doctors</h5>
-                        <h6>{{ $doctors }}</h6>
+                        <h6 id="doctors-number"></h6>
                     </div>
                 </div>
             </div>
@@ -36,7 +25,7 @@
                     </div>
                     <div>
                         <h5>Patients</h5>
-                        <h6>{{ $patients }}</h6>
+                        <h6 id="patients-number"></h6>
                     </div>
                 </div>
             </div>
@@ -48,7 +37,7 @@
                     </div>
                     <div>
                         <h5>Calls</h5>
-                        <h6>{{ $calls }}</h6>
+                        <h6 id="calls-number"></h6>
                     </div>
                 </div>
             </div>
@@ -60,7 +49,7 @@
                     </div>
                     <div>
                         <h5>Payments</h5>
-                        <h6>{{ $payments }}</h6>
+                        <h6 id="payments-number"></h6>
                     </div>
                 </div>
             </div>
@@ -71,7 +60,7 @@
                     </div>
                     <div>
                         <h5>New Tasks</h5>
-                        <h6>{{ 231 }}</h6>
+                        <h6 id="tasks-number"></h6>
                     </div>
                 </div>
             </div>
@@ -82,38 +71,45 @@
                     </div>
                     <div>
                         <h5>Total Projects</h5>
-                        <h6>{{ 24 }}</h6>
+                        <h6 id="projects-number"></h6>
                     </div>
                 </div>
             </div>
     </section>
 
     <script>
-        /*async function onInit() {
-                                                                                                                            try {
-                                                                                                                              const response = await axios.post(
-                                                                                                                                baseUrl + "/admin/stats",
-                                                                                                                                null,
-                                                                                                                                {
-                                                                                                                                  headers: {
-                                                                                                                                    Authorization: "Bearer " + localStorage.getItem(accessTokenKey)
-                                                                                                                                  }
-                                                                                                                                }
-                                                                                                                              )
+        async function onInit() {
+            const doctorsNumber = document.getElementById('doctors-number');
+            const patientsNumber = document.getElementById('patients-number');
+            const callsNumber = document.getElementById('calls-number');
+            const tasksNumber = document.getElementById('tasks-number');
+            const paymentsNumber = document.getElementById('payments-number');
+            const projectsNumber = document.getElementById('projects-number');
+            try {
+                const {
+                    data
+                } = await axios.get('{{ env('API_HOST') }}/admin/dashboard', {
+                    withCredentials: true
+                });
 
-                                                                                                                              if (response.data.status == "success") {
-                                                                                                                                const users = response.data.users || 0
-                                                                                                                                const messages = response.data.messages || 0
+                if (data.success) {
+                    doctorsNumber.innerText = data.doctors;
+                    patientsNumber.innerText = data.patients;
+                    callsNumber.innerText = data.calls;
+                    tasksNumber.innerText = data.tasks;
+                    paymentsNumber.innerText = data.payments;
+                    projectsNumber.innerText = data.projects;
+                } else {
+                    Swal.fire("Error", data.message, "error");
+                }
+            } catch (err) {
+                Swal.fire("Error", err.message, "error");
+            } finally {
+                // submitButton.removeAttribute("disabled");
+            }
 
-                                                                                                                                document.getElementById("users-count").innerHTML = users
-                                                                                                                                document.getElementById("messages-count").innerHTML = messages
-                                                                                                                              } else {
-                                                                                                                                // swal.fire("Error", response.data.message, "error")
-                                                                                                                              }
-                                                                                                                            } catch (exp) {
-                                                                                                                              // swal.fire("Error", exp.message, "error")
-                                                                                                                            }
-                                                                                                                          }*/
+        }
+        onInit();
     </script>
 
 @endsection

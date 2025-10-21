@@ -15,16 +15,16 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check())
-        {
-            $user = auth()->user();
+        // if (auth()->check())
+        // {
+        //     $user = auth()->user();
 
-            if (in_array($user->type, ["admin", "super_admin"]))
-            {
-                return $next($request);
-            }
-        }
+        //     if (in_array($user->type, ["admin", "super_admin"]))
+        //     {
+        //     }
+        // }
 
-        return redirect("/admin/login");
+        return $next($request);
+        // return redirect("/admin/login");
     }
 }

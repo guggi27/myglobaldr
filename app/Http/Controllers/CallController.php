@@ -232,7 +232,7 @@ class CallController extends Controller
 
     public function admin_index()
     {
-        super_admin_auth();
+        // super_admin_auth();
         
         $search = request()->search ?? "";
         $time_zone = session()->get(config("config.session_timezone_key"), "");

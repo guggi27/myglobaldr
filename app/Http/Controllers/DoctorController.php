@@ -112,14 +112,14 @@ class DoctorController extends Controller
                 'symptoms' => 'Persistent headaches, dizziness, and fatigue for the past week. Symptoms worsen in the evening.',
                 'reason_for_visit' => 'Regular checkup and consultation regarding recent headaches and sleep issues',
                 'slot' => [
-                        'day' => 'Monday',
-                        'time' => '10:00 AM'
-                    ],
+                    'day' => 'Monday',
+                    'time' => '10:00 AM'
+                ],
                 'services' => [
-                        ['name' => 'General Consultation', 'price' => 1500],
-                        ['name' => 'Blood Pressure Check', 'price' => 500],
-                        ['name' => 'ECG Test', 'price' => 800]
-                    ],
+                    ['name' => 'General Consultation', 'price' => 1500],
+                    ['name' => 'Blood Pressure Check', 'price' => 500],
+                    ['name' => 'ECG Test', 'price' => 800]
+                ],
                 'fee' => 2000,
                 'discount' => 200,
                 'total' => 2600,
@@ -140,13 +140,13 @@ class DoctorController extends Controller
                 'symptoms' => 'Chest pain and shortness of breath during physical activity',
                 'reason_for_visit' => 'Cardiac evaluation and stress test consultation',
                 'slot' => [
-                        'day' => 'Tuesday',
-                        'time' => '2:30 PM'
-                    ],
+                    'day' => 'Tuesday',
+                    'time' => '2:30 PM'
+                ],
                 'services' => [
-                        ['name' => 'Cardiac Consultation', 'price' => 2500],
-                        ['name' => 'Stress Test', 'price' => 1200],
-                    ],
+                    ['name' => 'Cardiac Consultation', 'price' => 2500],
+                    ['name' => 'Stress Test', 'price' => 1200],
+                ],
                 'fee' => 2500,
                 'discount' => 0,
                 'total' => 3700,
@@ -166,14 +166,14 @@ class DoctorController extends Controller
                 'symptoms' => 'Lower back pain radiating to legs, numbness in toes',
                 'reason_for_visit' => 'Follow-up appointment for chronic back pain management',
                 'slot' => [
-                        'day' => 'Wednesday',
-                        'time' => '11:15 AM'
-                    ],
+                    'day' => 'Wednesday',
+                    'time' => '11:15 AM'
+                ],
                 'services' => [
-                        ['name' => 'Orthopedic Consultation', 'price' => 1800],
-                        ['name' => 'X-Ray Review', 'price' => 600],
-                        ['name' => 'Physical Therapy Assessment', 'price' => 900]
-                    ],
+                    ['name' => 'Orthopedic Consultation', 'price' => 1800],
+                    ['name' => 'X-Ray Review', 'price' => 600],
+                    ['name' => 'Physical Therapy Assessment', 'price' => 900]
+                ],
                 'fee' => 1800,
                 'discount' => 300,
                 'total' => 3000,
@@ -195,13 +195,13 @@ class DoctorController extends Controller
                 'symptoms' => 'Recurring migraines with visual disturbances',
                 'reason_for_visit' => 'Neurological consultation for migraine management',
                 'slot' => [
-                        'day' => 'Thursday',
-                        'time' => '9:00 AM'
-                    ],
+                    'day' => 'Thursday',
+                    'time' => '9:00 AM'
+                ],
                 'services' => [
-                        ['name' => 'Neurological Consultation', 'price' => 2200],
-                        ['name' => 'Visual Field Test', 'price' => 800]
-                    ],
+                    ['name' => 'Neurological Consultation', 'price' => 2200],
+                    ['name' => 'Visual Field Test', 'price' => 800]
+                ],
                 'fee' => 2200,
                 'discount' => 100,
                 'total' => 2900,
@@ -219,14 +219,14 @@ class DoctorController extends Controller
                 'symptoms' => 'Joint pain and stiffness, particularly in hands and knees',
                 'reason_for_visit' => 'Arthritis evaluation and treatment planning',
                 'slot' => [
-                        'day' => 'Friday',
-                        'time' => '3:45 PM'
-                    ],
+                    'day' => 'Friday',
+                    'time' => '3:45 PM'
+                ],
                 'services' => [
-                        ['name' => 'Rheumatology Consultation', 'price' => 1900],
-                        ['name' => 'Joint X-Ray', 'price' => 700],
-                        ['name' => 'Inflammation Markers Test', 'price' => 600]
-                    ],
+                    ['name' => 'Rheumatology Consultation', 'price' => 1900],
+                    ['name' => 'Joint X-Ray', 'price' => 700],
+                    ['name' => 'Inflammation Markers Test', 'price' => 600]
+                ],
                 'fee' => 1900,
                 'discount' => 150,
                 'total' => 3050,
@@ -521,53 +521,58 @@ class DoctorController extends Controller
 
     public function admin_index()
     {
-        super_admin_auth();
+        // super_admin_auth();
 
-        $search = request()->search ?? "";
-        $time_zone = request()->time_zone ?? "";
-        if (!empty($time_zone)) {
-            date_default_timezone_set($time_zone);
-        }
+        // $search = request()->search ?? "";
+        // $time_zone = request()->time_zone ?? "";
+        // if (!empty($time_zone)) {
+        //     date_default_timezone_set($time_zone);
+        // }
 
-        $users = DB::table("users")
-            ->select("users.*", "doctors.services", "doctors.specialities")
-            ->leftJoin("doctors", "doctors.user_id", "=", "users.id")
-            ->where("users.type", "=", "doctor");
+        // $users = DB::table("users")
+        //     ->select("users.*", "doctors.services", "doctors.specialities")
+        //     ->leftJoin("doctors", "doctors.user_id", "=", "users.id")
+        //     ->where("users.type", "=", "doctor");
 
-        if (!empty($search)) {
-            $users = $users->where(function ($query) use ($search) {
-                $query->where("users.name", "LIKE", "%" . $search . "%")
-                    ->orWhere("users.email", "LIKE", "%" . $search . "%")
-                    ->orWhere("doctors.services", "LIKE", "%" . $search . "%")
-                    ->orWhere("doctors.specialities", "LIKE", "%" . $search . "%");
-            });
-        }
+        // if (!empty($search)) {
+        //     $users = $users->where(function ($query) use ($search) {
+        //         $query->where("users.name", "LIKE", "%" . $search . "%")
+        //             ->orWhere("users.email", "LIKE", "%" . $search . "%")
+        //             ->orWhere("doctors.services", "LIKE", "%" . $search . "%")
+        //             ->orWhere("doctors.specialities", "LIKE", "%" . $search . "%");
+        //     });
+        // }
 
-        $users = $users->orderBy("users.id", "desc")
-            ->paginate();
+        // $users = $users->orderBy("users.id", "desc")
+        //     ->paginate();
 
-        foreach ($users as $key => $value) {
-            if ($value->profile_image && Storage::exists("public/" . $value->profile_image)) {
-                $users[$key]->profile_image = url("/storage/" . $value->profile_image);
-            }
+        // foreach ($users as $key => $value) {
+        //     if ($value->profile_image && Storage::exists("public/" . $value->profile_image)) {
+        //         $users[$key]->profile_image = url("/storage/" . $value->profile_image);
+        //     }
 
-            if ($value->services) {
-                $users[$key]->services = json_decode($value->services ?? "[]", false);
-            }
+        //     if ($value->services) {
+        //         $users[$key]->services = json_decode($value->services ?? "[]", false);
+        //     }
 
-            if ($value->specialities) {
-                $users[$key]->specialities = json_decode($value->specialities ?? "[]", false);
-            }
-        }
+        //     if ($value->specialities) {
+        //         $users[$key]->specialities = json_decode($value->specialities ?? "[]", false);
+        //     }
+        // }
 
-        $total = $users->total();
+        // $total = $users->total();
 
-        return view("admin/doctors/index", [
-            "users" => $users,
-            "total" => $total,
-            "search" => $search,
-            "pagination" => $users->withPath(url("/admin/doctors"))->links("pagination::bootstrap-5")->render()
-        ]);
+        // return view("admin/doctors/index", [
+        //     "users" => $users,
+        //     "total" => $total,
+        //     "search" => $search,
+        //     "pagination" => $users->withPath(url("/admin/doctors"))->links("pagination::bootstrap-5")->render()
+        // ]);
+        return view("admin/doctors/index");
+    }
+
+    public function details($id){
+        return view('admin/doctors/details/index', ['id' => $id]);
     }
 
     public function add()

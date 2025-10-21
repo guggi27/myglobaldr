@@ -63,18 +63,18 @@
                             </strong>
                         </h3>
                         <p>
-                            Access the My Global Dr using your email and passcode.
+                            Access the My Global Dr using your username and passcode.
                         </p>
                     </div>
                     <form id="login-form" class="auth-form">
                         {{ csrf_field() }}
                         <div class="auth-form-field-container">
-                            <label for="email-or-username">Email / Username</label>
-                            <input type="text" placeholder="example@xyz.com" name="email" id="email-or-username">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" id="username">
                         </div>
                         <div class="auth-form-field-container">
                             <label for="password">Password</label>
-                            <input type="password" name="password" placeholder="********" id="password">
+                            <input type="password" name="password" id="password">
                         </div>
                         <div class="auth-form-other-fields-container">
                             <div class="remember-box">
@@ -156,7 +156,7 @@
                         </button>
                     </div>
                     <p style="align-self: baseline; text-align: center; color: black; margin: 100px auto 0 auto;">
-                        Copyright © {{ now()->year }} - {{ config("config.app_name") }}
+                        Copyright © {{ now()->year }} - {{ config('config.app_name') }}
                     </p>
             </section>
             <section class="auth-img-container">
@@ -186,37 +186,45 @@
     <script src="{{ asset('/administrator/js/script.js?v=' . time()) }}"></script>
 
     <script>
-        async function doLogin(event) {
-    event.preventDefault()
-    const form = event.target
+        function onInit() {
+            const form = document.getElementById("login-form");
+            if (!form) return alert('No form found');
+            const baseUrl = document.getElementById("baseUrl").value;
 
-    try {
-        const formData = new FormData(form)
-        const submitButton = form.querySelector('button[type="submit"]')
-        submitButton.setAttribute("disabled", "disabled")
+            async function doLogin(event) {
+                event.preventDefault();
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.setAttribute("disabled", "disabled");
 
-        const response = await axios.post(
-            baseUrl + "/admin/login",
-            formData
-        )
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+                const csrfToken = form.querySelector('input[name="_token"]').value;
 
-        if (response.data.status == "success") {
-            window.location.href = baseUrl + "/admin"
-        } else {
-            swal.fire("Error", response.data.message, "error")
-        }
-    } catch (exp) {
-        swal.fire("Error", exp.message, "error")
-    } finally {
-        const submitButton = form.querySelector('button[type="submit"]')
-        submitButton.removeAttribute("disabled")
-    }
-}
+                try {
+                    const response = await axios.post('{{ env('API_HOST') }}/auth/v1/admin/login', {
+                        username,
+                        password
+                    }, {
+                        withCredentials: true
+                    });
 
-const form = document.getElementById('login-form')
-form.addEventListener('submit', doLogin)  // ✅ no "on"
+                    if (response.data.success) {
+                        window.location.href = `${baseUrl}/admin`;
+                    } else {
+                        Swal.fire("Error", response.data.message, "error");
+                    }
+                } catch (err) {
+                    Swal.fire("Error", err.message, "error");
+                } finally {
+                    submitButton.removeAttribute("disabled");
+                }
+            }
 
+            form.addEventListener("submit", doLogin);
+        };
+        onInit();
     </script>
+
 
 </body>
 

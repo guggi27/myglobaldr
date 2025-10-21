@@ -118,6 +118,7 @@ Route::group([
     Route::get("/admin/patients", [PatientController::class, "admin_index"]);
 
     Route::any("/admin/doctors/add", [DoctorController::class, "add"]);
+    Route::get("/admin/doctors/{id}", [DoctorController::class, "details"]);
     Route::post("/admin/doctors/delete", [DoctorController::class, "destroy"]);
     Route::post("/admin/doctors/update", [DoctorController::class, "update"]);
     Route::get("/admin/doctors/{id}/edit", [DoctorController::class, "edit"]);

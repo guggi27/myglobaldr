@@ -193,20 +193,11 @@
 
         async function logout() {
             try {
-                const response = await axios.post(
-                    baseUrl + "/admin/logout",
-                    null, {
-                        headers: {
-                            Authorization: "Bearer " + localStorage.getItem(accessTokenKey)
-                        }
-                    }
-                )
-
-                if (response.data.status == "success") {
-                    globalState.setState({
-                        user: null
+                const response = await axios.delete(
+                    '{{ env('API_HOST') }}/auth/v1/admin/logout', {
+                        withCredentials: true
                     })
-                    localStorage.removeItem(accessTokenKey)
+                if (response.data.success) {
                     window.location.href = baseUrl + "/admin/login"
                 } else {
                     swal.fire("Error", response.data.message, "error")
