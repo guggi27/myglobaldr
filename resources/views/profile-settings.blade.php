@@ -4,6 +4,8 @@
 @section('main')
 
     <style>
+        /* === KEEP YOUR ORIGINAL CSS EXACTLY AS BEFORE === */
+        /* (I've copied your CSS unchanged) */
         .profile-container {
             /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
             min-height: 100vh;
@@ -171,12 +173,6 @@
             box-shadow: 0 0 10px rgba(111, 66, 193, 0.3);
         }
 
-
-        /* .service-item:hover {
-                                                                                                                                                border-color: #cbd5e0;
-                                                                                                                                                background: white;
-                                                                                                                                            } */
-
         .service-checkbox {
             margin-right: 0.75rem;
             transform: scale(1.2);
@@ -268,12 +264,14 @@
             <div class="profile-card">
                 <!-- Profile Header -->
                 <div class="profile-header">
-                    <img src="{{ get_absolute_path(auth()->user()->profile_image) }}" class="profile-avatar"
-                        onerror="this.remove();" alt="Profile Image" />
-                    <h1 class="profile-title">Profile Settings</h1>
+                    <!-- avatar will be filled by JS -->
+                    <img id="profile-avatar" src="" class="profile-avatar" onerror="this.remove();"
+                        alt="Profile Image" style="display:none;" />
+                    <h1 class="profile-title" id="profile-title">Profile Settings</h1>
                 </div>
 
-                <form onsubmit="updateProfile(event)" class="p-4">
+                <!-- NOTE: form fields will be populated by JS. Keep same names for backend compatibility -->
+                <form id="profile-form" class="p-4" onsubmit="updateProfile(event)">
                     <div class="row">
                         <!-- Personal Information Column -->
                         <div class="col-md-12 mb-4">
@@ -282,38 +280,38 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Full Name</label>
-                                    <input type="text" name="name" required value="{{ auth()->user()->name ?? '' }}"
+                                    <input id="input-name" type="text" name="name" required value=""
                                         class="form-control" placeholder="Enter your full name" />
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">Email Address</label>
-                                    <input type="email" name="email" disabled value="{{ auth()->user()->email ?? '' }}"
+                                    <input id="input-email" type="email" name="email" disabled value=""
                                         class="form-control" />
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">Profile Image</label>
-                                    <input type="file" name="profile_image" accept="image/*" class="form-control" />
+                                    <input id="input-profile-image" type="file" name="profile_image" accept="image/*"
+                                        class="form-control" />
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">Location</label>
-                                    <input type="text" name="location" value="{{ $doctor?->location ?? '' }}"
+                                    <input id="input-location" type="text" name="location" value=""
                                         class="form-control" placeholder="Enter your location" />
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label class="form-label">Consultation Fee ({{ config('config.currency') }})</label>
-                                        <input type="number" min="0" name="fee"
-                                            value="{{ $doctor?->fee ?? '' }}" class="form-control" placeholder="0.00" />
+                                        <input id="input-fee" type="number" min="0" name="fee" value=""
+                                            class="form-control" placeholder="0.00" />
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label class="form-label">Discount Amount ({{ config('config.currency') }})</label>
-                                        <input type="number" min="0" name="discount"
-                                            value="{{ $doctor?->discount ?? '' }}" class="form-control"
-                                            placeholder="0.00" />
+                                        <input id="input-discount" type="number" min="0" name="discount"
+                                            value="" class="form-control" placeholder="0.00" />
                                     </div>
                                 </div>
                             </div>
@@ -334,51 +332,15 @@
 
                                 <div class="form-group">
                                     <label class="form-label">Medical Speciality</label>
-                                    <select name="speciality" class="form-control">
+                                    <select id="select-speciality" name="speciality" class="form-control">
                                         <option value="">Select your speciality</option>
-                                        @foreach ($specialities as $speciality)
-                                            <option value="{{ $speciality->name ?? '' }}"
-                                                {{ in_array($speciality->name, json_decode($doctor?->specialities ?? '[]', true) ?? []) ? 'selected' : '' }}>
-                                                {{ $speciality->name ?? '' }}</option>
-                                        @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group mt-4">
                                     <label class="form-label">Available Services</label>
-                                    <div class="services-list row">
-                                        @foreach ($services as $service)
-                                            @php
-                                                $exists = false;
-                                                $price = 0;
-                                                $doctor_services = json_decode($doctor?->services ?? '[]', true);
-
-                                                foreach ($doctor_services as $doctor_service) {
-                                                    if (
-                                                        isset($doctor_service['name']) &&
-                                                        $doctor_service['name'] == $service->name
-                                                    ) {
-                                                        $exists = true;
-                                                        $price = $doctor_service['price'];
-                                                        break;
-                                                    }
-                                                }
-                                            @endphp
-                                            <div class="p-1 col-lg-4">
-                                                <div class="service-item">
-                                                    <label class="d-flex align-items-center">
-                                                        <input type="checkbox" name="services[]"
-                                                            value="{{ $service->name ?? '' }}" class="service-checkbox"
-                                                            {{ $exists ? 'checked' : '' }} />
-                                                        <span class="flex-grow-1">{{ $service->name ?? '' }}</span>
-                                                        <input type="number" min="0"
-                                                            name="service_price[{{ $service->name ?? '' }}]"
-                                                            placeholder="Price" class="service-price"
-                                                            value="{{ $price > 0 ? $price : '' }}" />
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                    <div id="services-list" class="services-list row">
+                                        <!-- services will be injected here -->
                                     </div>
                                 </div>
                             </div>
@@ -388,7 +350,7 @@
                     <!-- Submit Button -->
                     <div class="row mt-4">
                         <div class="col-lg-6 offset-lg-3">
-                            <button type="submit" name="submit" class="btn-update">
+                            <button id="submit-btn" type="submit" name="submit" class="btn-update">
                                 <i class="fas fa-save me-2"></i>
                                 Update Profile
                             </button>
@@ -396,12 +358,173 @@
                     </div>
                 </form>
 
-                <input type="hidden" id="hidden-availability" value="{{ $doctor?->availability ?? '[]' }}" />
+                <!-- hidden availability mirror (kept for compatibility if any legacy code expects it) -->
+                <input type="hidden" id="hidden-availability" value="[]" />
 
+                <!-- React availability component source (unchanged, but will use availabilityArr from JS) -->
                 <script>
-                    let availabilityArr = JSON.parse(document.getElementById("hidden-availability").value || "{}");
+                    // global availability array will be set after fetching profile
+                    let availabilityArr = [];
 
-                    if (availabilityArr.length <= 0) {
+                    function onChange(availability) {
+                        availabilityArr = availability;
+                        // reflect in hidden input for compatibility
+                        document.getElementById('hidden-availability').value = JSON.stringify(availabilityArr || []);
+                    }
+                </script>
+
+                <!-- DoctorAvailability React component (same as before, but uses availabilityArr initial value) -->
+                <script type="text/babel">
+            const weekdays = [
+              { name: 'Monday', short: 'Mon' },
+              { name: 'Tuesday', short: 'Tue' },
+              { name: 'Wednesday', short: 'Wed' },
+              { name: 'Thursday', short: 'Thu' },
+              { name: 'Friday', short: 'Fri' },
+              { name: 'Saturday', short: 'Sat' },
+              { name: 'Sunday', short: 'Sun' },
+            ];
+
+            function DoctorAvailability({ onChange }) {
+                const [schedule, setSchedule] = React.useState(availabilityArr || []);
+
+                const handleChange = (day, field, value) => {
+                  const updatedSchedule = schedule.map((item) =>
+                    item.day === day ? { ...item, [field]: value } : item
+                  );
+
+                  setSchedule(updatedSchedule);
+
+                  if (onChange != null) {
+                    onChange(updatedSchedule);
+                  }
+                };
+
+                React.useEffect(function () {
+                  if (onChange != null) {
+                    onChange(schedule);
+                  }
+                }, [schedule]);
+
+                return (
+                  <div className="schedule-container">
+                    {weekdays.map((weekday) => {
+                      const daySchedule = schedule.find((s) => s.day === weekday.name) || {};
+                      return ( 
+                        <div key={weekday.name} className="day-schedule">
+                          <div className="day-name">{weekday.short}</div>
+                          <div>
+                            <input
+                              type="time"
+                              step="60"
+                              value={daySchedule?.from || ''}
+                              onChange={(e) => handleChange(weekday.name, 'from', e.target.value)}
+                              className="time-input"
+                              placeholder="From"
+                            />
+                          </div>
+                          <div>
+                            <input
+                              type="time"
+                              step="60"
+                              value={daySchedule?.to || ''}
+                              onChange={(e) => handleChange(weekday.name, 'to', e.target.value)}
+                              className="time-input"
+                              placeholder="To"
+                            />
+                          </div>
+                          <div>
+                            <select
+                            name={'select-time-' + weekday.name}
+                              value={daySchedule?.difference || 30}
+                              onChange={(e) =>
+                                handleChange(weekday.name, 'difference', parseInt(e.target.value))
+                              }
+                              className="schedule-select">
+                              {[15, 30, 45, 60].map((val) => (
+                                <option key={val} value={val}>
+                                  {val}min
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+            }
+        </script>
+
+                <script type="text/babel">
+            ReactDOM.createRoot(
+                document.getElementById("DoctorAvailability")
+            ).render(<DoctorAvailability onChange={ onChange } />);
+        </script>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const API_HOST = "{{ env('API_HOST') }}"; // injected host (keep as-is)
+            const baseUrl = document.getElementById("baseUrl") ? document.getElementById("baseUrl").value : "";
+            const form = document.getElementById("profile-form");
+            const submitBtn = document.getElementById("submit-btn");
+
+            // DOM elements to populate
+            const avatarEl = document.getElementById("profile-avatar");
+            const titleEl = document.getElementById("profile-title");
+            const inputName = document.getElementById("input-name");
+            const inputEmail = document.getElementById("input-email");
+            const inputLocation = document.getElementById("input-location");
+            const inputFee = document.getElementById("input-fee");
+            const inputDiscount = document.getElementById("input-discount");
+            const selectSpeciality = document.getElementById("select-speciality");
+            const servicesList = document.getElementById("services-list");
+
+            // Fetch profile + required lists from API
+            async function loadProfile() {
+                try {
+                    const resp = await axios.get(`${API_HOST}/doctors/profile`, {
+                        withCredentials: true,
+                    });
+
+                    if (!resp.data || !resp.data.success) {
+                        // user not logged in or error — show default guest values
+                        titleEl.textContent = "Profile Settings";
+                        return;
+                    }
+
+                    const data = resp.data;
+                    const doctor = data.doctor || {};
+                    const specialities = data.specialities || [];
+                    const services = data.services || [];
+
+                    // populate basic fields
+                    inputName.value = doctor.name || "";
+                    inputEmail.value = doctor.email || "";
+                    inputLocation.value = doctor.location || "";
+                    inputFee.value = doctor.fee ?? "";
+                    inputDiscount.value = doctor.discount ?? "";
+
+                    // avatar
+                    if (doctor.profile_image) {
+                        avatarEl.src = doctor.profile_image;
+                        avatarEl.style.display = "";
+                    } else {
+                        avatarEl.style.display = "none";
+                    }
+
+                    // title: use doctor.name or username
+                    titleEl.textContent = doctor.name || doctor.username || "Profile Settings";
+
+                    // availability
+                    // prefer doctor.availability (should be array); fallback to defaults if empty
+                    if (Array.isArray(doctor.availability) && doctor.availability.length > 0) {
+                        availabilityArr = doctor.availability;
+                    } else {
+                        // keep defaults if none provided
                         availabilityArr = [{
                                 day: 'Monday',
                                 from: '09:00',
@@ -446,130 +569,149 @@
                             },
                         ];
                     }
+                    // inform React component
+                    onChange(availabilityArr);
 
-                    function onChange(availability) {
-                        availabilityArr = availability;
-                    }
-                </script>
+                    // populate specialities dropdown
+                    // clear first
+                    selectSpeciality.innerHTML = '<option value="">Select your speciality</option>';
+                    specialities.forEach(s => {
+                        const opt = document.createElement('option');
+                        opt.value = s.name;
+                        opt.textContent = s.name;
+                        if (Array.isArray(doctor.specialities) && doctor.specialities.includes(s.name)) {
+                            opt.selected = true;
+                        }
+                        selectSpeciality.appendChild(opt);
+                    });
 
-                <script type="text/babel">
-            const weekdays = [
-              { name: 'Monday', short: 'Mon' },
-              { name: 'Tuesday', short: 'Tue' },
-              { name: 'Wednesday', short: 'Wed' },
-              { name: 'Thursday', short: 'Thu' },
-              { name: 'Friday', short: 'Fri' },
-              { name: 'Saturday', short: 'Sat' },
-              { name: 'Sunday', short: 'Sun' },
-            ];
+                    // populate services list (checkbox + price input)
+                    servicesList.innerHTML = '';
+                    const doctorServices = Array.isArray(doctor.services) ? doctor.services : [];
 
-            function DoctorAvailability({ onChange }) {
-                const [schedule, setSchedule] = React.useState(availabilityArr);
+                    services.forEach((svc) => {
+                        // find if doctor has this service
+                        let exists = false;
+                        let price = '';
+                        for (const ds of doctorServices) {
+                            if (ds && ds.name === svc.name) {
+                                exists = true;
+                                price = ds.price ?? '';
+                                break;
+                            }
+                        }
 
-                const handleChange = (day, field, value) => {
-                  const updatedSchedule = schedule.map((item) =>
-                    item.day === day ? { ...item, [field]: value } : item
-                  );
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'p-1 col-lg-4';
 
-                  setSchedule(updatedSchedule);
+                        wrapper.innerHTML = `
+                            <div class="service-item">
+                                <label class="d-flex align-items-center">
+                                    <input type="checkbox" name="services[]" value="${escapeHtml(svc.name)}" class="service-checkbox" ${exists ? 'checked' : ''} />
+                                    <span class="flex-grow-1">${escapeHtml(svc.name)}</span>
+                                    <input type="number" min="0" name="service_price[${escapeHtml(svc.name)}]" placeholder="Price" class="service-price" value="${price !== '' ? String(price) : ''}" />
+                                </label>
+                            </div>
+                        `;
+                        servicesList.appendChild(wrapper);
+                    });
 
-                  if (onChange != null) {
-                    onChange(updatedSchedule);
-                  }
-                };
+                    // set hidden availability mirror
+                    document.getElementById('hidden-availability').value = JSON.stringify(availabilityArr || []);
 
-                React.useEffect(function () {
-                  if (onChange != null) {
-                    onChange(schedule);
-                  }
-                });
-
-                return (
-                  <div className="schedule-container">
-                    {weekdays.map((weekday) => {
-                      const daySchedule = schedule.find((s) => s.day === weekday.name);
-                      return ( 
-                        <div key={weekday.name} className="day-schedule">
-                          <div className="day-name">{weekday.short}</div>
-                          <div>
-                            <input
-                              type="time"
-                              step="3600"
-                              value={daySchedule?.from || ''}
-                              onChange={(e) => handleChange(weekday.name, 'from', e.target.value)}
-                              className="time-input"
-                              placeholder="From"
-                            />
-                          </div>
-                          <div>
-                            <input
-                              type="time"
-                              step="3600"
-                              value={daySchedule?.to || ''}
-                              onChange={(e) => handleChange(weekday.name, 'to', e.target.value)}
-                              className="time-input"
-                              placeholder="To"
-                            />
-                          </div>
-                          <div>
-                            <select
-                            name={'select-time'}
-                              value={daySchedule?.difference}
-                              onChange={(e) =>
-                                handleChange(weekday.name, 'difference', parseInt(e.target.value))
-                              }
-                              className="schedule-select">
-                              {[15, 30, 45, 60].map((val) => (
-                                <option key={val} value={val}>
-                                  {val}min
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-            }
-        </script>
-
-                <script type="text/babel">
-            ReactDOM.createRoot(
-                document.getElementById("DoctorAvailability")
-            ).render(<DoctorAvailability onChange={ onChange } />);
-        </script>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        async function updateProfile(event) {
-            event.preventDefault()
-            const form = event.target
-
-            try {
-                const formData = new FormData(form)
-                formData.append("availability", JSON.stringify(availabilityArr));
-                form.submit.setAttribute("disabled", "disabled")
-
-                const response = await axios.post(
-                    baseUrl + "/profile-settings",
-                    formData
-                )
-
-                if (response.data.status == "success") {
-                    // window.location.reload();
-                    swal.fire("Update profile", response.data.message, "success");
-                } else {
-                    swal.fire("Error", response.data.message, "error")
+                } catch (err) {
+                    console.error("Failed to load profile:", err);
+                    swal.fire("Error", "Unable to load profile data. Check console for details.", "error");
                 }
-            } catch (exp) {
-                swal.fire("Error", exp.message, "error")
-            } finally {
-                form.submit.removeAttribute("disabled")
             }
-        }
+
+            // minimal HTML-escape to avoid injection via service names
+            function escapeHtml(str) {
+                if (typeof str !== 'string') return str;
+                return str.replace(/[&<>"'`=\/]/g, function(s) {
+                return ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;',
+                    '/': '&#x2F;',
+                    '`': '&#x60;',
+                        '=': '&#x3D;'
+                    })[s];
+                });
+            }
+
+            // Form submit handler
+            async function updateProfile(event) {
+                event.preventDefault();
+                const theForm = form;
+                try {
+                    submitBtn.setAttribute('disabled', 'disabled');
+
+                    const fd = new FormData();
+
+                    // append simple fields
+                    fd.append('name', inputName.value || '');
+                    fd.append('location', inputLocation.value || '');
+                    fd.append('fee', inputFee.value || '');
+                    fd.append('discount', inputDiscount.value || '');
+                    fd.append('speciality', selectSpeciality.value || '');
+
+                    // append availability
+                    fd.append('availability', JSON.stringify(availabilityArr || []));
+
+                    // append services selected + prices
+                    // collect checked services
+                    const checked = Array.from(theForm.querySelectorAll('input[name="services[]"]:checked'))
+                        .map(ch => ch.value);
+
+                    // append services as JSON array of objects { name, price }
+                    const servicesArr = checked.map(name => {
+                        const priceInput = theForm.querySelector(
+                            `input[name="service_price[${CSS.escape(name)}]"]`);
+                        const price = priceInput ? Number(priceInput.value || 0) : 0;
+                        return {
+                            name,
+                            price
+                        };
+                    });
+
+                    fd.append('services', JSON.stringify(servicesArr));
+
+                    // append file if present
+                    const fileInput = document.getElementById('input-profile-image');
+                    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+                        fd.append('profile_image', fileInput.files[0]);
+                    }
+
+                    // send to API with credentials
+                    const res = await axios.post(`${API_HOST}/doctors/profile`, fd, {
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                    });
+
+                    if (res.data && res.data.status === 'success') {
+                        swal.fire("Update profile", res.data.message || "Profile updated successfully", "success");
+                        // reload to reflect changes (avatar etc.)
+                        await loadProfile();
+                    } else {
+                        swal.fire("Error", (res.data && res.data.message) ? res.data.message : "Update failed",
+                            "error");
+                    }
+                } catch (err) {
+                    console.error("Update error:", err);
+                    swal.fire("Error", err?.message || "Update failed", "error");
+                } finally {
+                    submitBtn.removeAttribute('disabled');
+                }
+            }
+
+            // initial load
+            loadProfile();
+        })();
     </script>
 
 @endsection

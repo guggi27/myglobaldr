@@ -56,7 +56,7 @@ Route::get("/admin/login", [AdminController::class, "login"]);
 Route::post("/admin/login", [AdminController::class, "do_login"]);
 
 Route::group([
-    "middleware" => ["auth"]
+    // "middleware" => ["auth"]
 ], function () {
     Route::post("/appointments/basic-info", [PatientController::class, "appointment_basic_info"]);
     Route::post("/appointments/change-status", [DoctorController::class, "change_appointment_status"]);

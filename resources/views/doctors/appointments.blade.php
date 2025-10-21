@@ -3,10 +3,6 @@
 
 @section('main')
 
-    @php
-        $user = auth()->user();
-    @endphp
-
     <style>
         .appointments-container {
             min-height: 100vh;
@@ -123,6 +119,7 @@
         .btn-details {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             text-decoration: none;
+            width: 100%;
             color: white;
             border: none;
             padding: 0.5rem 1rem;
@@ -444,277 +441,450 @@
         }
     </style>
 
-    <div class="appointments-container">
-        <div class="container">
-            <!-- Header -->
-            <div class="appointments-header">
-                <h1 class="appointments-title">My Appointments</h1>
-                <p class="text-muted mb-0">Manage and track all your patient appointments</p>
-            </div>
+    <script>
+        function getDummyAppointments() {
+            return [{
+                    id: 1,
+                    first_name: "John",
+                    last_name: "Smith",
+                    email: "john.smith@email.com",
+                    phone: "+1 (555) 123-4567",
+                    symptoms: "Persistent headaches, dizziness, and fatigue for the past week. Symptoms worsen in the evening.",
+                    reason_for_visit: "Regular checkup and consultation regarding recent headaches and sleep issues",
+                    slot: {
+                        day: "Monday",
+                        time: "10:00 AM",
+                    },
+                    services: [{
+                            name: "General Consultation",
+                            price: 1500
+                        },
+                        {
+                            name: "Blood Pressure Check",
+                            price: 500
+                        },
+                        {
+                            name: "ECG Test",
+                            price: 800
+                        },
+                    ],
+                    fee: 2000,
+                    discount: 200,
+                    total: 2600,
+                    payment_status: "Paid",
+                    attachments: ["medical_report_2024.pdf", "lab_results.pdf"],
+                    call_unique_id: "call_abc123",
+                    status: "approved",
+                },
+                {
+                    id: 2,
+                    first_name: "Sarah",
+                    last_name: "Johnson",
+                    email: "sarah.johnson@email.com",
+                    phone: "+1 (555) 987-6543",
+                    symptoms: "Chest pain and shortness of breath during physical activity",
+                    reason_for_visit: "Cardiac evaluation and stress test consultation",
+                    slot: {
+                        day: "Tuesday",
+                        time: "2:30 PM",
+                    },
+                    services: [{
+                            name: "Cardiac Consultation",
+                            price: 2500
+                        },
+                        {
+                            name: "Stress Test",
+                            price: 1200
+                        },
+                    ],
+                    fee: 2500,
+                    discount: 0,
+                    total: 3700,
+                    payment_status: "Pending",
+                    attachments: ["previous_ecg.pdf"],
+                    call_unique_id: "",
+                    status: "pending",
+                },
+                {
+                    id: 3,
+                    first_name: "Michael",
+                    last_name: "Brown",
+                    email: "michael.brown@email.com",
+                    phone: "+1 (555) 456-7890",
+                    symptoms: "Lower back pain radiating to legs, numbness in toes",
+                    reason_for_visit: "Follow-up appointment for chronic back pain management",
+                    slot: {
+                        day: "Wednesday",
+                        time: "11:15 AM",
+                    },
+                    services: [{
+                            name: "Orthopedic Consultation",
+                            price: 1800
+                        },
+                        {
+                            name: "X-Ray Review",
+                            price: 600
+                        },
+                        {
+                            name: "Physical Therapy Assessment",
+                            price: 900
+                        },
+                    ],
+                    fee: 1800,
+                    discount: 300,
+                    total: 3000,
+                    payment_status: "Paid",
+                    attachments: [
+                        "xray_spine_2024.pdf",
+                        "mri_report.pdf",
+                        "therapy_notes.pdf",
+                    ],
+                    call_unique_id: "call_xyz789",
+                    status: "done",
+                },
+                {
+                    id: 4,
+                    first_name: "Emily",
+                    last_name: "Davis",
+                    email: "emily.davis@email.com",
+                    phone: "+1 (555) 234-5678",
+                    symptoms: "Recurring migraines with visual disturbances",
+                    reason_for_visit: "Neurological consultation for migraine management",
+                    slot: {
+                        day: "Thursday",
+                        time: "9:00 AM",
+                    },
+                    services: [{
+                            name: "Neurological Consultation",
+                            price: 2200
+                        },
+                        {
+                            name: "Visual Field Test",
+                            price: 800
+                        },
+                    ],
+                    fee: 2200,
+                    discount: 100,
+                    total: 2900,
+                    payment_status: "Failed",
+                    attachments: [],
+                    call_unique_id: "",
+                    status: "cancelled",
+                },
+                {
+                    id: 5,
+                    first_name: "David",
+                    last_name: "Wilson",
+                    email: "david.wilson@email.com",
+                    phone: "+1 (555) 345-6789",
+                    symptoms: "Joint pain and stiffness, particularly in hands and knees",
+                    reason_for_visit: "Arthritis evaluation and treatment planning",
+                    slot: {
+                        day: "Friday",
+                        time: "3:45 PM",
+                    },
+                    services: [{
+                            name: "Rheumatology Consultation",
+                            price: 1900
+                        },
+                        {
+                            name: "Joint X-Ray",
+                            price: 700
+                        },
+                        {
+                            name: "Inflammation Markers Test",
+                            price: 600
+                        },
+                    ],
+                    fee: 1900,
+                    discount: 150,
+                    total: 3050,
+                    payment_status: "Paid",
+                    attachments: ["joint_xrays.pdf"],
+                    call_unique_id: "call_def456",
+                    status: "approved",
+                },
+            ];
+        }
 
-            <!-- Table View -->
-            <div class="table-view">
-                @if (count($data) > 0)
-                    <div class="table-container">
-                        <table class="appointments-table">
-                            <thead>
-                                <tr>
-                                    <th>Patient</th>
-                                    <th>Appointment</th>
-                                    <th>Status</th>
-                                    <th>Payment</th>
-                                    <th>Total</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($data as $d)
-                                    <tr>
-                                        <td>
-                                            <div class="fw-bold">{{ $d->first_name . ' ' . $d->last_name }}</div>
-                                            <small class="text-muted">{{ $d->email }}</small><br>
-                                            <small class="text-muted">{{ $d->phone }}</small>
-                                        </td>
-                                        <td>
-                                            @if (!is_null($d->slot))
-                                                <div class="fw-bold">{{ $d->slot['day'] }}</div>
-                                                <small class="text-muted">{{ $d->slot['time'] }}</small>
-                                            @else
-                                                <small class="text-muted">No slot assigned</small>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($user->type == 'doctor')
-                                                <select class="status-select"
-                                                    onchange="onchangeStatus(event, '{{ $d->id }}');">
-                                                    <option value="">Select status</option>
-                                                    <option value="pending" {{ $d->status == 'pending' ? 'selected' : '' }}>
-                                                        Pending</option>
-                                                    <option value="cancelled"
-                                                        {{ $d->status == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
-                                                    <option value="approved"
-                                                        {{ $d->status == 'approved' ? 'selected' : '' }}>Approved</option>
-                                                    <option value="done" {{ $d->status == 'done' ? 'selected' : '' }}>Done
-                                                    </option>
-                                                </select>
-                                            @else
-                                                <span class="status-badge status-{{ $d->status }}">
-                                                    {{ $d->status ?? 'Unknown' }}
-                                                </span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <span class="payment-status payment-{{ strtolower($d->payment_status) }}">
-                                                {{ $d->payment_status }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="fw-bold">{{ $d->total }} PKR</div>
-                                            @if ($d->discount > 0)
-                                                <small class="text-success">Discount: {{ $d->discount }} PKR</small>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <div style="display: flex; flex-direction: column; width: max-content; gap:3px">
-                                                <button class="btn-details" onclick="showDetails('{{ $d->id }}')">
-                                                    <i class="fas fa-eye me-1"></i>
-                                                    Details
-                                                </button>
-                                                <a href="{{ url('/calls/' . $d->call_unique_id . '/detail') }}"
-                                                    class="btn-details"
-                                                    style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+        // State management for appointments
+        let appointments = [];
+        let currentPage = 1;
+        let totalPages = 1;
+        let userType = localStorage.getItem('userType'); // Store user type in localStorage on login
+
+        // Fetch appointments from API
+        async function fetchAppointments(page = 1) {
+            try {
+                // Show loading state
+                document.querySelector('.appointments-container').innerHTML = `
+                    <div class="container">
+                        <div class="appointments-header">
+                            <h1 class="appointments-title">My Appointments</h1>
+                            <p class="text-muted mb-0">Loading appointments...</p>
+                        </div>
+                        <div class="table-container text-center py-5">
+                            <i class="fas fa-spinner fa-spin fa-3x text-muted"></i>
+                        </div>
+                    </div>
+                `;
+
+                // Fetch data from API
+                // const response = await fetch(`${env('API_HOST')}/appointments?page=${page}`, {
+                //     method: 'GET',
+                //     headers: {
+                //         'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                //         'Content-Type': 'application/json'
+                //     }
+                // });
+
+                // if (!response.ok) {
+                //     throw new Error(`HTTP error! status: ${response.status}`);
+                // }
+
+                // const data = await response.json();
+
+                // Update state
+                appointments = getDummyAppointments();;
+                currentPage = 1;
+                totalPages = 2;
+
+                // Render appointments
+                renderAppointments();
+
+            } catch (error) {
+                console.error('Error fetching appointments:', error);
+
+                // Show error state
+                document.querySelector('.appointments-container').innerHTML = `
+                    <div class="container">
+                        <div class="appointments-header">
+                            <h1 class="appointments-title">My Appointments</h1>
+                            <p class="text-muted mb-0">Manage and track all your patient appointments</p>
+                        </div>
+                        <div class="empty-state">
+                            <div class="empty-icon text-danger">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <h3 class="text-muted">Error Loading Appointments</h3>
+                            <p class="text-muted">${error.message}</p>
+                            <button class="btn-details mt-3" onclick="fetchAppointments(${currentPage})">
+                                <i class="fas fa-sync-alt me-2"></i>Retry
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Render appointments to DOM
+        function renderAppointments() {
+            const container = document.querySelector('.appointments-container');
+
+            if (!appointments.length) {
+                container.innerHTML = `
+                    <div class="container">
+                        <div class="appointments-header">
+                            <h1 class="appointments-title">My Appointments</h1>
+                            <p class="text-muted mb-0">Manage and track all your patient appointments</p>
+                        </div>
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-calendar-times"></i>
+                            </div>
+                            <h3 class="text-muted">No Appointments Found</h3>
+                            <p class="text-muted">You don't have any appointments scheduled at the moment.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Generate table rows HTML
+            const appointmentsHTML = appointments.map(appointment => `
+                <tr>
+                    <td>
+                        <div class="fw-bold">${appointment.first_name} ${appointment.last_name}</div>
+                        <small class="text-muted">${appointment.email}</small><br>
+                        <small class="text-muted">${appointment.phone}</small>
+                    </td>
+                    <td>
+                        ${appointment.slot ? `
+                                            <div class="fw-bold">${appointment.slot.day}</div>
+                                            <small class="text-muted">${appointment.slot.time}</small>
+                                        ` : '<small class="text-muted">No slot assigned</small>'}
+                    </td>
+                    <td>
+                        ${userType === 'doctor' ? renderStatusSelect(appointment) : renderStatusBadge(appointment)}
+                    </td>
+                    <td>
+                        <span class="payment-status payment-${appointment.payment_status.toLowerCase()}">
+                            ${appointment.payment_status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="fw-bold">${appointment.total} PKR</div>
+                        ${appointment.discount > 0 ? `
+                                            <small class="text-success">Discount: ${appointment.discount} PKR</small>
+                                        ` : ''}
+                    </td>
+                    <td>
+                        <div style="display: flex; flex-direction: column; width: max-content; gap:3px">
+                            <button class="btn-details" onclick="showDetails('${appointment.id}')">
+                                <i class="fas fa-eye me-1"></i>
+                                Details
+                            </button>
+                            ${appointment.call_unique_id ? `
+                                                <a href="/calls/${appointment.call_unique_id}/detail" class="btn-details" 
+                                                   style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
                                                     <i class="fas fa-video me-2"></i>
                                                     Join Call
                                                 </a>
-                                            </div>
-                                        </td>
+                                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render full content
+            container.innerHTML = `
+                <div class="container">
+                    <div class="appointments-header">
+                        <h1 class="appointments-title">My Appointments</h1>
+                        <p class="text-muted mb-0">Manage and track all your patient appointments</p>
+                    </div>
+                    <div class="table-view">
+                        <div class="table-container">
+                            <table class="appointments-table">
+                                <thead>
+                                    <tr>
+                                        <th>Patient</th>
+                                        <th>Appointment</th>
+                                        <th>Status</th>
+                                        <th>Payment</th>
+                                        <th>Total</th>
+                                        <th>Actions</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-
-                        <!-- Pagination -->
-                        <div class="pagination-wrapper">
-                            {!! $links !!}
-                        </div>
-                    </div>
-                @else
-                    <!-- Empty State -->
-                    <div class="empty-state">
-                        <div class="empty-icon">
-                            <i class="fas fa-calendar-times"></i>
-                        </div>
-                        <h3 class="text-muted">No Appointments Found</h3>
-                        <p class="text-muted">You don't have any appointments scheduled at the moment.</p>
-                    </div>
-                @endif
-            </div>
-
-            <!-- Detail View (Hidden by default) -->
-            <div class="detail-view">
-                @foreach ($data as $d)
-                    <div class="appointment-detail" id="detail-{{ $d->id }}" style="display: none;">
-                        <button class="back-button" onclick="showTable()">
-                            <i class="fas fa-arrow-left"></i>
-                            Back to Appointments
-                        </button>
-
-                        <div class="appointment-card">
-                            <!-- Appointment Header -->
-                            <div class="appointment-header">
-                                <div class="patient-info">
-                                    <div class="patient-name">
-                                        <i class="fas fa-user-circle me-2"></i>
-                                        {{ $d->first_name . ' ' . $d->last_name }}
-                                    </div>
-                                    <div class="patient-contact">
-                                        <div><i class="fas fa-envelope me-2"></i>{{ $d->email }}</div>
-                                        <div><i class="fas fa-phone me-2"></i>{{ $d->phone }}</div>
-                                    </div>
-                                </div>
-                                <div class="appointment-status">
-                                    @if ($user->type == 'doctor')
-                                        <select class="status-select"
-                                            onchange="onchangeStatus(event, '{{ $d->id }}');">
-                                            <option value="">Select status</option>
-                                            <option value="pending" {{ $d->status == 'pending' ? 'selected' : '' }}>Pending
-                                            </option>
-                                            <option value="cancelled" {{ $d->status == 'cancelled' ? 'selected' : '' }}>
-                                                Cancelled</option>
-                                            <option value="approved" {{ $d->status == 'approved' ? 'selected' : '' }}>
-                                                Approved</option>
-                                            <option value="done" {{ $d->status == 'done' ? 'selected' : '' }}>Done
-                                            </option>
-                                        </select>
-                                    @else
-                                        <span class="status-badge status-{{ $d->status }}">
-                                            {{ $d->status ?? 'Unknown' }}
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <!-- Appointment Details -->
-                            <div class="appointment-details">
-                                <!-- Medical Information -->
-                                <div class="detail-section">
-                                    <div class="detail-title">
-                                        <i class="fas fa-stethoscope me-2"></i>
-                                        Medical Information
-                                    </div>
-                                    <div class="detail-content">
-                                        @if ($d->symptoms)
-                                            <div class="mb-3">
-                                                <strong>Symptoms:</strong><br>
-                                                {{ $d->symptoms }}
-                                            </div>
-                                        @endif
-                                        @if ($d->reason_for_visit)
-                                            <div>
-                                                <strong>Reason for visit:</strong><br>
-                                                {{ $d->reason_for_visit }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <!-- Appointment Slot -->
-                                @if (!is_null($d->slot))
-                                    <div class="detail-section">
-                                        <div class="detail-title">
-                                            <i class="fas fa-calendar-alt me-2"></i>
-                                            Appointment Slot
-                                        </div>
-                                        <div class="slot-info">
-                                            <i class="fas fa-clock me-2"></i>
-                                            {{ $d->slot['day'] . ' at ' . $d->slot['time'] }}
-                                        </div>
-                                    </div>
-                                @endif
-
-                                <!-- Services -->
-                                @if (count($d->services) > 0)
-                                    <div class="detail-section">
-                                        <div class="detail-title">
-                                            <i class="fas fa-list-ul me-2"></i>
-                                            Services
-                                        </div>
-                                        <div class="detail-content">
-                                            @foreach ($d->services as $service)
-                                                <div class="service-item">
-                                                    <span class="service-name">{{ $service['name'] }}</span>
-                                                    <span class="service-price">{{ $service['price'] }} PKR</span>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-
-                                <!-- Financial Summary -->
-                                <div class="detail-section financial-summary">
-                                    <div class="detail-title">
-                                        <i class="fas fa-calculator me-2"></i>
-                                        Financial Summary
-                                    </div>
-                                    <div class="detail-content">
-                                        <div class="financial-row">
-                                            <span>Consultation Fee:</span>
-                                            <span>{{ $d->fee }} PKR</span>
-                                        </div>
-                                        <div class="financial-row">
-                                            <span>Discount:</span>
-                                            <span>{{ $d->discount }} PKR</span>
-                                        </div>
-                                        <div class="financial-row">
-                                            <span>Total Amount:</span>
-                                            <span>{{ $d->total }} PKR</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Actions and Additional Info -->
-                            <div class="appointment-actions">
-                                <div class="d-flex align-items-center gap-3 flex-wrap">
-                                    <!-- Payment Status -->
-                                    <div>
-                                        <small class="text-muted d-block mb-1">Payment Status</small>
-                                        <span class="payment-status payment-{{ strtolower($d->payment_status) }}">
-                                            {{ $d->payment_status }}
-                                        </span>
-                                    </div>
-
-                                    <!-- Call Link -->
-                                    @if (!empty($d->call_unique_id))
-                                        <a href="{{ url('/calls/' . $d->call_unique_id . '/detail') }}" class="call-link">
-                                            <i class="fas fa-video me-2"></i>
-                                            Join Call
-                                        </a>
-                                    @endif
-                                </div>
-
-                                <!-- Attachments -->
-                                @if (count($d->attachments) > 0)
-                                    <div>
-                                        <small class="text-muted d-block mb-2">Attachments</small>
-                                        @foreach ($d->attachments as $attachment)
-                                            <a href="{{ url('/appointments/attachment/' . $d->id . '/' . basename($attachment)) }}"
-                                                target="_blank" class="attachment-link">
-                                                <i class="fas fa-paperclip me-2"></i>
-                                                {{ basename($attachment) }}
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                @endif
+                                </thead>
+                                <tbody id="appointmentsTableBody">
+                                    ${appointmentsHTML}
+                                </tbody>
+                            </table>
+                            
+                            <div class="pagination-wrapper mt-4" id="paginationContainer">
+                                ${renderPagination()}
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
+                    
+                    <!-- Detail view container -->
+                    <div class="detail-view">
+                        <!-- Details will be dynamically inserted here -->
+                    </div>
+                </div>
+            `;
+        }
 
-    <script>
+        // Render pagination controls
+        function renderPagination() {
+            if (totalPages <= 1) return '';
+
+            let pages = [];
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(`
+                    <button class="btn ${i === currentPage ? 'btn-primary' : 'btn-outline-primary'} mx-1"
+                            onclick="fetchAppointments(${i})">
+                        ${i}
+                    </button>
+                `);
+            }
+
+            return pages.join('');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAppointments(1);
+        });
+
+        // Update the existing onchangeStatus function
+        async function onchangeStatus(event, id) {
+            const value = event.currentTarget.value || "";
+            const selectElement = event.currentTarget;
+
+            try {
+                selectElement.disabled = true;
+                const originalHtml = selectElement.innerHTML;
+                selectElement.innerHTML = '<option>Updating...</option>';
+
+                const response = await fetch(`${env('API_HOST')}/appointments/change-status`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id,
+                        status: value
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to update status');
+                }
+
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    // Update local state
+                    appointments = appointments.map(app =>
+                        app.id === id ? {
+                            ...app,
+                            status: value
+                        } : app
+                    );
+
+                    // Re-render appointments
+                    renderAppointments();
+
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire("Success", "Appointment status updated successfully", "success");
+                    }
+                } else {
+                    throw new Error(data.message || 'Failed to update status');
+                }
+            } catch (error) {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire("Error", error.message, "error");
+                }
+                // Restore original state
+                selectElement.innerHTML = originalHtml;
+            } finally {
+                selectElement.disabled = false;
+            }
+        }
+
+        // Helper functions
+        function renderStatusSelect(appointment) {
+            return `
+                <select class="status-select" onchange="onchangeStatus(event, '${appointment.id}')">
+                    <option value="">Select status</option>
+                    <option value="pending" ${appointment.status === 'pending' ? 'selected' : ''}>Pending</option>
+                    <option value="cancelled" ${appointment.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                    <option value="approved" ${appointment.status === 'approved' ? 'selected' : ''}>Approved</option>
+                    <option value="done" ${appointment.status === 'done' ? 'selected' : ''}>Done</option>
+                </select>
+            `;
+        }
+
+        function renderStatusBadge(appointment) {
+            return `
+                <span class="status-badge status-${appointment.status}">
+                    ${appointment.status || 'Unknown'}
+                </span>
+            `;
+        }
+
         function showDetails(appointmentId) {
             // Hide table view
             document.querySelector('.table-view').style.display = 'none';
@@ -738,70 +908,51 @@
             // Show table view
             document.querySelector('.table-view').style.display = 'block';
         }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAppointments(1);
+        });
     </script>
 
-    @if ($user->type == 'doctor')
-        <script>
-            async function onchangeStatus(event, id) {
-                const value = event.currentTarget.value || "";
-                const selectElement = event.currentTarget;
+    <div class="appointments-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="appointments-header">
+                <h1 class="appointments-title">My Appointments</h1>
+                <p class="text-muted mb-0">Manage and track all your patient appointments</p>
+            </div>
 
-                try {
-                    // Show loading state
-                    selectElement.disabled = true;
-                    const originalHtml = selectElement.innerHTML;
-                    selectElement.innerHTML = '<option>Updating...</option>';
+            <!-- Table View -->
+            <div class="table-view">
+                <div class="table-container">
+                    <table class="appointments-table">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Appointment</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTableBody">
+                            <!-- Data will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
 
-                    const formData = new FormData();
-                    formData.append("id", id);
-                    formData.append("status", value);
+                    <div class="pagination-wrapper mt-4" id="paginationContainer">
+                        <!-- Pagination will be inserted here -->
+                    </div>
+                </div>
+            </div>
 
-                    const response = await axios.post(
-                        baseUrl + "/appointments/change-status",
-                        formData
-                    );
-
-                    if (response.data.status == "success") {
-                        // Show success notification
-                        if (typeof swal !== 'undefined') {
-                            swal.fire("Success", "Appointment status updated successfully", "success");
-                        }
-
-                        // Update all status selects with the same appointment ID
-                        document.querySelectorAll(`select[onchange*="${id}"]`).forEach(function(select) {
-                            if (select !== selectElement) {
-                                select.innerHTML = originalHtml;
-                                select.value = value;
-                            }
-                        });
-
-                        // Update status badges if any
-                        document.querySelectorAll('.status-badge').forEach(function(badge) {
-                            if (badge.closest('tr') && badge.closest('tr').querySelector(
-                                    `button[onclick*="${id}"]`)) {
-                                badge.className = `status-badge status-${value}`;
-                                badge.textContent = value.charAt(0).toUpperCase() + value.slice(1);
-                            }
-                        });
-
-                    } else {
-                        if (typeof swal !== 'undefined') {
-                            swal.fire("Error", response.data.message || "Failed to update status", "error");
-                        }
-                        // Restore original state
-                        selectElement.innerHTML = originalHtml;
-                    }
-                } catch (exp) {
-                    if (typeof swal !== 'undefined') {
-                        swal.fire("Error", exp.message || "Network error occurred", "error");
-                    }
-                    // Restore original state
-                    selectElement.innerHTML = originalHtml;
-                } finally {
-                    selectElement.disabled = false;
-                }
-            }
-        </script>
-    @endif
+            <!-- Detail View Container -->
+            <div class="detail-view">
+                <!-- Details will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
 
 @endsection

@@ -1,7 +1,7 @@
-@extends('layouts/app')
+@extends('layouts/base')
 @section('title', config('config.app_name') . ' | Login')
 
-@section('main')
+@section('body')
 
     <style>
         body {
@@ -115,8 +115,10 @@
                     form.submit.setAttribute("disabled", "disabled")
 
                     const response = await axios.post(
-                        "{{ env('API_HOST') }}/doctors/login",
-                        formData, {
+                        "{{ env('API_HOST') }}/auth/v1/doctors/login", {
+                            email: formData.get('email'),
+                            password: formData.get('password')
+                        }, {
                             withCredentials: true
                         }
                     )
@@ -129,8 +131,7 @@
                         swal.fire("Error", response.data.message, "error")
                     }
                 } catch (exp) {
-                    console.log(exp.message)
-                    swal.fire("Error", exp.message, "error")
+                    swal.fire("Error", exp?.response.data.message ?? exp.message, "error")
                 } finally {
                     form.submit.removeAttribute("disabled")
                 }

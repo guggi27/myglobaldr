@@ -71,33 +71,7 @@ class DoctorController extends Controller
     public function appointments()
     {
         set_timezone();
-        $user = auth()->user();
-        // if ($user->type != "doctor")
-        //     abort(401);
-
-        $appointment = new Appointment();
-
-        $response = [
-            "data" => [],
-            "pages" => 0,
-            "links" => ""
-        ];
-
-        if ($user->type == "doctor") {
-            $appointment->doctor_user_id = $user->id;
-            $response = $appointment->fetch_by_doctor();
-        } else if ($user->type == "patient") {
-            $appointment->user_id = $user->id;
-            $response = $appointment->fetch_by_user();
-        }
-
-        // Add dummy data for preview if no real data exists
-        if (empty($response['data']) || request()->has('preview')) {
-            $response['data'] = $this->getDummyAppointments();
-            $response['links'] = ''; // No pagination for dummy data
-        }
-
-        return view("doctors/appointments", $response);
+        return view("doctors/appointments");
     }
 
     private function getDummyAppointments()
@@ -571,7 +545,8 @@ class DoctorController extends Controller
         return view("admin/doctors/index");
     }
 
-    public function details($id){
+    public function details($id)
+    {
         return view('admin/doctors/details/index', ['id' => $id]);
     }
 

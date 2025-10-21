@@ -62,7 +62,7 @@
 
                 function listenForCalls() {
 
-                    ref = db.ref("calls/" + user.id);
+                    ref = db.ref("calls/" + user);
 
                     // Listen for answer
                     ref.on("value", async snapshot => {
@@ -137,7 +137,7 @@
                         )
 
                         if (response.data.status == "success") {
-                            db.ref("calls/" + user.id).remove();
+                            db.ref("calls/" + user).remove();
                             document.getElementById('incomingCallModal').classList.add('hidden');
                         } else {
                             swal.fire("Error", response.data.message, "error")
@@ -317,27 +317,8 @@
                     <a href="tel:{{ fetch_setting('emergency_number') }}" class="btn no-border bold me-2 hide-mobile"
                         style="background-color: #feb4cf;">{{ fetch_setting('emergency_number') }}</a>
 
-                    @if (auth()->check())
-                        <div class="dropdown">
-                            <button class="btn btn-primary bg-primary-gradient dropdown-toggle no-border" type="button"
-                                id="dropText1" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ auth()->user()->name }}
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropText1">
-                                <!-- <li><h6 class="dropdown-header"></h6></li> -->
-                                <!-- <li><span class="dropdown-item-text">This is plain text inside the menu.</span></li> -->
-                                <li><a class="dropdown-item" href="{{ url('/appointments') }}">Appointments</a></li>
-                                <li><a class="dropdown-item" href="{{ url('/profile-settings') }}">Profile</a></li>
-                                <!-- <li><a class="dropdown-item" href="#action2">Another action</a></li> -->
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a href="{{ url('/logout') }}" class="dropdown-item-text px-3">Logout</a></li>
-                            </ul>
-                        </div>
-                    @else
-                        <a href="{{ url('/login') }}" class="btn bg-primary-gradient no-border white bold">Join us</a>
-                    @endif
+                    <div id="auth-container"></div>
+
                 </div>
 
             </div>
@@ -509,6 +490,72 @@
     <script src="{{ asset('/js/script.js?v=' . time()) }}"></script>
 
     @yield('script')
+    <script>
+        // Fetch authenticated user info from backend
+        async function fetchUser() {
+            try {
+                const response = await axios.get('{{ env('API_HOST') }}/doctors/info', {
+                    withCredentials: true, // Important for sending cookies
+                });
+
+                if (response.data && response.data.success && response.data.data.username) {
+                    user = response.data.data.username;
+                    console.log(user, response.data.data.username)
+                    renderUserUI(user);
+                } else {
+                    renderGuestUI();
+                }
+            } catch (err) {
+                console.error("Error fetching user:", err);
+                renderGuestUI();
+            }
+        }
+
+        // Render UI for logged-in users
+        function renderUserUI(user) {
+            const authContainer = document.getElementById("auth-container");
+            authContainer.innerHTML = `
+      <div class="dropdown">
+        <button class="btn btn-primary bg-primary-gradient dropdown-toggle no-border" 
+                type="button" id="dropText1" data-bs-toggle="dropdown" aria-expanded="false">
+          ${user || "User"}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropText1">
+          <li><a class="dropdown-item" href="${baseUrl}/appointments">Appointments</a></li>
+          <li><a class="dropdown-item" href="${baseUrl}/profile-settings">Profile</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><button class="dropdown-item-text px-3 btn" onclick="logout()">Logout</button></li>
+        </ul>
+      </div>
+    `;
+        }
+
+        // Render UI for guests (not logged in)
+        function renderGuestUI() {
+            const authContainer = document.getElementById("auth-container");
+            authContainer.innerHTML = `
+      <a href="${baseUrl}/login" class="btn bg-primary-gradient no-border white bold">
+        Join us
+      </a>
+    `;
+        }
+
+        // Logout function — calls backend logout route
+        async function logout() {
+            try {
+                await axios.post('{{ env('API_HOST') }}/auth/v1/doctors/logout', {}, {
+                    withCredentials: true
+                });
+                user = null;
+                renderGuestUI();
+            } catch (err) {
+                console.error("Logout failed:", err);
+            }
+        }
+
+        // Run immediately when page loads
+        fetchUser();
+    </script>
 </body>
 
 </html>
