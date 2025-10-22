@@ -208,7 +208,7 @@ class UserController extends Controller
 
     public function profile_settings()
     {
-        return view("profile-settings", );
+        return view("profile-settings");
     }
 
     public function logout()
