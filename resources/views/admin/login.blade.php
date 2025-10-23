@@ -159,9 +159,9 @@
                         Copyright © {{ now()->year }} - {{ config('config.app_name') }}
                     </p>
             </section>
-            <section class="auth-img-container">
+            {{-- <section class="auth-img-container">
                 <img src="{{ asset('/administrator/img/admin/doctors-admin-login.png') }}" alt="" />
-            </section>
+            </section> --}}
         </div>
         </div>
     </main><!-- End #main -->
@@ -189,16 +189,40 @@
         function onInit() {
             const form = document.getElementById("login-form");
             if (!form) return alert('No form found');
+
             const baseUrl = document.getElementById("baseUrl").value;
+            let isSubmitting = false; // Prevent double submit
 
             async function doLogin(event) {
                 event.preventDefault();
+                if (isSubmitting) return; // Skip if already submitting
+                isSubmitting = true;
+
                 const submitButton = form.querySelector('button[type="submit"]');
                 submitButton.setAttribute("disabled", "disabled");
 
                 const username = document.getElementById("username").value;
                 const password = document.getElementById("password").value;
                 const csrfToken = form.querySelector('input[name="_token"]').value;
+
+                // Show a nice loading alert
+                Swal.fire({
+                    title: "Logging you in...",
+                    html: '<div style="display:flex;justify-content:center;align-items:center;gap:10px;overflow:hidden;"><div class="spinner" style="width:24px;height:24px;border:3px solid #ccc;border-top:3px solid #3085d6;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Please wait</span></div>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        // Spinner animation
+                        const style = document.createElement('style');
+                        style.innerHTML = `
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `;
+                        document.head.appendChild(style);
+                    }
+                });
 
                 try {
                     const response = await axios.post('{{ env('API_HOST') }}/auth/v1/admin/login', {
@@ -208,15 +232,31 @@
                         withCredentials: true
                     });
 
+                    Swal.close(); // Close loading alert
+
                     if (response.data.success) {
-                        window.location.href = `${baseUrl}/admin`;
+                        Swal.fire({
+                            icon: "success",
+                            title: "Login Successful",
+                            text: "Redirecting to admin panel...",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        setTimeout(() => {
+                            window.location.href = `${baseUrl}/admin`;
+                        }, 1500);
                     } else {
-                        Swal.fire("Error", response.data.message, "error");
+                        Swal.fire("Error", response.data.message || "Invalid login details", "error");
                     }
                 } catch (err) {
-                    Swal.fire("Error", err.message, "error");
+                    Swal.close(); // Close loading alert before showing error
+                    Swal.fire("Error", err?.response?.data?.message ?? err?.message ?? "Please try again", "error");
+                    if (err?.response?.status === 401) {
+                        window.location.href = '{{ url('/admin/login') }}';
+                    }
                 } finally {
                     submitButton.removeAttribute("disabled");
+                    isSubmitting = false;
                 }
             }
 

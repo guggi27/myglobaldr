@@ -193,6 +193,23 @@
 
         async function logout() {
             try {
+                Swal.fire({
+                    title: "Logging out...",
+                    html: '<div style="display:flex;justify-content:center;align-items:center;gap:10px;overflow:hidden;"><div class="spinner" style="width:24px;height:24px;border:3px solid #ccc;border-top:3px solid #3085d6;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Please wait</span></div>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        // Spinner animation
+                        const style = document.createElement('style');
+                        style.innerHTML = `
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `;
+                        document.head.appendChild(style);
+                    }
+                });
                 const response = await axios.delete(
                     '{{ env('API_HOST') }}/auth/v1/admin/logout', {
                         withCredentials: true
@@ -203,7 +220,8 @@
                     swal.fire("Error", response.data.message, "error")
                 }
             } catch (exp) {
-                swal.fire("Error", exp.message, "error")
+                swal.fire("Error", exp ? exp?.response.data.message ?? exp.message : "Some technical error occured",
+                    "error")
             }
         }
 

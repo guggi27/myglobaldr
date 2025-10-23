@@ -703,7 +703,7 @@
                     }
                 } catch (err) {
                     console.error("Update error:", err);
-                    swal.fire("Error", err?.message || "Update failed", "error");
+                    swal.fire("Error", err?.response?.data?.message || "Update failed", "error");
                 } finally {
                     submitBtn.removeAttribute('disabled');
                 }

@@ -7,15 +7,17 @@
         <div class="row g-4">
 
             <div class="col-lg-4 col-md-6 col-12">
-                <div class="info-card">
-                    <div class="card-icon">
-                        <i class="fa-solid fa-user-doctor" style="color:#4154f1;"></i>
+                <a href="/admin/doctors">
+                    <div class="info-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-user-doctor" style="color:#4154f1;"></i>
+                        </div>
+                        <div>
+                            <h5>Doctors</h5>
+                            <h6 id="doctors-number"></h6>
+                        </div>
                     </div>
-                    <div>
-                        <h5>Doctors</h5>
-                        <h6 id="doctors-number"></h6>
-                    </div>
-                </div>
+                </a>
             </div>
 
             <div class="col-lg-4 col-md-6 col-12">
@@ -103,7 +105,10 @@
                     Swal.fire("Error", data.message, "error");
                 }
             } catch (err) {
-                Swal.fire("Error", err.message, "error");
+                // console.log(err)
+                Swal.fire("Error", err ? err?.response?.data.message ?? err?.message : 'Please login again', "error");
+                if (err?.response?.status === 401)
+                    window.location.href = '{{ url('/admin/login') }}';
             } finally {
                 // submitButton.removeAttribute("disabled");
             }

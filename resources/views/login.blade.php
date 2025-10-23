@@ -3,9 +3,9 @@
 
 @section('body')
 
+
     <style>
         body {
-            /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
             min-height: 100vh;
         }
 
@@ -25,7 +25,7 @@
         .login-title {
             font-weight: 700;
             color: #203a43;
-            margin-bottom: 1.5rem;
+            /* margin-bottom: 1.5rem; */
         }
 
         .form-label {
@@ -46,7 +46,6 @@
         }
 
         .btn-gradient {
-            /* background: linear-gradient(90deg, #007bff, #00c6ff); */
             border: none;
             color: white;
             font-weight: 600;
@@ -57,7 +56,6 @@
         }
 
         .btn-gradient:hover {
-            /* background: linear-gradient(90deg, #0062cc, #0099cc); */
             transform: translateY(-2px);
         }
 
@@ -73,29 +71,45 @@
         .forgot-link:hover {
             text-decoration: underline;
         }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
+
+    <input type="hidden" id="baseUrl" value="{{ url('/') }}">
 
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 90vh;">
         <div class="col-md-5">
             <div class="login-card">
-                <div class="text-center">
+                <div class="auth-logo mb-2">
+                    <img src="{{ asset('/administrator/img/admin/logo.png') }}" alt="" />
+                </div>
+                <div class="text-start">
                     <h2 class="login-title">Welcome Back</h2>
                     <p class="text-muted">Sign in to continue to {{ config('config.app_name') }}</p>
                 </div>
-                <form class="mt-4">
+                <form id="login-form" class="mt-4">
+                    {{ csrf_field() }}
                     <div class="form-group mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" required class="form-control" placeholder="Enter your email" />
+                        <input type="email" id="email" name="email" required class="form-control"
+                            placeholder="Enter your email" />
                     </div>
 
                     <div class="form-group mb-4">
                         <label class="form-label">Password</label>
-                        <input type="password" name="password" required class="form-control"
+                        <input type="password" id="password" name="password" required class="form-control"
                             placeholder="Enter your password" />
                     </div>
 
-                    <button type="submit" name="submit" class="bg-primary-gradient btn-gradient">Sign
-                        In</button>
+                    <button type="submit" name="submit" class="bg-primary-gradient btn-gradient">Sign In</button>
 
                     <a href="{{ url('/forgot-password') }}" class="forgot-link">Forgot your password?</a>
                 </form>
@@ -103,41 +117,76 @@
         </div>
     </div>
 
+    <script src="{{ asset('/js/axios.min.js') }}"></script>
+    <script src="{{ asset('/js/sweetalert2@11.js') }}"></script>
+
     <script>
         (function() {
-            const form = document.querySelector("form");
+            const form = document.getElementById("login-form");
+            if (!form) return;
+            const baseUrl = document.getElementById("baseUrl").value;
+            let isSubmitting = false;
+
             async function doLogin(event) {
-                event.preventDefault()
-                const form = event.target
+                event.preventDefault();
+                if (isSubmitting) return;
+                isSubmitting = true;
+
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.setAttribute("disabled", "disabled");
+
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+
+                // Show loading SweetAlert
+                Swal.fire({
+                    title: "Signing you in...",
+                    html: '<div style="display:flex;justify-content:center;align-items:center;gap:10px;"><div class="spinner" style="width:24px;height:24px;border:3px solid #ccc;border-top:3px solid #3085d6;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Please wait</span></div>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
 
                 try {
-                    const formData = new FormData(form)
-                    form.submit.setAttribute("disabled", "disabled")
-
                     const response = await axios.post(
                         "{{ env('API_HOST') }}/auth/v1/doctors/login", {
-                            email: formData.get('email'),
-                            password: formData.get('password')
+                            email,
+                            password
                         }, {
                             withCredentials: true
                         }
-                    )
+                    );
+
+                    Swal.close();
 
                     if (response.data.success) {
-                        const urlSearchParams = new URLSearchParams(window.location.search)
-                        const redirect = urlSearchParams.get("redirect") || ""
-                        window.location.href = redirect || baseUrl
+                        Swal.fire({
+                            icon: "success",
+                            title: "Login Successful",
+                            text: "Redirecting to dashboard...",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        const redirect = new URLSearchParams(window.location.search).get("redirect");
+                        setTimeout(() => {
+                            window.location.href = redirect || baseUrl;
+                        }, 1500);
                     } else {
-                        swal.fire("Error", response.data.message, "error")
+                        Swal.fire("Error", response.data.message || "Invalid login details", "error");
                     }
-                } catch (exp) {
-                    swal.fire("Error", exp?.response.data.message ?? exp.message, "error")
+                } catch (err) {
+                    Swal.close();
+                    Swal.fire("Error", err?.response?.data?.message ?? err?.message ?? "Something went wrong",
+                        "error");
                 } finally {
-                    form.submit.removeAttribute("disabled")
+                    submitButton.removeAttribute("disabled");
+                    isSubmitting = false;
                 }
             }
-            form.addEventListener("submit", doLogin)
-        })()
+
+            form.addEventListener("submit", doLogin);
+        })();
     </script>
+
 
 @endsection

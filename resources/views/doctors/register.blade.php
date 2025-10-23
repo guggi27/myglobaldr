@@ -22,44 +22,6 @@
     <link rel="stylesheet" href="{{ asset('/css/styles.css?v=' . time()) }}" />
 </head>
 <style>
-    .custom-file-input {
-        display: none;
-        /* hide default */
-    }
-
-    .custom-file-label {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .custom-file-label i {
-        font-size: 1rem;
-        color: #ccc;
-        /* lighter tint */
-        transition: color 0.3s;
-    }
-
-    .custom-file-label:hover i {
-        color: #fff;
-        /* highlight on hover */
-    }
-
-    .custom-file-label {
-        width: 100%;
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.2);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-    .custom-file-label:hover {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
     /* Select box text + placeholder */
     select {
         background: rgba(255, 255, 255, 0.2);
@@ -89,7 +51,6 @@
     input::placeholder {
         color: lightgray !important;
     }
-
 
 
     label,
@@ -920,65 +881,171 @@
 
             <h4 style="border-bottom: 1px solid lightgray;" class="mt-5 mb-4 text-light">Documents Upload</h4>
 
+
+
+            <!-- Bootstrap CSS (if not already included) -->
+            {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+
+            <style>
+                .file-name-wrapper {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background: #f8f9fa;
+                    border: 1px solid #dee2e6;
+                    border-radius: 6px;
+                    padding: 0.4rem 0.7rem;
+                    margin-top: 6px;
+                    font-size: 0.9rem;
+                }
+
+                .file-name-wrapper .file-name {
+                    color: black;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    flex-grow: 1;
+                }
+
+                .file-name-wrapper .clear-btn {
+                    margin-left: 10px;
+                }
+            </style>
+
+            <!-- MEDICAL LICENSE -->
             <div class="mb-3">
-                <label class="form-label custom-file-label" for="medical_license">
+                <label class="form-label" for="medical_license">
                     Medical License
                     <i class="bi bi-upload ms-2"></i>
                 </label>
-                <input class="form-control custom-file-input" type="file" id="medical_license"
-                    name="medical_license" accept=".pdf,.docx,.txt">
-                <small class="form-text">
+                <input class="form-control" type="file" id="medical_license" name="medical_license"
+                    accept=".pdf,.docx,.txt">
+                <div class="file-name-wrapper d-none">
+                    <span class="file-name"></span>
+                    <button type="button" class="btn btn-sm btn-outline-danger clear-btn">Clear</button>
+                </div>
+                <small class="form-text text-muted">
                     Please upload a scanned copy in PDF, DOCX, or TXT format.
                 </small>
             </div>
 
+            <!-- DEGREE CERTIFICATES -->
             <div class="mb-3">
-                <label class="form-label custom-file-label" for="degree_certificates">
+                <label class="form-label" for="degree_certificates">
                     Degree Certificates
                     <i class="bi bi-upload ms-2"></i>
                 </label>
-                <input class="form-control custom-file-input" type="file" id="degree_certificates"
-                    name="degree_certificates" multiple accept=".pdf,.docx,.txt">
-                <small class="form-text">
+                <input class="form-control" type="file" id="degree_certificates" name="degree_certificates"
+                    multiple accept=".pdf,.docx,.txt">
+                <div class="file-name-wrapper d-none">
+                    <span class="file-name"></span>
+                    <button type="button" class="btn btn-sm btn-outline-danger clear-btn">Clear</button>
+                </div>
+                <small class="form-text text-muted">
                     Please add all degree certificates and upload.
                 </small>
             </div>
 
+            <!-- CERTIFICATIONS -->
             <div class="mb-3">
-                <label class="form-label custom-file-label" for="certifications">
+                <label class="form-label" for="certifications">
                     Certifications
                     <i class="bi bi-upload ms-2"></i>
                 </label>
-                <input class="form-control custom-file-input" type="file" id="certifications"
-                    name="certifications" accept=".pdf,.docx,.txt">
-                <small class="form-text">
+                <input class="form-control" type="file" id="certifications" name="certifications"
+                    accept=".pdf,.docx,.txt">
+                <div class="file-name-wrapper d-none">
+                    <span class="file-name"></span>
+                    <button type="button" class="btn btn-sm btn-outline-danger clear-btn">Clear</button>
+                </div>
+                <small class="form-text text-muted">
                     Please upload scanned copy of all certificates in one PDF, DOCX, or TXT format file.
                 </small>
             </div>
 
+            <!-- RESUME -->
             <div class="mb-3">
-                <label class="form-label custom-file-label" for="resume">
+                <label class="form-label" for="resume">
                     Resume/CV
                     <i class="bi bi-upload ms-2"></i>
                 </label>
-                <input class="form-control custom-file-input" type="file" id="resume" name="resume"
-                    accept=".pdf,.docx,.txt">
-                <small class="form-text">
+                <input class="form-control" type="file" id="resume" name="resume" accept=".pdf,.docx,.txt">
+                <div class="file-name-wrapper d-none">
+                    <span class="file-name"></span>
+                    <button type="button" class="btn btn-sm btn-outline-danger clear-btn">Clear</button>
+                </div>
+                <small class="form-text text-muted">
                     Please upload your resume/CV in one PDF, DOCX, or TXT file.
                 </small>
             </div>
 
+            <!-- PROFILE PICTURE -->
             <div class="mb-3">
-                <label class="form-label custom-file-label" for="profile_picture">
+                <label class="form-label" for="profile_picture">
                     Profile Picture
                     <i class="bi bi-upload ms-2"></i>
                 </label>
-                <input class="form-control custom-file-input" type="file" id="profile_picture"
-                    name="profile_picture" accept="image/*" capture="user">
-                <small class="form-text">
+                <input class="form-control" type="file" id="profile_picture" name="profile_picture"
+                    accept="image/*" capture="user">
+                <div class="file-name-wrapper d-none">
+                    <span class="file-name"></span>
+                    <button type="button" class="btn btn-sm btn-outline-danger clear-btn">Clear</button>
+                </div>
+                <small class="form-text text-muted">
                     Please upload a profile picture (or capture using your webcam).
                 </small>
             </div>
+
+            <script>
+                document.querySelectorAll('.form-control[type="file"]').forEach(input => {
+                    const wrapper = input.closest('.mb-3');
+                    const fileWrapper = wrapper.querySelector('.file-name-wrapper');
+                    const fileNameSpan = fileWrapper.querySelector('.file-name');
+                    const clearBtn = fileWrapper.querySelector('.clear-btn');
+
+                    input.addEventListener('change', () => {
+                        if (input.files.length > 0) {
+                            const fileNames = Array.from(input.files).map(f => f.name).join(', ');
+                            fileNameSpan.textContent = fileNames;
+                            fileWrapper.classList.remove('d-none');
+                        } else {
+                            fileWrapper.classList.add('d-none');
+                        }
+                    });
+
+                    clearBtn.addEventListener('click', () => {
+                        input.value = '';
+                        fileWrapper.classList.add('d-none');
+                    });
+                });
+            </script>
+
+
+            <script>
+                document.querySelectorAll('.custom-file-input').forEach(input => {
+                    const wrapper = input.closest('.file-input-wrapper');
+                    const fileNameDisplay = wrapper.querySelector('.file-name');
+                    const clearBtn = wrapper.querySelector('.clear-btn');
+
+                    input.addEventListener('change', () => {
+                        if (input.files.length > 0) {
+                            const names = Array.from(input.files).map(f => f.name).join(', ');
+                            fileNameDisplay.textContent = names;
+                            clearBtn.style.display = 'inline';
+                        } else {
+                            fileNameDisplay.textContent = '';
+                            clearBtn.style.display = 'none';
+                        }
+                    });
+
+                    clearBtn.addEventListener('click', () => {
+                        input.value = '';
+                        fileNameDisplay.textContent = '';
+                        clearBtn.style.display = 'none';
+                    });
+                });
+            </script>
+
 
             <div class="mb-3">
                 <p class="mb-1">Terms & Conditions</p>
@@ -1176,585 +1243,653 @@
     </div>
     <script>
         (function() {
-            // Utility helpers
-            const $ = (sel, ctx = document) => ctx.querySelector(sel);
-            const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-            const byName = (name, ctx = document) => Array.from((ctx || document).querySelectorAll('[name="' + name +
-                '"]'));
-            const showError = (el, msg) => {
-                if (!el) return;
-                // find or create a .field-error next to the field
-                let wrapper = el.closest('.form-group') || el.parentElement;
-                if (!wrapper) wrapper = document.body;
-                let err = wrapper.querySelector('.field-error');
-                if (!err) {
-                    err = document.createElement('div');
-                    err.className = 'field-error text-danger small mt-1';
-                    wrapper.appendChild(err);
-                }
-                err.textContent = msg;
-            };
-            const clearErrors = (form) => {
-                $$('.field-error', form).forEach(n => n.remove());
+            function validatePassword(password) {
+                // Minimum 8 characters, at least one uppercase, one lowercase, one digit, one special char
+                const passwordRegex =
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=\[{\]};:'",<.>/?\\|`~]).{8,}$/;
+
+            if (!password) return {
+                success: false,
+                message: "Password is required"
             };
 
-            // Basic validators (expand if you need)
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const phoneRegex = /^[0-9+\-\s()]{6,20}$/; // permissive; change to your local format
+            if (password.length < 8)
+                return {
+                    success: false,
+                    message: "Password must be at least 8 characters long",
+                };
 
-            // Configure what to validate and rules
-            const rules = {
-                // Authentication
-                'password': {
-                    required: true,
-                    type: 'text',
-                    min: 8
-                },
+            if (!passwordRegex.test(password))
+                return {
+                    success: false,
+                    message: "Password must include at least one uppercase letter, one lowercase letter, one number, and one special character",
+                };
 
-                'confirm-password': {
-                    required: true,
-                    type: 'text',
-                    min: 8
-                },
-
-                // Basic Details
-                'salutation': {
-                    required: false
-                },
-                'first-name': {
-                    required: true
-                },
-                'last-name': {
-                    required: true
-                },
-                'gender': {
-                    required: true
-                },
-                'nationality': {
-                    required: true
-                },
-
-                // Contact Info
-                'email': {
-                    required: true,
-                    type: 'email'
-                },
-                'phone': {
-                    required: true,
-                    type: 'phone'
-                },
-
-                // Address
-                'street-address': {
-                    required: true
-                },
-                'address-line-2': {
-                    required: false
-                },
-                'city': {
-                    required: true
-                },
-                'state': {
-                    required: true
-                },
-                'postal': {
-                    required: true
-                },
-                'country': {
-                    required: true
-                },
-
-                // Professional Information
-                'medical-licence-number': {
-                    required: true
-                },
-                'medical-licence-issuing-authority': {
-                    required: true
-                },
-                'medical-licence-issuing-country': {
-                    required: true
-                },
-                'specialization': {
-                    required: true
-                },
-                'sub-specialization': {
-                    required: false
-                },
-                'experience': {
-                    required: true,
-                    type: 'number'
-                },
-                'clinic-name': {
-                    required: true
-                },
-                'clinic-street-address': {
-                    required: true
-                },
-                'clinic-address-line-2': {
-                    required: false
-                },
-                'clinic-city': {
-                    required: true
-                },
-                'clinic-state': {
-                    required: true
-                },
-                'clinic-postal-code': {
-                    required: true
-                },
-                'clinic-country': {
-                    required: true
-                },
-                'position': {
-                    required: true
-                },
-
-                // Educational Details
-                'medical-degree': {
-                    required: true
-                },
-                'institution-name': {
-                    required: true
-                },
-                'graduation-date': {
-                    required: true,
-                    type: 'date'
-                },
-                'additional-certifications': {
-                    required: false
-                },
-                'continuing-medical-education': {
-                    required: false
-                },
-
-                // Professional Affiliations
-                'memberships': {
-                    required: false
-                },
-                'licensing-bodies': {
-                    required: false
-                },
-                'other-affiliations': {
-                    required: false
-                },
-
-                // Preferences
-                'international-patients': {
-                    required: true
-                },
-                'countries-preferred': {
-                    required: false
-                },
-                'preferred_communication_methods': {
-                    required: true
-                },
-                'virtual-consultations': {
-                    required: true
-                },
-                'second-opinions': {
-                    required: true
-                },
-                'treatments-offered': {
-                    required: false
-                },
-                'estimated-costs': {
-                    required: false
-                },
-                'insurance-accepted': {
-                    required: true
-                },
-                'payment-methods[]': {
-                    required: true
-                },
-
-                // Document Uploads
-                'medical_license': {
-                    required: false,
-                    type: 'file'
-                },
-                'degree_certificates[]': {
-                    required: false,
-                    type: 'file'
-                },
-                'certifications': {
-                    required: false,
-                    type: 'file'
-                },
-                'resume': {
-                    required: false,
-                    type: 'file'
-                },
-                'profile_picture': {
-                    required: false,
-                    type: 'file'
-                },
-
-                // Legal
-                'terms-and-conditions': {
-                    required: true
-                },
-                'signature': {
-                    required: true,
-                    type: 'file'
-                },
-
-                // Misc
-                '_token': {
-                    required: false
-                }
+            return {
+                success: true,
+                message: "Password is strong and valid"
             };
+        }
 
-            // Inputs that are file inputs to append as files
-            const fileInputs = [
-                'medical_license',
-                'degree_certificates',
-                'certifications',
-                'resume',
-                'profile_picture'
-            ];
+        // Utility helpers
+        const $ = (sel, ctx = document) => ctx.querySelector(sel);
+        const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+        const byName = (name, ctx = document) => Array.from((ctx || document).querySelectorAll('[name="' + name +
+            '"]'));
+        const showError = (el, msg) => {
+            if (!el) return;
+            // find or create a .field-error next to the field
+            let wrapper = el.closest('.form-group') || el.parentElement;
+            if (!wrapper) wrapper = document.body;
+            let err = wrapper.querySelector('.field-error');
+            if (!err) {
+                err = document.createElement('div');
+                err.className = 'field-error text-danger small mt-1';
+                wrapper.appendChild(err);
+            }
+            err.textContent = msg;
+        };
+        const clearErrors = (form) => {
+            $$('.field-error', form).forEach(n => n.remove());
+        };
 
-            // main
-            document.addEventListener('DOMContentLoaded', () => {
-                document.querySelectorAll('input[type="checkbox"].all-check').forEach(allCheck => {
-                    allCheck.addEventListener('change', e => {
-                        const groupName = e.target.name;
-                        const checkboxes = document.querySelectorAll(
-                            `input[name="${groupName}"]`);
+        // Basic validators (expand if you need)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^[0-9+\-\s()]{6,20}$/; // permissive; change to your local format
 
-                        checkboxes.forEach(cb => {
-                            // Set all others to match the "all-check" state
-                            cb.checked = e.target.checked;
-                        });
+        // Configure what to validate and rules
+        const rules = {
+            // Authentication
+            'password': {
+                required: true,
+                type: 'text',
+                min: 8
+            },
+
+            'confirm-password': {
+                required: true,
+                type: 'text',
+                min: 8
+            },
+
+            // Basic Details
+            'salutation': {
+                required: false
+            },
+            'first-name': {
+                required: true
+            },
+            'last-name': {
+                required: true
+            },
+            'gender': {
+                required: true
+            },
+            'nationality': {
+                required: true
+            },
+
+            // Contact Info
+            'email': {
+                required: true,
+                type: 'email'
+            },
+            'phone': {
+                required: true,
+                type: 'phone'
+            },
+
+            // Address
+            'street-address': {
+                required: true
+            },
+            'address-line-2': {
+                required: false
+            },
+            'city': {
+                required: true
+            },
+            'state': {
+                required: true
+            },
+            'postal': {
+                required: true
+            },
+            'country': {
+                required: true
+            },
+
+            // Professional Information
+            'medical-licence-number': {
+                required: true
+            },
+            'medical-licence-issuing-authority': {
+                required: true
+            },
+            'medical-licence-issuing-country': {
+                required: true
+            },
+            'specialization': {
+                required: true
+            },
+            'sub-specialization': {
+                required: false
+            },
+            'experience': {
+                required: true,
+                type: 'number'
+            },
+            'clinic-name': {
+                required: true
+            },
+            'clinic-street-address': {
+                required: true
+            },
+            'clinic-address-line-2': {
+                required: false
+            },
+            'clinic-city': {
+                required: true
+            },
+            'clinic-state': {
+                required: true
+            },
+            'clinic-postal-code': {
+                required: true
+            },
+            'clinic-country': {
+                required: true
+            },
+            'position': {
+                required: true
+            },
+
+            // Educational Details
+            'medical-degree': {
+                required: true
+            },
+            'institution-name': {
+                required: true
+            },
+            'graduation-date': {
+                required: true,
+                type: 'date'
+            },
+            'additional-certifications': {
+                required: false
+            },
+            'continuing-medical-education': {
+                required: false
+            },
+
+            // Professional Affiliations
+            'memberships': {
+                required: false
+            },
+            'licensing-bodies': {
+                required: false
+            },
+            'other-affiliations': {
+                required: false
+            },
+
+            // Preferences
+            'international-patients': {
+                required: true
+            },
+            'countries-preferred': {
+                required: false
+            },
+            'preferred_communication_methods': {
+                required: true
+            },
+            'virtual-consultations': {
+                required: true
+            },
+            'second-opinions': {
+                required: true
+            },
+            'treatments-offered': {
+                required: false
+            },
+            'estimated-costs': {
+                required: false
+            },
+            'insurance-accepted': {
+                required: true
+            },
+            'payment-methods[]': {
+                required: true
+            },
+
+            // Document Uploads
+            'medical_license': {
+                required: false,
+                type: 'file'
+            },
+            'degree_certificates[]': {
+                required: false,
+                type: 'file'
+            },
+            'certifications': {
+                required: false,
+                type: 'file'
+            },
+            'resume': {
+                required: false,
+                type: 'file'
+            },
+            'profile_picture': {
+                required: false,
+                type: 'file'
+            },
+
+            // Legal
+            'terms-and-conditions': {
+                required: true
+            },
+            'signature': {
+                required: true,
+                type: 'file'
+            },
+
+            // Misc
+            '_token': {
+                required: false
+            }
+        };
+
+        // Inputs that are file inputs to append as files
+        const fileInputs = [
+            'medical_license',
+            'degree_certificates',
+            'certifications',
+            'resume',
+            'profile_picture'
+        ];
+
+        // main
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('input[type="checkbox"].all-check').forEach(allCheck => {
+                allCheck.addEventListener('change', e => {
+                    const groupName = e.target.name;
+                    const checkboxes = document.querySelectorAll(
+                        `input[name="${groupName}"]`);
+
+                    checkboxes.forEach(cb => {
+                        // Set all others to match the "all-check" state
+                        cb.checked = e.target.checked;
                     });
                 });
+            });
 
-                const form = document.querySelector('form[action="#"]') || document.querySelector('form');
-                if (!form) {
-                    console.warn('Registration form not found.');
-                    return;
-                }
+            const form = document.querySelector('form[action="#"]') || document.querySelector('form');
+            if (!form) {
+                console.warn('Registration form not found.');
+                return;
+            }
 
-                // create status area
-                let statusArea = document.createElement('div');
-                statusArea.id = 'register-status';
-                statusArea.style.marginTop = '12px';
-                form.appendChild(statusArea);
+            // create status area
+            let statusArea = document.createElement('div');
+            statusArea.id = 'register-status';
+            statusArea.style.marginTop = '12px';
+            form.appendChild(statusArea);
 
-                // hook submit
-                form.addEventListener('submit', async (ev) => {
-                    ev.preventDefault();
-                    clearErrors(form);
-                    statusArea.textContent = '';
-                    statusArea.className = '';
+            // hook submit
+            form.addEventListener('submit', async (ev) => {
+                ev.preventDefault();
+                clearErrors(form);
+                statusArea.textContent = '';
+                statusArea.className = '';
 
-                    // run validation
-                    const validationErrors = [];
+                // run validation
+                const validationErrors = [];
 
-                    // validate defined rules
-                    for (const [name, rule] of Object.entries(rules)) {
-                        // handle inputs which might be selects or checkboxes or text inputs
-                        const inputs = byName(name, form);
-                        if (rule.required) {
-                            if (!inputs || inputs.length === 0) {
-                                // if not found, skip (maybe it's missing in markup)
-                                continue;
-                            }
+                // validate defined rules
+                for (const [name, rule] of Object.entries(rules)) {
+                    // handle inputs which might be selects or checkboxes or text inputs
+                    const inputs = byName(name, form);
+                    if (rule.required) {
+                        if (!inputs || inputs.length === 0) {
+                            // if not found, skip (maybe it's missing in markup)
+                            continue;
+                        }
 
-                            // For checkboxes/radios we check checked
-                            const first = inputs[0];
-                            if (first.type === 'checkbox') {
-                                const anyChecked = inputs.some(i => i.checked);
-                                if (!anyChecked) validationErrors.push({
-                                    el: first,
-                                    msg: 'This field is required.'
-                                });
-                                continue;
-                            }
-
-                            if (first.type === 'radio') {
-                                const anyChecked = inputs.some(i => i.checked);
-                                if (!anyChecked) validationErrors.push({
-                                    el: first,
-                                    msg: 'Please select an option.'
-                                });
-                                continue;
-                            }
-
-                            // fallback: value presence
-                            const val = first.value && first.value.trim();
-                            if (!val) validationErrors.push({
+                        // For checkboxes/radios we check checked
+                        const first = inputs[0];
+                        if (first.type === 'checkbox') {
+                            const anyChecked = inputs.some(i => i.checked);
+                            if (!anyChecked) validationErrors.push({
                                 el: first,
                                 msg: 'This field is required.'
                             });
-                            if (val && rule.type === 'email' && !emailRegex.test(val))
-                                validationErrors.push({
-                                    el: first,
-                                    msg: 'Enter a valid email.'
-                                });
-                            if (val && rule.type === 'phone' && !phoneRegex.test(val))
-                                validationErrors.push({
-                                    el: first,
-                                    msg: 'Enter a valid phone number.'
-                                });
-                            if (val && rule.type === 'number' && isNaN(Number(val)))
-                                validationErrors.push({
-                                    el: first,
-                                    msg: 'Enter a valid number.'
-                                });
-                        } else {
-                            // not required but format validations if present and value exists
-                            const inputs = byName(name, form);
-                            if (inputs && inputs[0]) {
-                                const val = inputs[0].value && inputs[0].value.trim();
-                                if (val) {
-                                    if (rule.type === 'email' && !emailRegex.test(val))
-                                        validationErrors.push({
-                                            el: inputs[0],
-                                            msg: 'Enter a valid email.'
-                                        });
-                                    if (rule.type === 'phone' && !phoneRegex.test(val))
-                                        validationErrors.push({
-                                            el: inputs[0],
-                                            msg: 'Enter a valid phone number.'
-                                        });
-                                    if (rule.type === 'number' && isNaN(Number(val)))
-                                        validationErrors.push({
-                                            el: inputs[0],
-                                            msg: 'Enter a valid number.'
-                                        });
-                                }
-                            }
-                        }
-                    }
-
-                    // Additional validations for specific fields:
-                    const fname = form.querySelector('[name="first-name"]');
-                    const lname = form.querySelector('[name="last-name"]');
-                    if (fname && fname.value.trim().length < 2) validationErrors.push({
-                        el: fname,
-                        msg: 'First name must be at least 2 characters.'
-                    });
-                    if (lname && lname.value.trim().length < 1) validationErrors.push({
-                        el: lname,
-                        msg: 'Last name is required.'
-                    });
-
-                    const emailInput = form.querySelector('[name="email"]');
-                    if (emailInput && emailInput.value && !emailRegex.test(emailInput.value.trim()))
-                        validationErrors.push({
-                            el: emailInput,
-                            msg: 'Enter a valid email.'
-                        });
-
-                    const phoneInput = form.querySelector('[name="phone"]');
-                    if (phoneInput && phoneInput.value && !phoneRegex.test(phoneInput.value.trim()))
-                        validationErrors.push({
-                            el: phoneInput,
-                            msg: 'Enter a valid phone number.'
-                        });
-
-                    // Files: optional checks (example max 5MB)
-                    for (const fileName of fileInputs) {
-                        const fi = form.querySelector('[name="' + fileName + '"]');
-                        if (!fi) continue;
-                        if (fi.files && fi.files.length > 0) {
-                            for (const f of fi.files) {
-                                if (f.size > 5 * 1024 * 1024) {
-                                    validationErrors.push({
-                                        el: fi,
-                                        msg: `File "${f.name}" is larger than 5MB.`
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    // signature basic check: ensure some drawing exists (simple pixel check)
-                    const sigCanvas = form.querySelector('#sigCanvas');
-                    if (sigCanvas) {
-                        // check if canvas is blank by comparing pixel data
-                        const ctx = sigCanvas.getContext('2d');
-                        try {
-                            const px = ctx.getImageData(0, 0, sigCanvas.width, sigCanvas.height)
-                                .data;
-                            let allEmpty = true;
-                            for (let i = 0; i < px.length; i += 4) {
-                                if (px[i + 3] !== 0) { // non-transparent pixel
-                                    allEmpty = false;
-                                    break;
-                                }
-                            }
-                            // only warn, not fail; comment out next line if signature should be optional
-                            if (allEmpty) {
-                                // optional: require signature by uncommenting next line
-                                // validationErrors.push({ el: sigCanvas, msg: 'Please provide a signature.' });
-                            }
-                        } catch (err) {
-                            // ignore cross-origin or other issues
-                        }
-                    }
-
-                    // display validation errors
-                    if (validationErrors.length > 0) {
-                        validationErrors.forEach(e => showError(e.el, e.msg));
-                        statusArea.className = 'text-danger small';
-                        statusArea.textContent =
-                            `There are ${validationErrors.length} validation error(s). Please fix and try again.`;
-                        statusArea.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-                        return;
-                    }
-
-                    // build FormData
-                    const fd = new FormData();
-
-                    // helper to append input(s) by name
-                    const appendField = (name) => {
-                        // handle checkboxes arrays (name with [] or with given name)
-                        const els = byName(name, form);
-                        if (!els || els.length === 0) return;
-                        const first = els[0];
-                        if (first.type === 'checkbox') {
-                            // if there are multiple checkboxes with same name, append all checked values
-                            const checked = els.filter(i => i.checked).map(i => i.value);
-                            // append as JSON array string OR multiple keys — backend must support
-                            // Append as multiple entries: e.g., preferred_communication_methods[] -> multiple values
-                            if (name.endsWith('[]')) {
-                                checked.forEach(v => fd.append(name, v));
-                            } else {
-                                // safe option: append JSON
-                                if (name === 'terms-and-conditions')
-                                    fd.append(name, checked[0] ? true : false)
-                                else
-                                    fd.append(name, JSON.stringify(checked));
-                            }
-                            return;
+                            continue;
                         }
 
                         if (first.type === 'radio') {
-                            const checked = els.find(i => i.checked);
-                            if (checked) fd.append(name, checked.value);
-                            return;
-                        }
-
-                        // file inputs
-                        if (first.type === 'file') {
-                            const files = first.files;
-                            if (!files || files.length === 0) return;
-                            // Always append with the same name — Multer groups them automatically
-                            for (const f of files) fd.append(name, f);
-                            return;
-                        }
-
-
-                        // simple text/select/number etc.
-                        if (name === 'salutation') {
-                            fd.append(name, first.value.toLowerCase());
-                        } else {
-                            fd.append(name, first.value);
-                        }
-
-                    };
-                    // Append most common fields by iterating inputs in the form (robust)
-                    const allInputs = $$('input, select, textarea', form);
-                    const appended = new Set();
-                    allInputs.forEach(inp => {
-                        const name = inp.name;
-                        if (!name) return;
-                        if (appended.has(name) && !name.endsWith('[]'))
-                            return; // already appended non-array
-                        // Skip the built-in submit buttons
-                        if (inp.type === 'submit' || inp.type === 'button') return;
-                        // For multiple checkbox with [] naming, we want to append each
-                        if (inp.type === 'checkbox' && name.endsWith('[]')) {
-                            // will be handled below via appendField
-                            return;
-                        }
-                        appendField(name);
-                        appended.add(name);
-                    });
-
-                    // For checkboxes with array style name 'preferred_communication_methods[]' ensure appended
-                    const checkArrayNames = [
-                        'preferred_communication_methods[]',
-                        'payment_methods[]',
-                        'degree_certificates[]'
-                    ];
-
-                    checkArrayNames.forEach(name => {
-                        const els = byName(name, form);
-                        if (!els || els.length === 0) return;
-
-                        // filter out "all" or empty checkboxes
-                        const checked = els
-                            .filter(i => i.checked && i.value.trim() !== '' && i.value
-                                .toLowerCase() !== 'all')
-                            .map(i => i.value);
-
-                        if (checked.length === 0) return; // nothing meaningful selected
-
-                        // append them one by one like before
-                        checked.forEach(v => fd.append(name, v));
-
-                        appended.add(name);
-                    });
-
-                    // signature: convert canvas to blob and append as signature.png
-                    const canvas = form.querySelector('#sigCanvas');
-                    if (canvas) {
-                        // Use toBlob (async) and only send after blob ready
-                        try {
-                            statusArea.className = 'text-muted small';
-                            statusArea.textContent = 'Preparing signature and uploading...';
-                            await new Promise((resolve, reject) => {
-                                canvas.toBlob((blob) => {
-                                    if (blob && blob.size > 0) {
-                                        fd.append('signature', blob,
-                                            'signature.png');
-                                    }
-                                    resolve();
-                                }, 'image/png');
+                            const anyChecked = inputs.some(i => i.checked);
+                            if (!anyChecked) validationErrors.push({
+                                el: first,
+                                msg: 'Please select an option.'
                             });
-                        } catch (err) {
-                            // ignore, continue without signature
+                            continue;
                         }
-                    }
 
-                    // CSRF token (common Laravel name: _token)
-                    const tokenInput = form.querySelector('input[name="_token"]');
-                    if (tokenInput && tokenInput.value) {
-                        // Add to headers later; also append to FormData so backend receives it in case of file upload
-                        fd.append('_token', tokenInput.value);
+                        // fallback: value presence
+                        const val = first.value && first.value.trim();
+                        if (!val) validationErrors.push({
+                            el: first,
+                            msg: 'This field is required.'
+                        });
+                        if (val && rule.type === 'email' && !emailRegex.test(val))
+                            validationErrors.push({
+                                el: first,
+                                msg: 'Enter a valid email.'
+                            });
+                        if (val && rule.type === 'phone' && !phoneRegex.test(val))
+                            validationErrors.push({
+                                el: first,
+                                msg: 'Enter a valid phone number.'
+                            });
+                        if (val && rule.type === 'number' && isNaN(Number(val)))
+                            validationErrors.push({
+                                el: first,
+                                msg: 'Enter a valid number.'
+                            });
                     } else {
-                        // try meta
-                        const meta = document.querySelector('meta[name="csrf-token"]');
-                        if (meta && meta.content) {
-                            fd.append('_token', meta.content);
+                        // not required but format validations if present and value exists
+                        const inputs = byName(name, form);
+                        if (inputs && inputs[0]) {
+                            const val = inputs[0].value && inputs[0].value.trim();
+                            if (val) {
+                                if (rule.type === 'email' && !emailRegex.test(val))
+                                    validationErrors.push({
+                                        el: inputs[0],
+                                        msg: 'Enter a valid email.'
+                                    });
+                                if (rule.type === 'phone' && !phoneRegex.test(val))
+                                    validationErrors.push({
+                                        el: inputs[0],
+                                        msg: 'Enter a valid phone number.'
+                                    });
+                                if (rule.type === 'number' && isNaN(Number(val)))
+                                    validationErrors.push({
+                                        el: inputs[0],
+                                        msg: 'Enter a valid number.'
+                                    });
+                            }
                         }
                     }
+                }
 
-                    // You might want to show a loading state
-                    statusArea.className = 'text-info small';
-                    statusArea.textContent = 'Submitting...';
+                const passwordInput = form.querySelector('[name="password"]');
+                const confirmPasswordInput = form.querySelector('[name="confirm-password"]');
 
-                    // prepare axios headers
-                    const headers = {
-                        'X-Requested-With': 'XMLHttpRequest'
-                        // axios will set Content-Type to multipart/form-data with boundary automatically when you pass FormData
-                    };
+                if (passwordInput) {
+                    const result = validatePassword(passwordInput.value.trim());
+                    if (!result.success) {
+                        validationErrors.push({
+                            el: passwordInput,
+                            msg: result.message
+                        });
+                    }
+                }
 
-                    // if token present in meta, include as header (common in Laravel setups)
-                    const metaToken = document.querySelector('meta[name="csrf-token"]');
-                    if (metaToken && metaToken.content) headers['X-CSRF-TOKEN'] = metaToken.content;
+                if (confirmPasswordInput && passwordInput) {
+                    if (confirmPasswordInput.value.trim() !== passwordInput.value.trim()) {
+                        validationErrors.push({
+                            el: confirmPasswordInput,
+                            msg: "Passwords do not match."
+                        });
+                    }
+                }
 
+                // Additional validations for specific fields:
+                const fname = form.querySelector('[name="first-name"]');
+                const lname = form.querySelector('[name="last-name"]');
+                if (fname && fname.value.trim().length < 2) validationErrors.push({
+                    el: fname,
+                    msg: 'First name must be at least 2 characters.'
+                });
+                if (lname && lname.value.trim().length < 1) validationErrors.push({
+                    el: lname,
+                    msg: 'Last name is required.'
+                });
+
+                const emailInput = form.querySelector('[name="email"]');
+                if (emailInput && emailInput.value && !emailRegex.test(emailInput.value.trim()))
+                    validationErrors.push({
+                        el: emailInput,
+                        msg: 'Enter a valid email.'
+                    });
+
+                const phoneInput = form.querySelector('[name="phone"]');
+                if (phoneInput && phoneInput.value && !phoneRegex.test(phoneInput.value.trim()))
+                    validationErrors.push({
+                        el: phoneInput,
+                        msg: 'Enter a valid phone number.'
+                    });
+
+                // Files: optional checks (example max 5MB)
+                for (const fileName of fileInputs) {
+                    const fi = form.querySelector('[name="' + fileName + '"]');
+                    if (!fi) continue;
+                    if (fi.files && fi.files.length > 0) {
+                        for (const f of fi.files) {
+                            if (f.size > 5 * 1024 * 1024) {
+                                validationErrors.push({
+                                    el: fi,
+                                    msg: `File "${f.name}" is larger than 5MB.`
+                                });
+                            }
+                        }
+                    }
+                }
+
+                // signature basic check: ensure some drawing exists (simple pixel check)
+                const sigCanvas = form.querySelector('#sigCanvas');
+                if (sigCanvas) {
+                    // check if canvas is blank by comparing pixel data
+                    const ctx = sigCanvas.getContext('2d');
                     try {
+                        const px = ctx.getImageData(0, 0, sigCanvas.width, sigCanvas.height)
+                            .data;
+                        let allEmpty = true;
+                        for (let i = 0; i < px.length; i += 4) {
+                            if (px[i + 3] !== 0) { // non-transparent pixel
+                                allEmpty = false;
+                                break;
+                            }
+                        }
+                        // only warn, not fail; comment out next line if signature should be optional
+                        if (allEmpty) {
+                            // optional: require signature by uncommenting next line
+                            // validationErrors.push({ el: sigCanvas, msg: 'Please provide a signature.' });
+                        }
+                    } catch (err) {
+                        // ignore cross-origin or other issues
+                    }
+                }
+
+                // display validation errors
+                if (validationErrors.length > 0) {
+                    validationErrors.forEach(e => showError(e.el, e.msg));
+                    statusArea.className = 'text-danger small';
+                    statusArea.textContent =
+                        `There are ${validationErrors.length} validation error(s). Please fix and try again.`;
+                    statusArea.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                    return;
+                }
+
+                // build FormData
+                const fd = new FormData();
+
+                // helper to append input(s) by name
+                const appendField = (name) => {
+                    // handle checkboxes arrays (name with [] or with given name)
+                    const els = byName(name, form);
+                    if (!els || els.length === 0) return;
+                    const first = els[0];
+                    if (first.type === 'checkbox') {
+                        // if there are multiple checkboxes with same name, append all checked values
+                        const checked = els.filter(i => i.checked).map(i => i.value);
+                        // append as JSON array string OR multiple keys — backend must support
+                        // Append as multiple entries: e.g., preferred_communication_methods[] -> multiple values
+                        if (name.endsWith('[]')) {
+                            checked.forEach(v => fd.append(name, v));
+                        } else {
+                            // safe option: append JSON
+                            if (name === 'terms-and-conditions')
+                                fd.append(name, checked[0] ? true : false)
+                            else
+                                fd.append(name, JSON.stringify(checked));
+                        }
+                        return;
+                    }
+
+                    if (first.type === 'radio') {
+                        const checked = els.find(i => i.checked);
+                        if (checked) fd.append(name, checked.value);
+                        return;
+                    }
+
+                    // file inputs
+                    if (first.type === 'file') {
+                        const files = first.files;
+                        if (!files || files.length === 0) return;
+                        // Always append with the same name — Multer groups them automatically
+                        for (const f of files) fd.append(name, f);
+                        return;
+                    }
+
+
+                    // simple text/select/number etc.
+                    if (name === 'salutation') {
+                        fd.append(name, first.value.toLowerCase());
+                    } else {
+                        fd.append(name, first.value);
+                    }
+
+                };
+                // Append most common fields by iterating inputs in the form (robust)
+                const allInputs = $$('input, select, textarea', form);
+                const appended = new Set();
+                allInputs.forEach(inp => {
+                    const name = inp.name;
+                    if (!name) return;
+                    if (appended.has(name) && !name.endsWith('[]'))
+                        return; // already appended non-array
+                    // Skip the built-in submit buttons
+                    if (inp.type === 'submit' || inp.type === 'button') return;
+                    // For multiple checkbox with [] naming, we want to append each
+                    if (inp.type === 'checkbox' && name.endsWith('[]')) {
+                        // will be handled below via appendField
+                        return;
+                    }
+                    appendField(name);
+                    appended.add(name);
+                });
+
+                // For checkboxes with array style name 'preferred_communication_methods[]' ensure appended
+                const checkArrayNames = [
+                    'preferred_communication_methods[]',
+                    'payment_methods[]',
+                    'degree_certificates[]'
+                ];
+
+                checkArrayNames.forEach(name => {
+                    const els = byName(name, form);
+                    if (!els || els.length === 0) return;
+
+                    // filter out "all" or empty checkboxes
+                    const checked = els
+                        .filter(i => i.checked && i.value.trim() !== '' && i.value
+                            .toLowerCase() !== 'all')
+                        .map(i => i.value);
+
+                    if (checked.length === 0) return; // nothing meaningful selected
+
+                    // append them one by one like before
+                    checked.forEach(v => fd.append(name, v));
+
+                    appended.add(name);
+                });
+
+                // signature: convert canvas to blob and append as signature.png
+                const canvas = form.querySelector('#sigCanvas');
+                if (canvas) {
+                    // Use toBlob (async) and only send after blob ready
+                    try {
+                        statusArea.className = 'text-muted small';
+                        statusArea.textContent = 'Preparing signature and uploading...';
+                        await new Promise((resolve, reject) => {
+                            canvas.toBlob((blob) => {
+                                if (blob && blob.size > 0) {
+                                    fd.append('signature', blob,
+                                        'signature.png');
+                                }
+                                resolve();
+                            }, 'image/png');
+                        });
+                    } catch (err) {
+                        // ignore, continue without signature
+                    }
+                }
+
+                // CSRF token (common Laravel name: _token)
+                const tokenInput = form.querySelector('input[name="_token"]');
+                if (tokenInput && tokenInput.value) {
+                    // Add to headers later; also append to FormData so backend receives it in case of file upload
+                    fd.append('_token', tokenInput.value);
+                } else {
+                    // try meta
+                    const meta = document.querySelector('meta[name="csrf-token"]');
+                    if (meta && meta.content) {
+                        fd.append('_token', meta.content);
+                    }
+                }
+
+                // You might want to show a loading state
+                statusArea.className = 'text-info small';
+                statusArea.textContent = 'Submitting...';
+
+                // prepare axios headers
+                const headers = {
+                    'X-Requested-With': 'XMLHttpRequest'
+                    // axios will set Content-Type to multipart/form-data with boundary automatically when you pass FormData
+                };
+
+                // if token present in meta, include as header (common in Laravel setups)
+                const metaToken = document.querySelector('meta[name="csrf-token"]');
+                if (metaToken && metaToken.content) headers['X-CSRF-TOKEN'] = metaToken.content;
+
+                try {
+                    Swal.fire({
+                        title: "Logging you in...",
+                        html: '<div style="display:flex;justify-content:center;align-items:center;gap:10px;overflow:hidden;"><div class="spinner" style="width:24px;height:24px;border:3px solid #ccc;border-top:3px solid #3085d6;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Please wait</span></div>',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            // Spinner animation
+                            const style = document.createElement('style');
+                            style.innerHTML = `
+                                @keyframes spin {
+                                    0% { transform: rotate(0deg); }
+                                    100% { transform: rotate(360deg); }
+                                }
+                            `;
+                                document.head.appendChild(style);
+                            }
+                        });
                         const response = await axios.post('{{ env('API_HOST') }}/doctor/register',
                             fd, {
                                 headers,
                                 withCredentials: true
                             });
+                        Swal.close();
                         // success handling
                         statusArea.className = 'text-success small';
                         // backend should return a message — show it or a default success

@@ -92,6 +92,12 @@
                 renderPagination(payload.meta || {});
             } catch (err) {
                 console.error(err);
+                if (err?.response?.status === 401) {
+                    Swal.fire("Error", err?.response.data.message ?? 'Please login again', "error").then(() => {
+                        window.location.href = '{{ url('/admin/login') }}';
+                    });
+                    return;
+                }
                 doctorsTableBody.innerHTML = `
                 <tr><td colspan="8" class="text-center text-danger">Failed to load doctors</td></tr>
             `;
@@ -182,13 +188,33 @@
                 } else {
                     Swal.fire("Error", response.data.message, "error");
                 }
-            } catch (error) {
-                Swal.fire("Error", error.message, "error");
+            } catch (err) {
+                Swal.fire("Error", err ? err?.response?.data.message ?? err?.message : 'Some technical', "error");
+
+                if (err?.response?.status === 401)
+                    window.location.href = '{{ url('/admin/login') }}';
             }
         }
 
         async function toggleStatus(id, currentStatus) {
             try {
+                Swal.fire({
+                    title: "Changing activity...",
+                    html: '<div style="display:flex;justify-content:center;align-items:center;gap:10px;overflow:hidden;"><div class="spinner" style="width:24px;height:24px;border:3px solid #ccc;border-top:3px solid #3085d6;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Please wait</span></div>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        // Spinner animation
+                        const style = document.createElement('style');
+                        style.innerHTML = `
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `;
+                        document.head.appendChild(style);
+                    }
+                });
                 const newStatus = !currentStatus;
                 const response = await axios.post(`{{ env('API_HOST') }}/admin/doctors/status`, {
                     id,
@@ -196,7 +222,6 @@
                 }, {
                     withCredentials: true
                 });
-                console.log(response.data.success)
                 if (response.data.success) {
                     Swal.fire("Updated!", `Doctor status set to ${newStatus ? "Active" : "Inactive"}.`, "success");
                     fetchDoctors(currentPage, searchQuery, orderBy, orderDirection);
@@ -204,7 +229,10 @@
                     Swal.fire("Error", response.data.message, "error");
                 }
             } catch (error) {
-                Swal.fire("Error", error.message, "error");
+                Swal.fire("Error", error ? error?.response?.data?.message ?? error.message :
+                    'Some technical error occured, please try again', "error");
+                if (error?.response?.status === 401)
+                    window.location.href = '{{ url('/admin/login') }}';
             }
         }
 

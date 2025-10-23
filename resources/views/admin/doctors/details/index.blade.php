@@ -184,6 +184,23 @@
             }
 
             try {
+                Swal.fire({
+                    title: "Loading data...",
+                    html: '<div style="display:flex;justify-content:center;align-items:center;gap:10px;overflow:hidden;"><div class="spinner" style="width:24px;height:24px;border:3px solid #ccc;border-top:3px solid #3085d6;border-radius:50%;animation:spin 1s linear infinite;"></div><span>Please wait</span></div>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        // Spinner animation
+                        const style = document.createElement('style');
+                        style.innerHTML = `
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                `;
+                        document.head.appendChild(style);
+                    }
+                });
                 const response = await axios.get(`{{ env('API_HOST') }}/admin/doctors/${id}`, {
                     withCredentials: true
                 });
@@ -209,9 +226,17 @@
                 renderDocuments(data.documents || {});
                 rawEl.textContent = JSON.stringify(data, null, 2);
             } catch (err) {
+                if (err?.response?.status === 401) {
+                    Swal.fire("Error", "Please login again", "error").then(() => {
+                        window.location.href = '{{ url('/admin/login') }}';
+                    });
+                    return;
+                }
                 console.error(err);
                 detailsEl.innerHTML =
                     `<div class="text-center text-danger py-5">Failed to fetch doctor data.</div>`;
+            } finally {
+                Swal.close();
             }
         });
     </script>
